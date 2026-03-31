@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta name="color-scheme" content="dark" />
 <style>
 /* ================================================================== */
 /*  Design Tokens                                                      */
@@ -37,7 +38,9 @@
 /*  Reset & Base                                                       */
 /* ================================================================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+
+html, body { height: 100%; margin: 0; padding: 0; }
+html { background: var(--bg); color-scheme: dark; }
 body {
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-size: 12px;
@@ -229,12 +232,12 @@ select.input {
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
   flex: 1 1 calc(33.33% - 6px);
-  min-width: 90px;
+  min-width: 100px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 8px;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
   background: var(--card);
   border: 1.5px solid var(--border-lt);
   border-radius: var(--r);
@@ -248,14 +251,22 @@ select.input {
   background: var(--primary-bg);
 }
 .chip input { display: none; }
-.chip .flag { font-size: 20px; line-height: 1; }
-.chip .name { font-size: 12px; font-weight: 600; }
+.chip .flag {
+  font-size: 18px;
+  line-height: 1;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.chip .lang-meta { display: flex; flex-direction: column; gap: 2px; }
+.chip .name { font-size: 12px; font-weight: 600; line-height: 1; }
 .chip .code {
   font-size: 9px;
   font-weight: 700;
   letter-spacing: .5px;
   color: var(--txt3);
   text-transform: uppercase;
+  line-height: 1;
 }
 .chip.on .code { color: var(--primary); }
 
@@ -403,7 +414,8 @@ select.input {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   padding: 12px 20px 16px;
-  background: linear-gradient(to top, var(--bg) 70%, transparent);
+  background: var(--bg);
+  border-top: 1px solid var(--border-lt);
   pointer-events: none;
 }
 .bottom > * { pointer-events: auto; }
@@ -415,17 +427,38 @@ select.input {
 }
 
 /* ================================================================== */
-/*  Empty state                                                        */
+/*  Selection-changed warning banner                                   */
 /* ================================================================== */
-.empty {
-  text-align: center;
-  padding: 32px 20px;
-  color: var(--txt3);
-  font-size: 12px;
-  line-height: 1.6;
+.rescan-warn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  margin-bottom: 4px;
+  background: rgba(251,191,36,.10);
+  border: 1px solid rgba(251,191,36,.28);
+  border-radius: var(--r);
+  font-size: 11px;
+  color: var(--yellow);
+  line-height: 1.4;
+  animation: fadeIn .2s ease;
 }
-.empty .icon-big { font-size: 28px; margin-bottom: 8px; }
+.rescan-warn svg { flex-shrink: 0; }
+.rescan-warn strong { font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
+/* ================================================================== */
+/*  Scan hint (empty state) — tight to button, same visual group        */
+/* ================================================================== */
+.section-scan .scan-hint {
+  text-align: center;
+  margin: 10px 0 0;
+  padding: 0 8px;
+  color: var(--txt3);
+  font-size: 11px;
+  line-height: 1.45;
+  font-weight: 400;
+}
+.section-scan .scan-hint strong { color: var(--txt2); font-weight: 600; }
 /* ================================================================== */
 /*  Utility                                                            */
 /* ================================================================== */
@@ -556,13 +589,22 @@ select.input {
   text-transform: uppercase;
   letter-spacing: .6px;
   color: var(--txt3);
-  padding: 6px 10px;
   background: var(--elevated);
   border-bottom: 1px solid var(--border-lt);
   border-radius: var(--r) var(--r) 0 0;
   position: sticky;
   top: 0;
   z-index: 1;
+}
+/* Each header cell mirrors .review-cell padding so columns stay aligned */
+.review-header > span {
+  padding: 6px 10px;
+}
+.review-header > span:not(:last-child) {
+  border-right: 1px solid var(--border-lt);
+}
+.review-header > span:last-child {
+  text-align: center;
 }
 
 .review-summary {
@@ -587,6 +629,65 @@ select.input {
 .btn-success:hover:not(:disabled) {
   background: #2DD4A0;
   box-shadow: 0 4px 16px rgba(52,211,153,.35);
+}
+
+/* ================================================================== */
+/*  Smart Fit controls                                                 */
+/* ================================================================== */
+.fit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  flex: 1;
+}
+.fit-toggle input { display: none; }
+.fit-toggle-track {
+  flex-shrink: 0;
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--elevated);
+  border: 1px solid var(--border);
+  position: relative;
+  transition: background var(--transition), border-color var(--transition);
+}
+.fit-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--txt3);
+  transition: transform var(--transition), background var(--transition);
+}
+.fit-toggle input:checked + .fit-toggle-track {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.fit-toggle input:checked + .fit-toggle-track::after {
+  transform: translateX(14px);
+  background: #fff;
+}
+.fit-toggle-label { font-size: 12px; font-weight: 500; color: var(--txt); }
+
+.fit-control-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  transition: opacity var(--transition);
+}
+.fit-hint-label {
+  font-size: 10px;
+  color: var(--txt3);
+  white-space: nowrap;
 }
 
 /* ================================================================== */
@@ -702,7 +803,7 @@ select.input {
       <label class="chip on" data-lang="es">
         <input type="checkbox" value="es" checked />
         <span class="flag">&#127466;&#127480;</span>
-        <div>
+        <div class="lang-meta">
           <div class="name">Spanish</div>
           <div class="code">ES</div>
         </div>
@@ -710,7 +811,7 @@ select.input {
       <label class="chip on" data-lang="it">
         <input type="checkbox" value="it" checked />
         <span class="flag">&#127470;&#127481;</span>
-        <div>
+        <div class="lang-meta">
           <div class="name">Italian</div>
           <div class="code">IT</div>
         </div>
@@ -718,7 +819,7 @@ select.input {
       <label class="chip on" data-lang="fr">
         <input type="checkbox" value="fr" checked />
         <span class="flag">&#127467;&#127479;</span>
-        <div>
+        <div class="lang-meta">
           <div class="name">French</div>
           <div class="code">FR</div>
         </div>
@@ -726,7 +827,7 @@ select.input {
       <label class="chip on" data-lang="de">
         <input type="checkbox" value="de" checked />
         <span class="flag">&#127465;&#127466;</span>
-        <div>
+        <div class="lang-meta">
           <div class="name">Deutsch</div>
           <div class="code">DE</div>
         </div>
@@ -734,7 +835,7 @@ select.input {
       <label class="chip on" data-lang="pt">
         <input type="checkbox" value="pt" checked />
         <span class="flag">&#127477;&#127481;</span>
-        <div>
+        <div class="lang-meta">
           <div class="name">Português</div>
           <div class="code">PT</div>
         </div>
@@ -753,32 +854,59 @@ select.input {
   <!-- Smart layout fit -->
   <div class="section">
     <div class="section-label">Smart Fit (Pro UX)</div>
-    <div class="input-row">
-      <label class="chip on" style="flex:1 1 auto;min-width:180px;justify-content:flex-start;padding:10px 12px;">
+
+    <!-- Row 1: wrap + side padding -->
+    <div class="fit-row">
+      <label class="fit-toggle" id="wrapToggle">
         <input type="checkbox" id="smartWrap" checked />
-        <span class="name">Smart wrap by frame width</span>
+        <span class="fit-toggle-track"></span>
+        <span class="fit-toggle-label">Wrap to frame width</span>
       </label>
-      <div class="stepper" aria-label="Side padding control">
-        <button class="stepper-btn" id="padMinus" type="button" title="Decrease padding">−</button>
-        <input class="stepper-input" id="sidePadding" type="number" min="0" max="80" step="1" value="16" />
-        <button class="stepper-btn" id="padPlus" type="button" title="Increase padding">+</button>
+      <div class="fit-control-group">
+        <span class="fit-hint-label">Side padding</span>
+        <div class="stepper">
+          <button class="stepper-btn" id="padMinus" type="button">−</button>
+          <input class="stepper-input" id="sidePadding" type="number" min="0" max="80" step="1" value="16" />
+          <button class="stepper-btn" id="padPlus" type="button">+</button>
+        </div>
       </div>
     </div>
-    <p class="hint">Wraps long lines and keeps side paddings inside frame bounds (px).</p>
+
+    <!-- Row 2: font scale + min size -->
+    <div class="fit-row" style="margin-top:8px">
+      <label class="fit-toggle" id="scaleToggle">
+        <input type="checkbox" id="autoFontScale" />
+        <span class="fit-toggle-track"></span>
+        <span class="fit-toggle-label">Auto scale font if overflow</span>
+      </label>
+      <div class="fit-control-group" id="minFontGroup" style="opacity:.4;pointer-events:none">
+        <span class="fit-hint-label">Min size</span>
+        <div class="stepper">
+          <button class="stepper-btn" id="minFontMinus" type="button">−</button>
+          <input class="stepper-input" id="minFontSize" type="number" min="6" max="24" step="1" value="8" />
+          <button class="stepper-btn" id="minFontPlus" type="button">+</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint">Wrap converts single-line expanding text to wrapping mode. Font scale reduces size to prevent overflow into fixed containers.</p>
   </div>
 
-  <!-- Scan -->
-  <div class="section">
+  <!-- Selection-changed warning -->
+  <div class="rescan-warn hidden" id="rescanWarn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Selection changed — <strong id="rescanLink">Scan again</strong> to translate the new frames
+  </div>
+
+  <!-- Scan: button + hint grouped (proximity) -->
+  <div class="section section-scan">
     <button class="btn btn-primary btn-full" id="scanBtn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       Scan Selection
     </button>
-  </div>
-
-  <!-- Empty state -->
-  <div id="emptyState" class="empty">
-    <div class="icon-big">&#9634;</div>
-    <div>Select frames in Figma, then hit <strong>Scan</strong></div>
+    <p id="emptyState" class="scan-hint" role="status">
+      Select frames in Figma, then hit <strong>Scan</strong>
+    </p>
   </div>
 
   <!-- Preview -->
@@ -807,7 +935,7 @@ select.input {
       <div class="review-header">
         <span>Original (EN)</span>
         <span>Translation</span>
-        <span style="text-align:center">Fit</span>
+        <span>Fit</span>
       </div>
       <div id="reviewRows"></div>
     </div>
@@ -1370,6 +1498,7 @@ const $progressSec  = $("progressSection");
 const $progressBar  = $("progressBar");
 const $progressLbl  = $("progressLabel");
 const $logArea      = $("logArea");
+const $scrollWrap   = document.querySelector(".scroll");
 const $emptyState   = $("emptyState");
 const $proSettings  = $("proSettings");
 const $lockTerms    = $("lockTerms");
@@ -1444,6 +1573,38 @@ if ($padPlus && $sidePadding) {
   });
 }
 
+const $autoFontScale = document.getElementById("autoFontScale");
+const $minFontSize   = document.getElementById("minFontSize");
+const $minFontMinus  = document.getElementById("minFontMinus");
+const $minFontPlus   = document.getElementById("minFontPlus");
+const $minFontGroup  = document.getElementById("minFontGroup");
+
+function syncFontScaleUI() {
+  const on = $autoFontScale && $autoFontScale.checked;
+  if ($minFontGroup) {
+    $minFontGroup.style.opacity       = on ? "1" : "0.4";
+    $minFontGroup.style.pointerEvents = on ? "auto" : "none";
+  }
+}
+if ($autoFontScale) {
+  $autoFontScale.addEventListener("change", function() { syncFontScaleUI(); saveSettings(); });
+  syncFontScaleUI();
+}
+if ($minFontMinus && $minFontSize) {
+  $minFontMinus.addEventListener("click", () => {
+    const n = Math.max(6, Number($minFontSize.value || 8) - 1);
+    $minFontSize.value = String(n);
+    saveSettings();
+  });
+}
+if ($minFontPlus && $minFontSize) {
+  $minFontPlus.addEventListener("click", () => {
+    const n = Math.min(24, Number($minFontSize.value || 8) + 1);
+    $minFontSize.value = String(n);
+    saveSettings();
+  });
+}
+
 function selectedLangs() {
   return [...document.querySelectorAll(".chip input:checked")].map(i => i.value);
 }
@@ -1471,17 +1632,33 @@ if ($lockTerms) $lockTerms.addEventListener("input", () => saveSettings());
 /* ================================================================== */
 /*  UI helpers                                                         */
 /* ================================================================== */
+function scrollToEl(el) {
+  if (!$scrollWrap || !el) return;
+  // Small timeout lets the DOM render before measuring positions.
+  setTimeout(function() {
+    var top = el.getBoundingClientRect().top - $scrollWrap.getBoundingClientRect().top;
+    $scrollWrap.scrollBy({ top: top - 12, behavior: "smooth" });
+  }, 60);
+}
+
 function log(msg, cls) {
   const d = document.createElement("div");
   d.className = "log-line fade-in " + (cls || "info");
   d.innerHTML = '<span class="dot"></span>' + esc(msg);
-  $logArea.prepend(d);
+  // Append (newest at bottom) so scrolling down shows latest.
+  $logArea.appendChild(d);
+  if ($scrollWrap) {
+    $scrollWrap.scrollTop = $scrollWrap.scrollHeight;
+  }
 }
 
 function setProgress(pct, text) {
+  const wasHidden = $progressSec.classList.contains("hidden");
   $progressSec.classList.remove("hidden");
   $progressBar.style.width = pct + "%";
   $progressLbl.textContent = text;
+  // Scroll into view when progress section first appears.
+  if (wasHidden) scrollToEl($progressSec);
 }
 
 function setBusy(v) {
@@ -1538,11 +1715,27 @@ function updateCost() {
 /* ================================================================== */
 /*  Scan                                                               */
 /* ================================================================== */
-$scanBtn.addEventListener("click", () => {
+const $rescanWarn = $("rescanWarn");
+const $rescanLink = $("rescanLink");
+
+function hideRescanWarn() {
+  if ($rescanWarn) $rescanWarn.classList.add("hidden");
+}
+function showRescanWarn() {
+  if ($rescanWarn && framesData.length > 0) $rescanWarn.classList.remove("hidden");
+}
+
+function doScan() {
   if (busy) return;
+  hideRescanWarn();
   parent.postMessage({ pluginMessage: { type: "scan" } }, "*");
   log("Scanning selection…", "info");
-});
+}
+
+$scanBtn.addEventListener("click", doScan);
+if ($rescanLink) {
+  $rescanLink.addEventListener("click", function() { doScan(); });
+}
 
 /* ================================================================== */
 /*  Helpers: cleanup                                                   */
@@ -1827,6 +2020,7 @@ function showReviewPanel(langs) {
   $reviewSec.classList.remove("hidden");
   $translateBtn.classList.add("hidden");
   $applyBtn.classList.remove("hidden");
+  scrollToEl($reviewSec);
 
   $reviewTabs.innerHTML = "";
   langs.forEach((lang, i) => {
@@ -1931,6 +2125,10 @@ $applyBtn.addEventListener("click", async () => {
 
   const langs = Object.keys(translatedStore);
   let created = 0;
+  const multiFrame = framesData.length > 1;
+  if (multiFrame) {
+    log("Multiple frames: translations are placed below each slide (no horizontal overlap).", "info");
+  }
 
   for (let li = 0; li < langs.length; li++) {
     const lang = langs[li];
@@ -1948,10 +2146,13 @@ $applyBtn.addEventListener("click", async () => {
         frameId,
         langCode: lang,
         langIndex: li,
+        multiFrame: multiFrame,
         translations: byFrame[frameId],
         fitOptions: {
-          smartWrap: !!($smartWrap && $smartWrap.checked),
-          sidePadding: Number(($sidePadding && $sidePadding.value) || 0),
+          smartWrap:     !!($smartWrap     && $smartWrap.checked),
+          sidePadding:   Number(($sidePadding  && $sidePadding.value)  || 0),
+          autoFontScale: !!($autoFontScale && $autoFontScale.checked),
+          minFontSize:   Number(($minFontSize  && $minFontSize.value)   || 8),
         },
       }}, "*");
       created++;
@@ -1981,8 +2182,10 @@ function saveSettings() {
       model: $model.value,
       langs: selectedLangs(),
       lockTerms: $lockTerms.value || "",
-      smartWrap: !!($smartWrap && $smartWrap.checked),
-      sidePadding: Number(($sidePadding && $sidePadding.value) || 16),
+      smartWrap:     !!($smartWrap     && $smartWrap.checked),
+      sidePadding:   Number(($sidePadding  && $sidePadding.value)  || 16),
+      autoFontScale: !!($autoFontScale && $autoFontScale.checked),
+      minFontSize:   Number(($minFontSize  && $minFontSize.value)   || 8),
     },
   }}, "*");
 }
@@ -1997,9 +2200,14 @@ function applySettings(s) {
     $proSettings.classList.toggle("hidden", provider === "free");
   }
   if (s.model) $model.value = s.model;
-  if (typeof s.lockTerms === "string") $lockTerms.value = s.lockTerms;
-  if (typeof s.smartWrap === "boolean") $smartWrap.checked = s.smartWrap;
-  if (typeof s.sidePadding === "number") $sidePadding.value = String(s.sidePadding);
+  if (typeof s.lockTerms    === "string")  $lockTerms.value        = s.lockTerms;
+  if (typeof s.smartWrap    === "boolean") $smartWrap.checked      = s.smartWrap;
+  if (typeof s.sidePadding  === "number")  $sidePadding.value      = String(s.sidePadding);
+  if (typeof s.autoFontScale === "boolean" && $autoFontScale) {
+    $autoFontScale.checked = s.autoFontScale;
+    syncFontScaleUI();
+  }
+  if (typeof s.minFontSize  === "number" && $minFontSize) $minFontSize.value = String(s.minFontSize);
   if (s.langs) {
     document.querySelectorAll(".chip").forEach(chip => {
       const cb = chip.querySelector("input");
@@ -2048,8 +2256,22 @@ window.onmessage = (e) => {
     $previewSec.classList.remove("hidden");
     $emptyState.classList.add("hidden");
     $translateBtn.disabled = false;
+    hideRescanWarn();
     updateCost();
     log("Scanned: " + framesData.length + " frame(s), " + total + " text(s)", "ok");
+  }
+
+  if (msg.type === "selection-changed") {
+    // Show warning only if we have scanned frames and the new selection doesn't match.
+    if (framesData.length > 0) {
+      const scannedIds = framesData.map(function(f) { return f.id; }).sort().join(",");
+      const newIds = (msg.ids || []).slice().sort().join(",");
+      if (scannedIds !== newIds) {
+        showRescanWarn();
+      } else {
+        hideRescanWarn();
+      }
+    }
   }
 
   if (msg.type === "error") { log(msg.text, "err"); }

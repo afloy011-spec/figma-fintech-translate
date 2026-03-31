@@ -42,30 +42,115 @@
       await figma.loadFontAsync(t.fontName);
     }
   }
-  function applySmartFit(node, opts, originalWidth) {
-    if (!opts || !opts.smartWrap)
+  function parentIsAutoLayout(node) {
+    const p = node.parent;
+    if (!p)
+      return false;
+    if (p.type !== "FRAME" && p.type !== "COMPONENT" && p.type !== "INSTANCE")
+      return false;
+    return p.layoutMode !== "NONE";
+  }
+  function availableWidth(node, sidePadding) {
+    const p = node.parent;
+    if (!p || !("width" in p))
+      return node.width;
+    const pNode = p;
+    const hasFrame = p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE";
+    const padL = hasFrame ? (pNode.paddingLeft || 0) + sidePadding : sidePadding;
+    const padR = hasFrame ? (pNode.paddingRight || 0) + sidePadding : sidePadding;
+    return Math.max(24, pNode.width - padL - padR);
+  }
+  function availableHeight(node, sidePadding) {
+    const p = node.parent;
+    if (!p || !("height" in p))
+      return Infinity;
+    if (parentIsAutoLayout(node))
+      return Infinity;
+    const pNode = p;
+    const hasFrame = p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE";
+    const padB = hasFrame ? pNode.paddingBottom || 0 : 0;
+    return Math.max(16, pNode.height - padB - node.y - sidePadding);
+  }
+  async function scaleFontDown(node, maxHeight, minSize) {
+    if (node.fontSize === figma.mixed)
       return;
-    const sidePadding = Math.max(0, Number(
-      opts.sidePadding === void 0 || opts.sidePadding === null ? 0 : opts.sidePadding
-    ));
-    let targetWidth = Math.max(24, originalWidth);
-    const parent = node.parent;
-    if (parent && parent.type === "FRAME" && parent.layoutMode === "NONE") {
-      const maxInside = Math.max(24, parent.width - sidePadding * 2);
-      targetWidth = Math.min(targetWidth, maxInside);
-      if (node.x < sidePadding)
-        node.x = sidePadding;
-      if (node.x + targetWidth > parent.width - sidePadding) {
-        node.x = Math.max(sidePadding, parent.width - sidePadding - targetWidth);
+    let size = node.fontSize;
+    if (size <= minSize)
+      return;
+    while (node.height > maxHeight && size > minSize) {
+      size = Math.max(minSize, size - 0.5);
+      try {
+        await figma.loadFontAsync(node.fontName);
+        node.setRangeFontSize(0, node.characters.length, size);
+      } catch (_e) {
+        break;
       }
     }
-    if (node.textAutoResize === "WIDTH_AND_HEIGHT") {
-      node.textAutoResize = "HEIGHT";
-    }
-    if (node.textAutoResize === "HEIGHT" || node.textAutoResize === "NONE") {
-      node.resize(targetWidth, Math.max(1, node.height));
+  }
+  async function scaleFontToWidth(node, maxWidth, minSize) {
+    if (node.fontSize === figma.mixed)
+      return;
+    if (node.textAutoResize !== "WIDTH_AND_HEIGHT")
+      return;
+    let size = node.fontSize;
+    if (size <= minSize)
+      return;
+    while (node.width > maxWidth && size > minSize) {
+      size = Math.max(minSize, size - 0.5);
+      try {
+        await figma.loadFontAsync(node.fontName);
+        node.setRangeFontSize(0, node.characters.length, size);
+      } catch (_e) {
+        break;
+      }
     }
   }
+  async function applySmartFit(node, opts, originalWidth) {
+    if (!opts || !opts.smartWrap)
+      return;
+    const sp = Math.max(0, Number(opts.sidePadding == null ? 0 : opts.sidePadding));
+    const autoScale = opts.autoFontScale === true;
+    const minFont = Math.max(6, Number(opts.minFontSize || 8));
+    const inAutoLayout = parentIsAutoLayout(node);
+    if (node.textAutoResize === "WIDTH_AND_HEIGHT") {
+      if (inAutoLayout) {
+        if (autoScale) {
+          await scaleFontToWidth(node, originalWidth, minFont);
+        }
+      } else {
+        node.textAutoResize = "HEIGHT";
+        node.resize(Math.max(24, originalWidth), node.height);
+        if (autoScale) {
+          const ah = availableHeight(node, sp);
+          if (node.height > ah)
+            await scaleFontDown(node, ah, minFont);
+        }
+      }
+      return;
+    }
+    if (node.textAutoResize === "HEIGHT") {
+      if (!inAutoLayout) {
+        const aw = availableWidth(node, sp);
+        if (node.width > aw)
+          node.resize(Math.max(24, aw), node.height);
+        if (autoScale) {
+          const ah = availableHeight(node, sp);
+          if (node.height > ah)
+            await scaleFontDown(node, ah, minFont);
+        }
+      }
+      return;
+    }
+    if (autoScale) {
+      const ah = availableHeight(node, sp);
+      if (node.height > ah)
+        await scaleFontDown(node, ah, minFont);
+    }
+  }
+  figma.on("selectionchange", () => {
+    const ids = figma.currentPage.selection.map((n) => n.id);
+    figma.ui.postMessage({ type: "selection-changed", ids });
+  });
   figma.ui.onmessage = async (msg) => {
     if (msg.type === "init") {
       const settings = await figma.clientStorage.getAsync("ft_settings") || {};
@@ -104,7 +189,14 @@
       figma.ui.postMessage({ type: "scanned", frames });
     }
     if (msg.type === "create-frame") {
-      const { frameId, langCode, langIndex, translations, fitOptions } = msg;
+      const {
+        frameId,
+        langCode,
+        langIndex,
+        translations,
+        fitOptions,
+        multiFrame
+      } = msg;
       const orig = figma.getNodeById(frameId);
       if (!orig) {
         figma.ui.postMessage({ type: "frame-error", frameId, langCode, text: "Original frame not found" });
@@ -113,23 +205,87 @@
       const clone = orig.clone();
       clone.name = `${orig.name} [${langCode.toUpperCase()}]`;
       const gap = 80;
-      clone.x = orig.x + (orig.width + gap) * (langIndex + 1);
+      const ow = "width" in orig ? orig.width : 400;
+      const oh = "height" in orig ? orig.height : 400;
+      if (multiFrame === true) {
+        clone.x = orig.x;
+        clone.y = orig.y + (oh + gap) * (langIndex + 1);
+      } else {
+        clone.x = orig.x + (ow + gap) * (langIndex + 1);
+        clone.y = orig.y;
+      }
+      const fo = fitOptions || {};
+      const doAutoScale = fo.autoFontScale === true;
+      const minFont = Math.max(6, Number(fo.minFontSize || 8));
+      const records = [];
       let ok = 0;
       let fail = 0;
+      const foNoScale = {
+        smartWrap: fo.smartWrap,
+        sidePadding: fo.sidePadding,
+        autoFontScale: false,
+        minFontSize: fo.minFontSize
+      };
       for (const t of translations) {
         const node = nodeAtPath(clone, t.path);
         if (node && node.type === "TEXT") {
           try {
             const originalWidth = node.width;
+            const originalFontSize = node.fontSize === figma.mixed ? 0 : node.fontSize;
+            const wasWAH = node.textAutoResize === "WIDTH_AND_HEIGHT";
+            const inAL = parentIsAutoLayout(node);
             await loadFonts(node);
             node.characters = t.text;
-            applySmartFit(node, fitOptions || {}, originalWidth);
+            await applySmartFit(node, foNoScale, originalWidth);
+            records.push({ node, originalWidth, originalFontSize, wasWAH, inAutoLayout: inAL });
             ok++;
           } catch (_e) {
             fail++;
           }
         } else {
           fail++;
+        }
+      }
+      if (doAutoScale) {
+        const scaleBySize = {};
+        for (let ri = 0; ri < records.length; ri++) {
+          const r = records[ri];
+          if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
+            continue;
+          if (r.node.width > r.originalWidth && r.originalWidth > 0) {
+            const ratio = r.originalWidth / r.node.width;
+            const key = String(r.originalFontSize);
+            const prev = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
+            scaleBySize[key] = prev < ratio ? prev : ratio;
+          }
+        }
+        for (let ri = 0; ri < records.length; ri++) {
+          const r = records[ri];
+          if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
+            continue;
+          const key = String(r.originalFontSize);
+          const scale = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
+          if (scale >= 1)
+            continue;
+          const newSize = Math.max(minFont, Math.round(r.originalFontSize * scale * 2) / 2);
+          try {
+            await figma.loadFontAsync(r.node.fontName);
+            r.node.setRangeFontSize(0, r.node.characters.length, newSize);
+          } catch (_e2) {
+          }
+        }
+        const spNum = Math.max(0, Number(fo.sidePadding === void 0 || fo.sidePadding === null ? 0 : fo.sidePadding));
+        for (let ri = 0; ri < records.length; ri++) {
+          const r = records[ri];
+          if (r.inAutoLayout)
+            continue;
+          const ah = availableHeight(r.node, spNum);
+          if (r.node.height > ah) {
+            try {
+              await scaleFontDown(r.node, ah, minFont);
+            } catch (_e2) {
+            }
+          }
         }
       }
       figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });

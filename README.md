@@ -1,40 +1,25 @@
 # Fintech Translator for Figma
 
-Advanced Figma plugin for fintech/crypto localization with:
-- multi-language translation,
-- domain glossary (Maclear + crypto course terms),
-- designer review/edit before apply,
-- smart text fitting for better UX/UI layout.
+Figma plugin for fintech/crypto localization: EN → ES / IT / FR / DE / PT, glossary, review before apply, and smart layout so translated UI doesn’t break.
 
 ## Features
 
-- EN -> ES / IT / FR / DE / PT translation
-- 2 translation engines:
-  - `Free`: Google Translate (primary) + MyMemory (fallback)
-  - `Pro`: OpenAI API models
-- Rich glossary system:
-  - fintech terms
-  - P2P/crowdlending terms
-  - crypto/Web3 terms
-  - advanced course vocabulary
-- `Do Not Translate` custom lock terms (comma-separated)
-- 2-step production flow:
-  1. `Translate` (no frame creation yet)
-  2. `Review & Edit` (inline editing + overflow signals)
-  3. `Apply to Frames`
-- Review QA panel:
-  - per-language tabs
-  - fit delta (`+%`) per string
-  - warning indicators for potentially long translations
-- Smart UI fitting:
-  - `Smart wrap by frame width`
-  - `Side padding` control (px)
-  - keeps text inside frame bounds more predictably
-- Translation cache to reduce repeated API calls/cost
-- Estimated cost card for Pro mode
-- Saved settings between sessions (provider/model/languages/fit options/lock terms)
+- **Languages:** English source → Spanish, Italian, French, German, Portuguese.
+- **Engines:**
+  - **Free:** Google Translate (primary) + MyMemory (fallback). No API key.
+  - **Pro:** OpenAI (`sk-...` key + model).
+- **Glossary:** Fintech, crowdlending, crypto/Web3, extended course vocabulary; exact-match in Free mode; prompt + exact-match in Pro.
+- **Do not translate:** Comma-separated lock list (brands, tickers, `KYC`, etc.).
+- **Flow:** Scan → Translate → **Review & Edit** (tabs, inline edits, Fit delta) → **Apply to Frames**.
+- **Smart Fit (canvas):**
+  - Wrap to frame width + side padding (`px`).
+  - **Auto scale font if overflow** with **min font size**; for chips in auto-layout, font scales **uniformly** per original font size (no random size mix per label).
+  - Different behavior for auto-layout parents vs. fixed frames (wrap / scale without trashing button grids).
+- **Multi-frame workflow:** If you scan **more than one** frame, translated clones are placed **below each source** (vertical stack per language) so horizontal decks don’t overlap. **One frame** → clones stay **to the right** (classic strip).
+- **Selection guard:** After a scan, if you change the selection on the canvas, a yellow banner asks you to **Scan again** so you don’t apply translations to the wrong frames.
+- **Cost estimate** (Pro), **translation cache**, **settings + key** in `clientStorage`.
 
-## Plugin Structure
+## Plugin structure
 
 ```text
 figma-fintech-translate/
@@ -42,107 +27,71 @@ figma-fintech-translate/
 ├── build.mjs
 ├── package.json
 ├── src/
-│   ├── code.ts      # Figma sandbox logic (node operations, clone/apply/smart-fit)
-│   └── ui.html      # UI + translation logic + glossary + review flow
+│   ├── code.ts    # Sandbox: scan, clone, apply, smart-fit, selection events
+│   └── ui.html    # UI, APIs, glossary, review, apply batching
 └── dist/
     ├── code.js
     └── ui.html
 ```
 
-## Installation (Development)
-
-1. Install dependencies:
+## Install (development)
 
 ```bash
 npm install
-```
-
-2. Build:
-
-```bash
 npm run build
 ```
 
-3. In Figma Desktop:
-   - `Plugins` -> `Development` -> `Import plugin from manifest...`
-   - Select `manifest.json` from this folder.
+In **Figma Desktop:** `Plugins` → `Development` → `Import plugin from manifest...` → pick `manifest.json`.
+
+Rebuild after changes; for manifest/network changes, re-import the plugin.
 
 ## Usage
 
-1. Select one or more frames in Figma.
-2. Open plugin `Fintech Translator`.
-3. Choose translation engine:
-   - `Google Translate (Free)` or
-   - `OpenAI (Pro)` + API key + model.
-4. Choose target languages.
-5. (Optional) Fill `Do Not Translate` terms.
-6. (Optional) Configure `Smart Fit`:
-   - toggle wrap,
-   - side padding in px.
-7. Click `Scan Selection`.
-8. Click `Translate`.
-9. In `Review & Edit`, adjust any translated strings inline.
-10. Click `Apply to Frames`.
+1. Select one or more frames (with text).
+2. Open **Fintech Translator**.
+3. Choose **Free** or **Pro** (+ key if Pro).
+4. Toggle target languages.
+5. Optional: **Do Not Translate**, **Smart Fit** (wrap, padding, auto font scale, min size).
+6. **Scan Selection** — wait for preview and counts.
+7. If you change the selection later, use **Scan again** when the banner appears.
+8. **Translate** → review/edit in **Review & Edit**.
+9. **Apply to Frames**.
 
-Result: cloned frames per language (`[ES]`, `[IT]`, etc.) with reviewed text applied.
+Clones are named like `Frame name [ES]`, etc.
 
 ## Free vs Pro
 
-### Free
-- No API key required.
-- Uses Google Translate endpoint with MyMemory fallback.
-- Glossary exact-match support.
-- Best for quick drafts and no-cost localization passes.
+| | Free | Pro |
+|---|-----|-----|
+| Key | Not required | `sk-...` OpenAI |
+| Quality | Fast drafts | Better context |
+| Glossary | Exact match | Prompt + exact match |
 
-### Pro (OpenAI)
-- Requires API key (`sk-...`).
-- Better contextual translation quality.
-- Full glossary prompt injection + exact-match optimization.
-- Recommended for production text quality.
+## Smart Fit (short)
 
-## Glossary System
+- **WIDTH_AND_HEIGHT** text in **auto-layout:** optional font scale to fit slot width; no forced multi-line chip mess.
+- **Fixed / group parents:** switch to wrapping width + optional height-based font downscale.
+- **Multi-frame apply:** `multiFrame` flag from UI stacks clones vertically per frame.
 
-Plugin merges two dictionaries per language:
-- core finance + product glossary,
-- crypto course/advanced terminology.
+## Compatibility notes
 
-Also supports user-defined lock terms via `Do Not Translate`.
+- Plugin UI runs in Figma’s WebView: avoid **optional chaining (`?.`)**, **nullish coalescing (`??`)**, and **object spread** in `ui.html` inline scripts when in doubt; `code.ts` is compiled with esbuild but runtime compatibility is tuned for older engines.
+- `figma.showUI` does **not** use `transparent: true` here (not available on all declared API versions).
 
-## Smart Fit Logic
+## Security
 
-When enabled:
-- translated text is wrapped more predictably,
-- width is constrained to original text width,
-- for non-auto-layout parent frames, text is kept inside frame with side paddings.
-
-This reduces common UI breakage from longer localized strings.
-
-## Security Notes
-
-- API key is stored in Figma `clientStorage` (local to user/plugin).
-- Key is only sent to OpenAI in Pro mode.
-- Do not share keys/screenshots containing keys.
-
-For stricter security, use a backend proxy instead of direct API from plugin UI.
+- OpenAI key: `clientStorage` only, sent to OpenAI in Pro mode.
+- Don’t commit keys; don’t paste keys in screenshots.
 
 ## Troubleshooting
 
-- `An error occurred while running this plugin`:
-  - open `Show/Hide console` in plugin,
-  - check first red error line,
-  - rebuild plugin and relaunch.
-
-- `Failed to fetch`:
-  - verify network access in `manifest.json`,
-  - check internet/proxy restrictions,
-  - verify provider endpoint availability.
-
-- No texts found:
-  - ensure a frame is selected,
-  - ensure selected frame contains `TEXT` nodes.
-
-- Wrong key format:
-  - OpenAI key must start with `sk-`.
+| Issue | What to try |
+|------|-------------|
+| Plugin runtime error | Plugin console → first red line; rebuild; no `?.` / `??` in UI script if error points at `ui.html`. |
+| Failed to fetch | `manifest.json` `networkAccess` domains; network/proxy. |
+| Translates wrong frames | Selection changed after scan → **Scan again** (banner). |
+| Overlapping clones (many frames in one row) | Use latest build: multi-frame uses **below-each** placement. |
+| Wrong OpenAI key | Must start with `sk-` (not Chat session tokens). |
 
 ## Commands
 
@@ -151,23 +100,18 @@ npm run build
 npm run watch
 ```
 
-## Current Limitations
+## Limitations
 
-- Free engine depends on public translation endpoints (stability can vary).
-- Glossary in Free mode is exact-match oriented (not full phrase NLP enforcement).
-- Large files with thousands of text nodes may require multiple passes.
+- Free tier depends on public endpoints; behavior can change.
+- Very large selections may need splitting.
+- Corner/chrome artifacts around the plugin window are limited by Figma’s iframe rendering.
 
-## Suggested Roadmap
+## Roadmap ideas
 
-- Phrase-level glossary enforcement for Free mode
-- Retry/backoff handling for transient API errors
-- Overflow auto-fix presets (`shorten`, `CTA compact`, `legal strict`)
-- Export/import Translation Memory JSON
-- Optional proxy mode for enterprise security
+- Translation memory export/import  
+- Retry/backoff for APIs  
+- Optional layout mode toggle (always horizontal / always vertical)
 
 ---
 
-If you want, this README can be split into:
-- user-facing (`README.md`),
-- technical (`README.dev.md`),
-- release notes (`CHANGELOG.md`).
+**Repository:** [github.com/afloy011-spec/figma-fintech-translate](https://github.com/afloy011-spec/figma-fintech-translate)
