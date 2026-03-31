@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+/* ================================================================== */
+/*  Design Tokens                                                      */
+/* ================================================================== */
+:root {
+  --bg:         #1a1a1a;
+  --card:       #242428;
+  --card-hover: #2c2c31;
+  --elevated:   #333338;
+  --border:     #38383d;
+  --border-lt:  #2e2e33;
+
+  --primary:    #6366F1;
+  --primary-h:  #818CF8;
+  --primary-bg: rgba(99,102,241,.10);
+  --green:      #34D399;
+  --green-bg:   rgba(52,211,153,.10);
+  --red:        #F87171;
+  --red-bg:     rgba(248,113,113,.10);
+  --yellow:     #FBBF24;
+  --yellow-bg:  rgba(251,191,36,.10);
+
+  --txt:   #E5E7EB;
+  --txt2:  #9CA3AF;
+  --txt3:  #6B7280;
+
+  --r:  8px;
+  --r2: 12px;
+  --transition: .15s ease;
+}
+
+/* ================================================================== */
+/*  Reset & Base                                                       */
+/* ================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--txt);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================================================================== */
+/*  Layout                                                             */
+/* ================================================================== */
+header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--border-lt);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.logo {
+  width: 32px; height: 32px;
+  border-radius: var(--r);
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A78BFA 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff;
+  letter-spacing: -.5px;
+  flex-shrink: 0;
+}
+header h1 { font-size: 15px; font-weight: 600; letter-spacing: -.2px; }
+header .ver {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--txt3);
+  background: var(--card);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.scroll { flex: 1; overflow-y: auto; padding: 16px 20px 100px; }
+.scroll::-webkit-scrollbar { width: 4px; }
+.scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ================================================================== */
+/*  Sections                                                           */
+/* ================================================================== */
+.section { margin-bottom: 20px; }
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--txt3);
+  margin-bottom: 10px;
+}
+
+/* ================================================================== */
+/*  Provider Toggle                                                    */
+/* ================================================================== */
+.toggle-group {
+  display: flex;
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border-lt);
+}
+.toggle-opt {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--txt2);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.toggle-opt:hover { color: var(--txt); }
+.toggle-opt.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(99,102,241,.3);
+}
+.toggle-opt .badge {
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.toggle-opt.active .badge { background: rgba(255,255,255,.2); color: #fff; }
+.toggle-opt:not(.active) .badge { background: var(--green-bg); color: var(--green); }
+
+/* ================================================================== */
+/*  Inputs                                                             */
+/* ================================================================== */
+.input-row {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+.input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border-lt);
+  border-radius: var(--r);
+  color: var(--txt);
+  padding: 10px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.input:focus { border-color: var(--primary); }
+.input::placeholder { color: var(--txt3); }
+
+select.input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+/* ================================================================== */
+/*  Buttons                                                            */
+/* ================================================================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 20px;
+  border: none; border-radius: var(--r);
+  font-size: 12px; font-weight: 600; font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn:active:not(:disabled) { transform: scale(.98); }
+
+.btn-primary {
+  background: var(--primary);
+  box-shadow: 0 2px 12px rgba(99,102,241,.25);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-h);
+  box-shadow: 0 4px 16px rgba(99,102,241,.35);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--txt2);
+  box-shadow: none;
+  padding: 9px 14px;
+}
+.btn-outline:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+
+.btn-full { width: 100%; }
+
+.btn-icon {
+  width: 40px; height: 40px;
+  padding: 0;
+  background: var(--card);
+  border: 1px solid var(--border-lt);
+  color: var(--txt2);
+  border-radius: var(--r);
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: none;
+}
+.btn-icon:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+
+/* ================================================================== */
+/*  Language Chips                                                     */
+/* ================================================================== */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  flex: 1 1 calc(33.33% - 6px);
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px;
+  background: var(--card);
+  border: 1.5px solid var(--border-lt);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all var(--transition);
+  user-select: none;
+}
+.chip:hover { border-color: var(--txt3); }
+.chip.on {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+}
+.chip input { display: none; }
+.chip .flag { font-size: 20px; line-height: 1; }
+.chip .name { font-size: 12px; font-weight: 600; }
+.chip .code {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--txt3);
+  text-transform: uppercase;
+}
+.chip.on .code { color: var(--primary); }
+
+/* ================================================================== */
+/*  Preview                                                            */
+/* ================================================================== */
+.preview-box {
+  background: var(--card);
+  border: 1px solid var(--border-lt);
+  border-radius: var(--r);
+  max-height: 180px;
+  overflow-y: auto;
+}
+.preview-box::-webkit-scrollbar { width: 3px; }
+.preview-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.frame-label {
+  position: sticky;
+  top: 0;
+  padding: 8px 14px;
+  background: var(--elevated);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: .3px;
+  border-bottom: 1px solid var(--border-lt);
+  z-index: 1;
+}
+.text-row {
+  padding: 6px 14px;
+  font-size: 11px;
+  color: var(--txt);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.03);
+}
+.text-row:last-child { border-bottom: none; }
+.text-row .num {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--txt3);
+  min-width: 16px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.text-row .val {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ================================================================== */
+/*  Cost Estimate Card                                                 */
+/* ================================================================== */
+.cost-card {
+  background: var(--card);
+  border: 1px solid var(--border-lt);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cost-card .icon {
+  width: 36px; height: 36px;
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.cost-card .icon.free { background: var(--green-bg); }
+.cost-card .icon.paid { background: var(--primary-bg); }
+.cost-card .info { flex: 1; }
+.cost-card .price {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.3px;
+}
+.cost-card .price.free-price { color: var(--green); }
+.cost-card .price.paid-price { color: var(--primary-h); }
+.cost-card .detail {
+  font-size: 10px;
+  color: var(--txt3);
+  margin-top: 2px;
+}
+
+/* ================================================================== */
+/*  Progress                                                           */
+/* ================================================================== */
+.progress-section { margin-top: 16px; }
+.progress-outer {
+  height: 4px;
+  background: var(--card);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.progress-inner {
+  height: 100%;
+  border-radius: 2px;
+  width: 0%;
+  transition: width .3s ease;
+  background: linear-gradient(90deg, var(--primary), var(--primary-h));
+}
+.progress-label {
+  font-size: 11px;
+  color: var(--txt2);
+  text-align: center;
+}
+
+/* ================================================================== */
+/*  Log                                                                */
+/* ================================================================== */
+.log {
+  margin-top: 12px;
+  max-height: 100px;
+  overflow-y: auto;
+  font-size: 11px;
+}
+.log::-webkit-scrollbar { width: 3px; }
+.log::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.log-line {
+  padding: 3px 0;
+  color: var(--txt2);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.log-line .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.log-line.ok   .dot { background: var(--green); }
+.log-line.err  .dot { background: var(--red); }
+.log-line.warn .dot { background: var(--yellow); }
+.log-line.info .dot { background: var(--txt3); }
+
+/* ================================================================== */
+/*  Bottom bar                                                         */
+/* ================================================================== */
+.bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 20px 16px;
+  background: linear-gradient(to top, var(--bg) 70%, transparent);
+  pointer-events: none;
+}
+.bottom > * { pointer-events: auto; }
+.bottom .cost-hint {
+  text-align: center;
+  font-size: 10px;
+  color: var(--txt3);
+  margin-top: 6px;
+}
+
+/* ================================================================== */
+/*  Empty state                                                        */
+/* ================================================================== */
+.empty {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--txt3);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.empty .icon-big { font-size: 28px; margin-bottom: 8px; }
+
+/* ================================================================== */
+/*  Utility                                                            */
+/* ================================================================== */
+/* ================================================================== */
+/*  Lock terms                                                         */
+/* ================================================================== */
+.lock-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border-lt);
+  border-radius: var(--r);
+  color: var(--txt);
+  padding: 10px 12px;
+  font-size: 11px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition);
+  resize: vertical;
+  min-height: 36px;
+}
+.lock-input:focus { border-color: var(--primary); }
+.lock-input::placeholder { color: var(--txt3); }
+
+/* ================================================================== */
+/*  Review panel                                                       */
+/* ================================================================== */
+.review-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  background: var(--card);
+  border-radius: var(--r);
+  padding: 3px;
+  border: 1px solid var(--border-lt);
+}
+.review-tab {
+  flex: 1;
+  padding: 7px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--txt3);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.review-tab:hover { color: var(--txt); }
+.review-tab.active { background: var(--primary); color: #fff; }
+.review-tab .warn-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--yellow);
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.review-list {
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--border-lt);
+  border-radius: var(--r);
+  background: var(--card);
+}
+.review-list::-webkit-scrollbar { width: 3px; }
+.review-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.review-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 48px;
+  gap: 1px;
+  border-bottom: 1px solid var(--border-lt);
+  font-size: 11px;
+  position: relative;
+}
+.review-row:last-child { border-bottom: none; }
+.review-row.overflow-warn { background: var(--yellow-bg); }
+.review-row.overflow-danger { background: var(--red-bg); }
+
+.review-cell {
+  padding: 8px 10px;
+  min-height: 36px;
+  word-break: break-word;
+  line-height: 1.4;
+}
+.review-original {
+  color: var(--txt3);
+  border-right: 1px solid var(--border-lt);
+}
+.review-translated {
+  color: var(--txt);
+  outline: none;
+  cursor: text;
+  border-radius: 2px;
+  transition: background var(--transition);
+}
+.review-translated:focus {
+  background: rgba(99,102,241,.08);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+.review-translated:hover:not(:focus) {
+  background: rgba(255,255,255,.03);
+}
+
+.review-delta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--txt3);
+  border-left: 1px solid var(--border-lt);
+}
+.review-delta.ok { color: var(--green); }
+.review-delta.warn { color: var(--yellow); }
+.review-delta.danger { color: var(--red); }
+
+.review-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 48px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--txt3);
+  padding: 6px 10px;
+  background: var(--elevated);
+  border-bottom: 1px solid var(--border-lt);
+  border-radius: var(--r) var(--r) 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.review-summary {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0 0;
+  font-size: 10px;
+  color: var(--txt2);
+}
+.review-summary .stat { display: flex; align-items: center; gap: 4px; }
+.review-summary .dot-sm {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* ================================================================== */
+/*  Bottom bar variants                                                */
+/* ================================================================== */
+.btn-success {
+  background: var(--green);
+  box-shadow: 0 2px 12px rgba(52,211,153,.25);
+}
+.btn-success:hover:not(:disabled) {
+  background: #2DD4A0;
+  box-shadow: 0 4px 16px rgba(52,211,153,.35);
+}
+
+/* ================================================================== */
+/*  Side padding stepper                                               */
+/* ================================================================== */
+.stepper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border-lt);
+  border-radius: var(--r);
+  overflow: hidden;
+  background: var(--card);
+  min-width: 132px;
+}
+.stepper-btn {
+  width: 34px;
+  border: none;
+  background: var(--elevated);
+  color: var(--txt2);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.stepper-btn:hover { color: #fff; background: #45454d; }
+.stepper-btn:active { transform: scale(.98); }
+.stepper-input {
+  width: 64px;
+  border: none;
+  border-left: 1px solid var(--border-lt);
+  border-right: 1px solid var(--border-lt);
+  background: transparent;
+  color: var(--txt);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+}
+.stepper-input::-webkit-outer-spin-button,
+.stepper-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.stepper-input[type=number] { -moz-appearance: textfield; }
+
+/* ================================================================== */
+/*  Utility                                                            */
+/* ================================================================== */
+.hidden { display: none !important; }
+.hint { font-size: 10px; color: var(--txt3); margin-top: 6px; line-height: 1.4; }
+.mt-sm { margin-top: 8px; }
+.mt { margin-top: 12px; }
+.fade-in { animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!--  Header                                                           -->
+<!-- ================================================================ -->
+<header>
+  <div class="logo">FT</div>
+  <h1>Fintech Translator</h1>
+  <span class="ver">v2.0</span>
+</header>
+
+<!-- ================================================================ -->
+<!--  Scrollable body                                                  -->
+<!-- ================================================================ -->
+<div class="scroll">
+
+  <!-- Provider toggle -->
+  <div class="section">
+    <div class="section-label">Translation Engine</div>
+    <div class="toggle-group">
+      <button class="toggle-opt active" data-provider="free" id="provFree">
+        <span>Google Translate</span>
+        <span class="badge">Free</span>
+      </button>
+      <button class="toggle-opt" data-provider="openai" id="provPro">
+        <span>OpenAI</span>
+        <span class="badge">Pro</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- API Key (Pro only) -->
+  <div class="section hidden" id="proSettings">
+    <div class="section-label">OpenAI API Key</div>
+    <div class="input-row">
+      <input class="input" id="apiKey" type="password" placeholder="sk-proj-..." />
+      <button class="btn btn-icon" id="toggleKey" title="Show/hide">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <button class="btn btn-outline" id="saveKey">Save</button>
+    </div>
+    <p class="hint">Stored locally in Figma. Never sent anywhere except OpenAI.</p>
+
+    <div class="mt">
+      <div class="section-label">Model</div>
+      <select class="input" id="model">
+        <option value="gpt-5.4-nano">GPT-5.4 Nano  —  fastest, ~$0.20/1M</option>
+        <option value="gpt-5.4-mini" selected>GPT-5.4 Mini  —  balanced, ~$0.75/1M</option>
+        <option value="gpt-5.4">GPT-5.4  —  best quality, ~$3/1M</option>
+        <option value="gpt-4o-mini">GPT-4o Mini  —  legacy</option>
+        <option value="gpt-4o">GPT-4o  —  legacy</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div class="section">
+    <div class="section-label">Target Languages</div>
+    <div class="chips">
+      <label class="chip on" data-lang="es">
+        <input type="checkbox" value="es" checked />
+        <span class="flag">&#127466;&#127480;</span>
+        <div>
+          <div class="name">Spanish</div>
+          <div class="code">ES</div>
+        </div>
+      </label>
+      <label class="chip on" data-lang="it">
+        <input type="checkbox" value="it" checked />
+        <span class="flag">&#127470;&#127481;</span>
+        <div>
+          <div class="name">Italian</div>
+          <div class="code">IT</div>
+        </div>
+      </label>
+      <label class="chip on" data-lang="fr">
+        <input type="checkbox" value="fr" checked />
+        <span class="flag">&#127467;&#127479;</span>
+        <div>
+          <div class="name">French</div>
+          <div class="code">FR</div>
+        </div>
+      </label>
+      <label class="chip on" data-lang="de">
+        <input type="checkbox" value="de" checked />
+        <span class="flag">&#127465;&#127466;</span>
+        <div>
+          <div class="name">Deutsch</div>
+          <div class="code">DE</div>
+        </div>
+      </label>
+      <label class="chip on" data-lang="pt">
+        <input type="checkbox" value="pt" checked />
+        <span class="flag">&#127477;&#127481;</span>
+        <div>
+          <div class="name">Português</div>
+          <div class="code">PT</div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Lock terms -->
+  <div class="section">
+    <div class="section-label">Do Not Translate</div>
+    <input class="lock-input" id="lockTerms" type="text"
+           placeholder="Maclear, 8lends, USDC, KYC, APR…  (comma-separated)" />
+    <p class="hint">These terms will stay in English in all translations.</p>
+  </div>
+
+  <!-- Smart layout fit -->
+  <div class="section">
+    <div class="section-label">Smart Fit (Pro UX)</div>
+    <div class="input-row">
+      <label class="chip on" style="flex:1 1 auto;min-width:180px;justify-content:flex-start;padding:10px 12px;">
+        <input type="checkbox" id="smartWrap" checked />
+        <span class="name">Smart wrap by frame width</span>
+      </label>
+      <div class="stepper" aria-label="Side padding control">
+        <button class="stepper-btn" id="padMinus" type="button" title="Decrease padding">−</button>
+        <input class="stepper-input" id="sidePadding" type="number" min="0" max="80" step="1" value="16" />
+        <button class="stepper-btn" id="padPlus" type="button" title="Increase padding">+</button>
+      </div>
+    </div>
+    <p class="hint">Wraps long lines and keeps side paddings inside frame bounds (px).</p>
+  </div>
+
+  <!-- Scan -->
+  <div class="section">
+    <button class="btn btn-primary btn-full" id="scanBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      Scan Selection
+    </button>
+  </div>
+
+  <!-- Empty state -->
+  <div id="emptyState" class="empty">
+    <div class="icon-big">&#9634;</div>
+    <div>Select frames in Figma, then hit <strong>Scan</strong></div>
+  </div>
+
+  <!-- Preview -->
+  <div class="section hidden fade-in" id="previewSection">
+    <div class="section-label">Found Texts <span id="countBadge" style="color:var(--primary)"></span></div>
+    <div class="preview-box" id="previewBox"></div>
+  </div>
+
+  <!-- Cost estimate -->
+  <div class="section hidden fade-in" id="costSection">
+    <div class="section-label">Estimated Cost</div>
+    <div class="cost-card" id="costCard"></div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-section hidden" id="progressSection">
+    <div class="progress-outer"><div class="progress-inner" id="progressBar"></div></div>
+    <div class="progress-label" id="progressLabel">Ready</div>
+  </div>
+
+  <!-- Review panel (appears after translation, before applying) -->
+  <div class="section hidden fade-in" id="reviewSection">
+    <div class="section-label">Review &amp; Edit Translations</div>
+    <div class="review-tabs" id="reviewTabs"></div>
+    <div class="review-list" id="reviewList">
+      <div class="review-header">
+        <span>Original (EN)</span>
+        <span>Translation</span>
+        <span style="text-align:center">Fit</span>
+      </div>
+      <div id="reviewRows"></div>
+    </div>
+    <div class="review-summary" id="reviewSummary"></div>
+  </div>
+
+  <!-- Log -->
+  <div class="log" id="logArea"></div>
+
+</div>
+
+<!-- ================================================================ -->
+<!--  Bottom bar                                                       -->
+<!-- ================================================================ -->
+<div class="bottom">
+  <button class="btn btn-primary btn-full" id="translateBtn" disabled>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+    <span id="translateLabel">Translate</span>
+  </button>
+  <button class="btn btn-success btn-full hidden" id="applyBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    <span id="applyLabel">Apply to Frames</span>
+  </button>
+  <div class="cost-hint hidden" id="costHint"></div>
+</div>
+
+<!-- ================================================================ -->
+<!--  Script                                                           -->
+<!-- ================================================================ -->
+<script>
+/* ================================================================== */
+/*  Glossary                                                           */
+/* ================================================================== */
+const GLOSSARY = {
+  es: {
+    // Core finance
+    "APR":"TAE","Annual Percentage Rate":"Tasa Anual Equivalente",
+    "interest rate":"tasa de interés","annual returns":"rendimientos anuales",
+    "monthly payouts":"pagos mensuales","monthly payments":"pagos mensuales",
+    "balance":"saldo","statement":"extracto","account":"cuenta",
+    "deposit":"depósito","withdrawal":"retiro","wire transfer":"transferencia bancaria",
+    "transaction":"transacción","payment":"pago","invoice":"factura",
+    "fee":"comisión","no hidden fees":"sin comisiones ocultas",
+    // P2P / Crowdlending (Maclear)
+    "P2P lending":"préstamos P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financiación colectiva","lending platform":"plataforma de préstamos",
+    "investment platform":"plataforma de inversión",
+    "investor":"inversor","investors":"inversores",
+    "borrower":"prestatario","lender":"prestamista",
+    "loan":"préstamo","loan period":"plazo del préstamo","loan term":"plazo del préstamo",
+    "loan originator":"originador de préstamos",
+    "funded":"financiado","repaid":"reembolsado",
+    "default":"impago","late loans":"préstamos con retraso",
+    "cash drag":"capital inactivo",
+    "primary market":"mercado primario","secondary market":"mercado secundario",
+    "total funded":"total financiado","total interest paid":"total de intereses pagados",
+    "available funds":"fondos disponibles","invested funds":"fondos invertidos",
+    "total funds":"fondos totales",
+    // Investment
+    "initial investment":"inversión inicial","investment period":"período de inversión",
+    "future value":"valor futuro","earned return":"rendimiento obtenido",
+    "average annual return":"rendimiento medio anual",
+    "portfolio":"cartera","passive income":"ingresos pasivos",
+    "principal repayment":"devolución del capital",
+    "interest payment":"pago de intereses",
+    "installment":"cuota","recurring payment":"pago recurrente",
+    // Compliance & process
+    "due diligence":"diligencia debida","risk assessment":"evaluación de riesgos",
+    "risk scoring":"puntuación de riesgo","AML":"AML",
+    "compliance":"cumplimiento normativo","regulated":"regulado",
+    "verification":"verificación","KYC":"KYC",
+    // Bonuses & rewards
+    "referral bonus":"bono de referido","loyalty bonus":"bono de fidelidad",
+    "welcome bonus":"bono de bienvenida","investment reward":"recompensa de inversión",
+    "invite friends":"invitar amigos",
+    // UI actions
+    "sign up":"registrarse","log in":"iniciar sesión","register":"registrarse",
+    "invest now":"invertir ahora","start investing":"empezar a invertir",
+    "dashboard":"panel de control","onboarding":"alta de cliente",
+    // General finance
+    "collateral":"garantía","mortgage":"hipoteca","savings":"ahorros",
+    "credit score":"puntuación crediticia","overdraft":"sobregiro",
+    "chargeback":"contracargo","settlement":"liquidación",
+    "direct debit":"domiciliación bancaria","exchange rate":"tipo de cambio",
+    "payee":"beneficiario","payer":"pagador","beneficiary":"beneficiario",
+    "equity":"capital","liability":"pasivo","asset":"activo",
+    "dividend":"dividendo","spending limit":"límite de gasto",
+    // Crypto / Web3 (Maclear Crypto Course)
+    "blockchain":"blockchain","token":"token","tokens":"tokens",
+    "stablecoin":"stablecoin","stablecoins":"stablecoins",
+    "cryptocurrency":"criptomoneda","crypto":"cripto",
+    "crypto wallet":"monedero cripto","wallet":"monedero",
+    "seed phrase":"frase semilla","private key":"clave privada",
+    "public address":"dirección pública","smart contract":"contrato inteligente",
+    "network fees":"comisiones de red","gas fees":"tarifas de gas",
+    "custodial":"custodiado","non-custodial":"no custodiado",
+    "custodial wallet":"monedero custodiado",
+    "non-custodial wallet":"monedero auto-custodiado",
+    "fiat":"moneda fiduciaria","pegged":"vinculado",
+    "decentralized":"descentralizado","centralized":"centralizado",
+    "capital provider":"proveedor de capital",
+    "repayment schedule":"calendario de pagos",
+    "leverage":"apalancamiento","diversification":"diversificación",
+    "yield":"rendimiento","returns":"rendimientos",
+    "liquidity":"liquidez","protocol":"protocolo",
+    "staking":"staking","airdrop":"airdrop",
+    "mining":"minería","validator":"validador",
+    "consensus":"consenso","bridge":"puente",
+    "on-chain":"on-chain","off-chain":"off-chain",
+    "scam":"estafa","phishing":"phishing",
+    "Learn & Earn":"Aprende y Gana",
+    "start learning":"empezar a aprender",
+    "checklist":"lista de verificación",
+    "step-by-step":"paso a paso",
+    "beginner":"principiante","beginners":"principiantes"
+  },
+  it: {
+    "APR":"TAEG","Annual Percentage Rate":"Tasso Annuo Effettivo Globale",
+    "interest rate":"tasso di interesse","annual returns":"rendimenti annuali",
+    "monthly payouts":"pagamenti mensili","monthly payments":"pagamenti mensili",
+    "balance":"saldo","statement":"estratto conto","account":"conto",
+    "deposit":"deposito","withdrawal":"prelievo","wire transfer":"bonifico bancario",
+    "transaction":"transazione","payment":"pagamento","invoice":"fattura",
+    "fee":"commissione","no hidden fees":"nessuna commissione nascosta",
+    "P2P lending":"prestiti P2P","crowdlending":"crowdlending",
+    "crowdfunding":"crowdfunding","lending platform":"piattaforma di prestiti",
+    "investment platform":"piattaforma di investimento",
+    "investor":"investitore","investors":"investitori",
+    "borrower":"mutuatario","lender":"prestatore",
+    "loan":"prestito","loan period":"durata del prestito","loan term":"durata del prestito",
+    "loan originator":"originatore di prestiti",
+    "funded":"finanziato","repaid":"rimborsato",
+    "default":"insolvenza","late loans":"prestiti in ritardo",
+    "cash drag":"capitale inattivo",
+    "primary market":"mercato primario","secondary market":"mercato secondario",
+    "total funded":"totale finanziato","total interest paid":"totale interessi pagati",
+    "available funds":"fondi disponibili","invested funds":"fondi investiti",
+    "total funds":"fondi totali",
+    "initial investment":"investimento iniziale","investment period":"periodo di investimento",
+    "future value":"valore futuro","earned return":"rendimento ottenuto",
+    "average annual return":"rendimento medio annuo",
+    "portfolio":"portafoglio","passive income":"reddito passivo",
+    "principal repayment":"rimborso del capitale",
+    "interest payment":"pagamento degli interessi",
+    "installment":"rata","recurring payment":"pagamento ricorrente",
+    "due diligence":"due diligence","risk assessment":"valutazione del rischio",
+    "risk scoring":"punteggio di rischio","AML":"AML",
+    "compliance":"conformità normativa","regulated":"regolamentato",
+    "verification":"verifica","KYC":"KYC",
+    "referral bonus":"bonus referral","loyalty bonus":"bonus fedeltà",
+    "welcome bonus":"bonus di benvenuto","investment reward":"premio di investimento",
+    "invite friends":"invita amici",
+    "sign up":"registrati","log in":"accedi","register":"registrati",
+    "invest now":"investi ora","start investing":"inizia a investire",
+    "dashboard":"pannello di controllo","onboarding":"registrazione cliente",
+    "collateral":"garanzia","mortgage":"mutuo","savings":"risparmi",
+    "credit score":"punteggio di credito","overdraft":"scoperto",
+    "chargeback":"storno","settlement":"regolamento",
+    "direct debit":"addebito diretto","exchange rate":"tasso di cambio",
+    "payee":"beneficiario","payer":"pagatore","beneficiary":"beneficiario",
+    "equity":"capitale","liability":"passività","asset":"attività",
+    "dividend":"dividendo","spending limit":"limite di spesa",
+    "blockchain":"blockchain","token":"token","tokens":"token",
+    "stablecoin":"stablecoin","stablecoins":"stablecoin",
+    "cryptocurrency":"criptovaluta","crypto":"cripto",
+    "crypto wallet":"portafoglio crypto","wallet":"portafoglio",
+    "seed phrase":"frase seed","private key":"chiave privata",
+    "public address":"indirizzo pubblico","smart contract":"contratto intelligente",
+    "network fees":"commissioni di rete","gas fees":"commissioni gas",
+    "custodial":"custodiale","non-custodial":"non custodiale",
+    "custodial wallet":"portafoglio custodiale",
+    "non-custodial wallet":"portafoglio non custodiale",
+    "fiat":"valuta fiat","pegged":"ancorato",
+    "decentralized":"decentralizzato","centralized":"centralizzato",
+    "capital provider":"fornitore di capitale",
+    "repayment schedule":"piano di rimborso",
+    "leverage":"leva finanziaria","diversification":"diversificazione",
+    "yield":"rendimento","returns":"rendimenti",
+    "liquidity":"liquidità","protocol":"protocollo",
+    "staking":"staking","airdrop":"airdrop",
+    "mining":"mining","validator":"validatore",
+    "consensus":"consenso","bridge":"bridge",
+    "on-chain":"on-chain","off-chain":"off-chain",
+    "scam":"truffa","phishing":"phishing",
+    "Learn & Earn":"Impara e Guadagna",
+    "start learning":"inizia a imparare",
+    "checklist":"checklist","step-by-step":"passo dopo passo",
+    "beginner":"principiante","beginners":"principianti"
+  },
+  fr: {
+    "APR":"TAEG","Annual Percentage Rate":"Taux Annuel Effectif Global",
+    "interest rate":"taux d'intérêt","annual returns":"rendements annuels",
+    "monthly payouts":"versements mensuels","monthly payments":"paiements mensuels",
+    "balance":"solde","statement":"relevé","account":"compte",
+    "deposit":"dépôt","withdrawal":"retrait","wire transfer":"virement bancaire",
+    "transaction":"transaction","payment":"paiement","invoice":"facture",
+    "fee":"frais","no hidden fees":"aucuns frais cachés",
+    "P2P lending":"prêt P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financement participatif","lending platform":"plateforme de prêt",
+    "investment platform":"plateforme d'investissement",
+    "investor":"investisseur","investors":"investisseurs",
+    "borrower":"emprunteur","lender":"prêteur",
+    "loan":"prêt","loan period":"durée du prêt","loan term":"durée du prêt",
+    "loan originator":"originateur de prêts",
+    "funded":"financé","repaid":"remboursé",
+    "default":"défaut de paiement","late loans":"prêts en retard",
+    "cash drag":"capital inactif",
+    "primary market":"marché primaire","secondary market":"marché secondaire",
+    "total funded":"total financé","total interest paid":"total des intérêts versés",
+    "available funds":"fonds disponibles","invested funds":"fonds investis",
+    "total funds":"fonds totaux",
+    "initial investment":"investissement initial","investment period":"période d'investissement",
+    "future value":"valeur future","earned return":"rendement obtenu",
+    "average annual return":"rendement annuel moyen",
+    "portfolio":"portefeuille","passive income":"revenu passif",
+    "principal repayment":"remboursement du capital",
+    "interest payment":"paiement des intérêts",
+    "installment":"versement","recurring payment":"paiement récurrent",
+    "due diligence":"vérification préalable","risk assessment":"évaluation des risques",
+    "risk scoring":"notation du risque","AML":"LCB",
+    "compliance":"conformité réglementaire","regulated":"réglementé",
+    "verification":"vérification","KYC":"KYC",
+    "referral bonus":"prime de parrainage","loyalty bonus":"prime de fidélité",
+    "welcome bonus":"prime de bienvenue","investment reward":"récompense d'investissement",
+    "invite friends":"inviter des amis",
+    "sign up":"s'inscrire","log in":"se connecter","register":"s'inscrire",
+    "invest now":"investir maintenant","start investing":"commencer à investir",
+    "dashboard":"tableau de bord","onboarding":"inscription client",
+    "collateral":"garantie","mortgage":"prêt hypothécaire","savings":"épargne",
+    "credit score":"cote de crédit","overdraft":"découvert",
+    "chargeback":"rétrofacturation","settlement":"règlement",
+    "direct debit":"prélèvement automatique","exchange rate":"taux de change",
+    "payee":"bénéficiaire","payer":"payeur","beneficiary":"bénéficiaire",
+    "equity":"capitaux propres","liability":"passif","asset":"actif",
+    "dividend":"dividende","spending limit":"plafond de dépenses",
+    "blockchain":"blockchain","token":"jeton","tokens":"jetons",
+    "stablecoin":"stablecoin","stablecoins":"stablecoins",
+    "cryptocurrency":"cryptomonnaie","crypto":"crypto",
+    "crypto wallet":"portefeuille crypto","wallet":"portefeuille",
+    "seed phrase":"phrase de récupération","private key":"clé privée",
+    "public address":"adresse publique","smart contract":"contrat intelligent",
+    "network fees":"frais de réseau","gas fees":"frais de gas",
+    "custodial":"custodial","non-custodial":"non-custodial",
+    "custodial wallet":"portefeuille custodial",
+    "non-custodial wallet":"portefeuille non-custodial",
+    "fiat":"monnaie fiduciaire","pegged":"indexé",
+    "decentralized":"décentralisé","centralized":"centralisé",
+    "capital provider":"fournisseur de capital",
+    "repayment schedule":"calendrier de remboursement",
+    "leverage":"effet de levier","diversification":"diversification",
+    "yield":"rendement","returns":"rendements",
+    "liquidity":"liquidité","protocol":"protocole",
+    "staking":"staking","airdrop":"airdrop",
+    "mining":"minage","validator":"validateur",
+    "consensus":"consensus","bridge":"pont",
+    "on-chain":"on-chain","off-chain":"off-chain",
+    "scam":"arnaque","phishing":"hameçonnage",
+    "Learn & Earn":"Apprendre et Gagner",
+    "start learning":"commencer à apprendre",
+    "checklist":"liste de contrôle","step-by-step":"étape par étape",
+    "beginner":"débutant","beginners":"débutants"
+  },
+  de: {
+    "APR":"Eff. Jahreszins","Annual Percentage Rate":"Effektiver Jahreszins",
+    "interest rate":"Zinssatz","annual returns":"Jahresrendite",
+    "monthly payouts":"monatliche Auszahlungen","monthly payments":"monatliche Zahlungen",
+    "balance":"Kontostand","statement":"Kontoauszug","account":"Konto",
+    "deposit":"Einzahlung","withdrawal":"Auszahlung","wire transfer":"Banküberweisung",
+    "transaction":"Transaktion","payment":"Zahlung","invoice":"Rechnung",
+    "fee":"Gebühr","no hidden fees":"keine versteckten Gebühren",
+    "P2P lending":"P2P-Kreditvergabe","crowdlending":"Crowdlending",
+    "crowdfunding":"Crowdfunding","lending platform":"Kreditplattform",
+    "investment platform":"Investitionsplattform",
+    "investor":"Investor","investors":"Investoren",
+    "borrower":"Kreditnehmer","lender":"Kreditgeber",
+    "loan":"Kredit","loan period":"Kreditlaufzeit","loan term":"Kreditlaufzeit",
+    "loan originator":"Kreditanbahner",
+    "funded":"finanziert","repaid":"zurückgezahlt",
+    "default":"Ausfall","late loans":"verspätete Kredite",
+    "cash drag":"Kapitalverzögerung",
+    "primary market":"Primärmarkt","secondary market":"Sekundärmarkt",
+    "total funded":"Gesamtfinanzierung","total interest paid":"Gesamtzinsen gezahlt",
+    "available funds":"verfügbare Mittel","invested funds":"investierte Mittel",
+    "total funds":"Gesamtmittel",
+    "initial investment":"Erstinvestition","investment period":"Investitionszeitraum",
+    "future value":"Endwert","earned return":"erzielter Ertrag",
+    "average annual return":"durchschnittliche Jahresrendite",
+    "portfolio":"Portfolio","passive income":"passives Einkommen",
+    "principal repayment":"Kapitalrückzahlung",
+    "interest payment":"Zinszahlung",
+    "installment":"Rate","recurring payment":"Dauerauftrag",
+    "due diligence":"Sorgfaltsprüfung","risk assessment":"Risikobewertung",
+    "risk scoring":"Risikobewertung","AML":"GwG",
+    "compliance":"Compliance","regulated":"reguliert",
+    "verification":"Verifizierung","KYC":"KYC",
+    "referral bonus":"Empfehlungsbonus","loyalty bonus":"Treuebonus",
+    "welcome bonus":"Willkommensbonus","investment reward":"Investitionsprämie",
+    "invite friends":"Freunde einladen",
+    "sign up":"registrieren","log in":"anmelden","register":"registrieren",
+    "invest now":"jetzt investieren","start investing":"jetzt anlegen",
+    "dashboard":"Dashboard","onboarding":"Kontoeröffnung",
+    "collateral":"Sicherheit","mortgage":"Hypothek","savings":"Ersparnisse",
+    "credit score":"Bonitätsbewertung","overdraft":"Überziehung",
+    "chargeback":"Rückbuchung","settlement":"Abrechnung",
+    "direct debit":"Lastschrift","exchange rate":"Wechselkurs",
+    "payee":"Zahlungsempfänger","payer":"Zahler","beneficiary":"Begünstigter",
+    "equity":"Eigenkapital","liability":"Verbindlichkeit","asset":"Vermögenswert",
+    "dividend":"Dividende","spending limit":"Ausgabenlimit",
+    "blockchain":"Blockchain","token":"Token","tokens":"Token",
+    "stablecoin":"Stablecoin","stablecoins":"Stablecoins",
+    "cryptocurrency":"Kryptowährung","crypto":"Krypto",
+    "crypto wallet":"Krypto-Wallet","wallet":"Wallet",
+    "seed phrase":"Seed-Phrase","private key":"privater Schlüssel",
+    "public address":"öffentliche Adresse","smart contract":"Smart Contract",
+    "network fees":"Netzwerkgebühren","gas fees":"Gas-Gebühren",
+    "custodial":"verwahrt","non-custodial":"nicht-verwahrt",
+    "custodial wallet":"verwahrtes Wallet",
+    "non-custodial wallet":"nicht-verwahrtes Wallet",
+    "fiat":"Fiatgeld","pegged":"gebunden",
+    "decentralized":"dezentralisiert","centralized":"zentralisiert",
+    "capital provider":"Kapitalgeber",
+    "repayment schedule":"Tilgungsplan",
+    "leverage":"Hebelwirkung","diversification":"Diversifizierung",
+    "yield":"Rendite","returns":"Erträge",
+    "liquidity":"Liquidität","protocol":"Protokoll",
+    "staking":"Staking","airdrop":"Airdrop",
+    "mining":"Mining","validator":"Validator",
+    "consensus":"Konsens","bridge":"Bridge",
+    "on-chain":"On-Chain","off-chain":"Off-Chain",
+    "scam":"Betrug","phishing":"Phishing",
+    "Learn & Earn":"Lernen und Verdienen",
+    "start learning":"jetzt lernen",
+    "checklist":"Checkliste","step-by-step":"Schritt für Schritt",
+    "beginner":"Anfänger","beginners":"Anfänger"
+  },
+  pt: {
+    "APR":"TAEG","Annual Percentage Rate":"Taxa Anual Efetiva Global",
+    "interest rate":"taxa de juro","annual returns":"rendimento anual",
+    "monthly payouts":"pagamentos mensais","monthly payments":"pagamentos mensais",
+    "balance":"saldo","statement":"extrato","account":"conta",
+    "deposit":"depósito","withdrawal":"levantamento","wire transfer":"transferência bancária",
+    "transaction":"transação","payment":"pagamento","invoice":"fatura",
+    "fee":"comissão","no hidden fees":"sem taxas ocultas",
+    "P2P lending":"empréstimos P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financiamento coletivo","lending platform":"plataforma de empréstimos",
+    "investment platform":"plataforma de investimento",
+    "investor":"investidor","investors":"investidores",
+    "borrower":"mutuário","lender":"mutuante",
+    "loan":"empréstimo","loan period":"prazo do empréstimo","loan term":"prazo do empréstimo",
+    "loan originator":"originador de empréstimos",
+    "funded":"financiado","repaid":"reembolsado",
+    "default":"incumprimento","late loans":"empréstimos em atraso",
+    "cash drag":"capital inativo",
+    "primary market":"mercado primário","secondary market":"mercado secundário",
+    "total funded":"total financiado","total interest paid":"total de juros pagos",
+    "available funds":"fundos disponíveis","invested funds":"fundos investidos",
+    "total funds":"fundos totais",
+    "initial investment":"investimento inicial","investment period":"período de investimento",
+    "future value":"valor futuro","earned return":"rendimento obtido",
+    "average annual return":"rendimento anual médio",
+    "portfolio":"carteira","passive income":"rendimento passivo",
+    "principal repayment":"reembolso do capital",
+    "interest payment":"pagamento de juros",
+    "installment":"prestação","recurring payment":"pagamento recorrente",
+    "due diligence":"auditoria prévia","risk assessment":"avaliação de risco",
+    "risk scoring":"pontuação de risco","AML":"ABC",
+    "compliance":"conformidade regulamentar","regulated":"regulamentado",
+    "verification":"verificação","KYC":"KYC",
+    "referral bonus":"bónus de referência","loyalty bonus":"bónus de fidelidade",
+    "welcome bonus":"bónus de boas-vindas","investment reward":"recompensa de investimento",
+    "invite friends":"convidar amigos",
+    "sign up":"registar","log in":"iniciar sessão","register":"registar",
+    "invest now":"investir agora","start investing":"começar a investir",
+    "dashboard":"painel de controlo","onboarding":"registo de cliente",
+    "collateral":"garantia","mortgage":"hipoteca","savings":"poupanças",
+    "credit score":"pontuação de crédito","overdraft":"descoberto",
+    "chargeback":"estorno","settlement":"liquidação",
+    "direct debit":"débito direto","exchange rate":"taxa de câmbio",
+    "payee":"beneficiário","payer":"pagador","beneficiary":"beneficiário",
+    "equity":"capital próprio","liability":"passivo","asset":"ativo",
+    "dividend":"dividendo","spending limit":"limite de gastos",
+    "blockchain":"blockchain","token":"token","tokens":"tokens",
+    "stablecoin":"stablecoin","stablecoins":"stablecoins",
+    "cryptocurrency":"criptomoeda","crypto":"cripto",
+    "crypto wallet":"carteira cripto","wallet":"carteira",
+    "seed phrase":"frase-semente","private key":"chave privada",
+    "public address":"endereço público","smart contract":"contrato inteligente",
+    "network fees":"taxas de rede","gas fees":"taxas de gas",
+    "custodial":"custodial","non-custodial":"não custodial",
+    "custodial wallet":"carteira custodial",
+    "non-custodial wallet":"carteira não custodial",
+    "fiat":"moeda fiduciária","pegged":"indexado",
+    "decentralized":"descentralizado","centralized":"centralizado",
+    "capital provider":"provedor de capital",
+    "repayment schedule":"calendário de reembolso",
+    "leverage":"alavancagem","diversification":"diversificação",
+    "yield":"rendimento","returns":"rendimentos",
+    "liquidity":"liquidez","protocol":"protocolo",
+    "staking":"staking","airdrop":"airdrop",
+    "mining":"mineração","validator":"validador",
+    "consensus":"consenso","bridge":"ponte",
+    "on-chain":"on-chain","off-chain":"off-chain",
+    "scam":"fraude","phishing":"phishing",
+    "Learn & Earn":"Aprender e Ganhar",
+    "start learning":"começar a aprender",
+    "checklist":"lista de verificação","step-by-step":"passo a passo",
+    "beginner":"iniciante","beginners":"iniciantes"
+  }
+};
+
+const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"Portuguese" };
+
+const COURSE_GLOSSARY = {
+  es: {
+    "tx as a receipt":"tx como comprobante",
+    "transaction hash":"hash de transacción",
+    "block explorer":"explorador de bloques",
+    "network":"red","base network":"red Base",
+    "tokenomics":"tokenómica",
+    "crypto taxes":"impuestos cripto",
+    "real yield":"rendimiento real",
+    "approval":"aprobación","approvals":"aprobaciones",
+    "spending cap":"límite de gasto",
+    "allowance":"asignación",
+    "revoke approval":"revocar aprobación",
+    "wallet connection":"conexión de monedero",
+    "normal login":"inicio de sesión normal",
+    "clone site":"sitio clonado","fake support":"soporte falso",
+    "support staff":"personal de soporte",
+    "wrong address":"dirección incorrecta",
+    "malicious transaction":"transacción maliciosa",
+    "private key leak":"filtración de clave privada",
+    "seed phrase leak":"filtración de frase semilla",
+    "risk management":"gestión de riesgos",
+    "position sizing":"dimensionamiento de posición",
+    "term length":"plazo",
+    "investor discipline":"disciplina del inversor",
+    "capital preservation":"preservación de capital",
+    "money management":"gestión del dinero",
+    "operational security":"seguridad operativa",
+    "self-custody":"autocustodia",
+    "price swings":"oscilaciones de precio",
+    "quick reset":"reinicio rápido"
+  },
+  it: {
+    "tx as a receipt":"tx come ricevuta","transaction hash":"hash della transazione",
+    "block explorer":"explorer blockchain","network":"rete","base network":"rete Base",
+    "tokenomics":"tokenomics","crypto taxes":"tasse crypto","real yield":"rendimento reale",
+    "approval":"approvazione","approvals":"approvazioni","spending cap":"limite di spesa",
+    "allowance":"autorizzazione","revoke approval":"revoca approvazione",
+    "wallet connection":"connessione wallet","normal login":"accesso normale",
+    "clone site":"sito clone","fake support":"supporto falso","support staff":"staff di supporto",
+    "wrong address":"indirizzo errato","malicious transaction":"transazione malevola",
+    "private key leak":"fuga della chiave privata","seed phrase leak":"fuga della seed phrase",
+    "risk management":"gestione del rischio","position sizing":"dimensionamento posizione",
+    "term length":"durata","investor discipline":"disciplina dell'investitore",
+    "capital preservation":"preservazione del capitale","money management":"gestione del denaro",
+    "operational security":"sicurezza operativa","self-custody":"autocustodia",
+    "price swings":"oscillazioni di prezzo","quick reset":"reset rapido"
+  },
+  fr: {
+    "tx as a receipt":"tx comme reçu","transaction hash":"hash de transaction",
+    "block explorer":"explorateur de blocs","network":"réseau","base network":"réseau Base",
+    "tokenomics":"tokenomics","crypto taxes":"fiscalité crypto","real yield":"rendement réel",
+    "approval":"approbation","approvals":"approbations","spending cap":"plafond de dépense",
+    "allowance":"autorisation","revoke approval":"révoquer l'approbation",
+    "wallet connection":"connexion du portefeuille","normal login":"connexion classique",
+    "clone site":"site cloné","fake support":"faux support","support staff":"équipe support",
+    "wrong address":"mauvaise adresse","malicious transaction":"transaction malveillante",
+    "private key leak":"fuite de clé privée","seed phrase leak":"fuite de phrase de récupération",
+    "risk management":"gestion des risques","position sizing":"dimensionnement de position",
+    "term length":"durée","investor discipline":"discipline de l'investisseur",
+    "capital preservation":"préservation du capital","money management":"gestion de l'argent",
+    "operational security":"sécurité opérationnelle","self-custody":"auto-garde",
+    "price swings":"variations de prix","quick reset":"réinitialisation rapide"
+  },
+  de: {
+    "tx as a receipt":"TX als Beleg","transaction hash":"Transaktions-Hash",
+    "block explorer":"Block-Explorer","network":"Netzwerk","base network":"Base-Netzwerk",
+    "tokenomics":"Tokenomics","crypto taxes":"Krypto-Steuern","real yield":"reale Rendite",
+    "approval":"Freigabe","approvals":"Freigaben","spending cap":"Ausgabenlimit",
+    "allowance":"Berechtigung","revoke approval":"Freigabe widerrufen",
+    "wallet connection":"Wallet-Verbindung","normal login":"normale Anmeldung",
+    "clone site":"Klonseite","fake support":"falscher Support","support staff":"Support-Team",
+    "wrong address":"falsche Adresse","malicious transaction":"bösartige Transaktion",
+    "private key leak":"Leak des privaten Schlüssels","seed phrase leak":"Leak der Seed-Phrase",
+    "risk management":"Risikomanagement","position sizing":"Positionsgröße",
+    "term length":"Laufzeit","investor discipline":"Investor-Disziplin",
+    "capital preservation":"Kapitalerhalt","money management":"Geldmanagement",
+    "operational security":"operative Sicherheit","self-custody":"Selbstverwahrung",
+    "price swings":"Preisschwankungen","quick reset":"Schnell-Reset"
+  },
+  pt: {
+    "tx as a receipt":"tx como comprovativo","transaction hash":"hash da transação",
+    "block explorer":"explorador de blocos","network":"rede","base network":"rede Base",
+    "tokenomics":"tokenomics","crypto taxes":"impostos cripto","real yield":"rendimento real",
+    "approval":"aprovação","approvals":"aprovações","spending cap":"limite de gastos",
+    "allowance":"permissão","revoke approval":"revogar aprovação",
+    "wallet connection":"conexão da carteira","normal login":"login normal",
+    "clone site":"site clonado","fake support":"suporte falso","support staff":"equipa de suporte",
+    "wrong address":"endereço errado","malicious transaction":"transação maliciosa",
+    "private key leak":"vazamento de chave privada","seed phrase leak":"vazamento da frase-semente",
+    "risk management":"gestão de risco","position sizing":"dimensionamento da posição",
+    "term length":"prazo","investor discipline":"disciplina do investidor",
+    "capital preservation":"preservação de capital","money management":"gestão de dinheiro",
+    "operational security":"segurança operacional","self-custody":"autocustódia",
+    "price swings":"oscilações de preço","quick reset":"reinício rápido"
+  }
+};
+
+function getGlossary(lang) {
+  return { ...(GLOSSARY[lang] || {}), ...(COURSE_GLOSSARY[lang] || {}) };
+}
+
+function glossaryExact(sourceText, lang) {
+  if (isLockedTerm(sourceText)) return sourceText;
+  const gl = getGlossary(lang);
+  if (gl[sourceText] !== undefined) return gl[sourceText];
+  const lower = sourceText.toLowerCase();
+  if (gl[lower] !== undefined) return gl[lower];
+  return null;
+}
+
+const PRICING = {
+  "gpt-5.4-nano": { i: 0.20, o: 1.25 },
+  "gpt-5.4-mini": { i: 0.75, o: 4.50 },
+  "gpt-5.4":      { i: 3.00, o: 15.0 },
+  "gpt-4o-mini":  { i: 0.15, o: 0.60 },
+  "gpt-4o":       { i: 2.50, o: 10.0 },
+};
+
+/* ================================================================== */
+/*  State                                                              */
+/* ================================================================== */
+let provider = "free";
+let framesData = [];
+let busy = false;
+const cache = {};
+
+/* ================================================================== */
+/*  DOM                                                                */
+/* ================================================================== */
+const $ = (s) => document.getElementById(s);
+const $apiKey       = $("apiKey");
+const $saveKey      = $("saveKey");
+const $toggleKey    = $("toggleKey");
+const $model        = $("model");
+const $scanBtn      = $("scanBtn");
+const $translateBtn = $("translateBtn");
+const $translateLbl = $("translateLabel");
+const $applyBtn     = $("applyBtn");
+const $applyLbl     = $("applyLabel");
+const $previewSec   = $("previewSection");
+const $previewBox   = $("previewBox");
+const $countBadge   = $("countBadge");
+const $costSection  = $("costSection");
+const $costCard     = $("costCard");
+const $costHint     = $("costHint");
+const $progressSec  = $("progressSection");
+const $progressBar  = $("progressBar");
+const $progressLbl  = $("progressLabel");
+const $logArea      = $("logArea");
+const $emptyState   = $("emptyState");
+const $proSettings  = $("proSettings");
+const $lockTerms    = $("lockTerms");
+const $smartWrap    = $("smartWrap");
+const $sidePadding  = $("sidePadding");
+const $padMinus     = $("padMinus");
+const $padPlus      = $("padPlus");
+const $reviewSec    = $("reviewSection");
+const $reviewTabs   = $("reviewTabs");
+const $reviewRows   = $("reviewRows");
+const $reviewSummary = $("reviewSummary");
+
+let translatedStore = {};  // { "es": [ {original, translated, path, frameId} ], ... }
+let activeReviewLang = null;
+
+/* ================================================================== */
+/*  Provider toggle                                                    */
+/* ================================================================== */
+document.querySelectorAll(".toggle-opt").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".toggle-opt").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    provider = btn.dataset.provider;
+    $proSettings.classList.toggle("hidden", provider === "free");
+    updateCost();
+    saveSettings();
+  });
+});
+
+/* ================================================================== */
+/*  Language chips                                                     */
+/* ================================================================== */
+document.querySelectorAll(".chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    const cb = chip.querySelector("input");
+    if (!cb || cb.id === "smartWrap") return;
+    requestAnimationFrame(() => {
+      chip.classList.toggle("on", cb.checked);
+      updateCost();
+      saveSettings();
+    });
+  });
+});
+
+if ($smartWrap) {
+  $smartWrap.addEventListener("change", () => {
+    saveSettings();
+  });
+}
+
+if ($sidePadding) {
+  $sidePadding.addEventListener("input", () => {
+    const n = Number($sidePadding.value || 0);
+    if (!Number.isFinite(n) || n < 0) $sidePadding.value = "0";
+    if (n > 80) $sidePadding.value = "80";
+    updateCost();
+    saveSettings();
+  });
+}
+if ($padMinus && $sidePadding) {
+  $padMinus.addEventListener("click", () => {
+    const n = Math.max(0, Number($sidePadding.value || 0) - 1);
+    $sidePadding.value = String(n);
+    saveSettings();
+  });
+}
+if ($padPlus && $sidePadding) {
+  $padPlus.addEventListener("click", () => {
+    const n = Math.min(80, Number($sidePadding.value || 0) + 1);
+    $sidePadding.value = String(n);
+    saveSettings();
+  });
+}
+
+function selectedLangs() {
+  return [...document.querySelectorAll(".chip input:checked")].map(i => i.value);
+}
+
+/* ================================================================== */
+/*  API Key                                                            */
+/* ================================================================== */
+$toggleKey.addEventListener("click", () => {
+  $apiKey.type = $apiKey.type === "password" ? "text" : "password";
+});
+$saveKey.addEventListener("click", () => {
+  const k = $apiKey.value.trim();
+  if (!k) return;
+  if (!k.startsWith("sk-")) {
+    log("Key must start with sk-... (not sess- or other)", "err");
+    return;
+  }
+  parent.postMessage({ pluginMessage: { type: "save-key", key: k } }, "*");
+  log("API key saved", "ok");
+});
+
+$model.addEventListener("change", () => { updateCost(); saveSettings(); });
+if ($lockTerms) $lockTerms.addEventListener("input", () => saveSettings());
+
+/* ================================================================== */
+/*  UI helpers                                                         */
+/* ================================================================== */
+function log(msg, cls) {
+  const d = document.createElement("div");
+  d.className = "log-line fade-in " + (cls || "info");
+  d.innerHTML = '<span class="dot"></span>' + esc(msg);
+  $logArea.prepend(d);
+}
+
+function setProgress(pct, text) {
+  $progressSec.classList.remove("hidden");
+  $progressBar.style.width = pct + "%";
+  $progressLbl.textContent = text;
+}
+
+function setBusy(v) {
+  busy = v;
+  $scanBtn.disabled = v;
+  $translateBtn.disabled = v;
+}
+
+function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ================================================================== */
+/*  Cost estimation                                                    */
+/* ================================================================== */
+function updateCost() {
+  if (!framesData.length) { $costSection.classList.add("hidden"); $costHint.classList.add("hidden"); return; }
+
+  const langs = selectedLangs();
+  const totalStrings = framesData.reduce((s,f) => s + f.texts.length, 0);
+  const totalChars   = framesData.reduce((s,f) => s + f.texts.reduce((a,t) => a + t.characters.length, 0), 0);
+  const perLang = totalStrings * langs.length;
+
+  if (provider === "free") {
+    $costCard.innerHTML =
+      '<div class="icon free">&#x2728;</div>' +
+      '<div class="info">' +
+        '<div class="price free-price">Free</div>' +
+        '<div class="detail">' + perLang + ' strings via Google Translate &middot; No API key needed</div>' +
+      '</div>';
+    $costHint.textContent = "Free — powered by Google Translate";
+    $costHint.classList.remove("hidden");
+  } else {
+    const model = $model.value;
+    const p = PRICING[model] || PRICING["gpt-5.4-mini"];
+    const sysTokens = 500;
+    const inTokens  = Math.ceil(totalChars / 3.5) + sysTokens;
+    const outTokens = Math.ceil(totalChars / 3.5);
+    const costPerLang = (inTokens * p.i + outTokens * p.o) / 1_000_000;
+    const totalCost = costPerLang * langs.length;
+    const display = totalCost < 0.01 ? "<$0.01" : "$" + totalCost.toFixed(3);
+
+    $costCard.innerHTML =
+      '<div class="icon paid">&#x26A1;</div>' +
+      '<div class="info">' +
+        '<div class="price paid-price">~' + display + '</div>' +
+        '<div class="detail">' + perLang + ' strings &middot; ' + model + ' &middot; ~' + (inTokens + outTokens) + ' tokens</div>' +
+      '</div>';
+    $costHint.textContent = "Est. ~" + display;
+    $costHint.classList.remove("hidden");
+  }
+
+  $costSection.classList.remove("hidden");
+}
+
+/* ================================================================== */
+/*  Scan                                                               */
+/* ================================================================== */
+$scanBtn.addEventListener("click", () => {
+  if (busy) return;
+  parent.postMessage({ pluginMessage: { type: "scan" } }, "*");
+  log("Scanning selection…", "info");
+});
+
+/* ================================================================== */
+/*  Helpers: cleanup                                                   */
+/* ================================================================== */
+function stripTags(s) {
+  return s.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#39;/g, "'").replace(/&quot;/g, '"').trim();
+}
+
+function looksTranslated(original, translated) {
+  if (!translated || !translated.trim()) return false;
+  const a = original.toLowerCase().trim();
+  const b = translated.toLowerCase().trim();
+  if (a === b) return false;
+  if (b.includes("<g ") || b.includes("</g>")) return false;
+  return true;
+}
+
+/* ================================================================== */
+/*  Translation: Google Translate (free, primary)                      */
+/* ================================================================== */
+async function translateGoogle(text, lang) {
+  const url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" +
+    lang + "&dt=t&q=" + encodeURIComponent(text);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Google Translate HTTP " + res.status);
+  const data = await res.json();
+  let result = "";
+  if (data && data[0]) {
+    for (const part of data[0]) {
+      if (part && part[0]) result += part[0];
+    }
+  }
+  return result.trim();
+}
+
+/* ================================================================== */
+/*  Translation: MyMemory (free, fallback)                             */
+/* ================================================================== */
+async function translateMyMemory(text, lang) {
+  const url = "https://api.mymemory.translated.net/get?q=" +
+    encodeURIComponent(text) + "&langpair=en|" + lang;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("MyMemory HTTP " + res.status);
+  const data = await res.json();
+  return stripTags(data.responseData.translatedText || "");
+}
+
+/* ================================================================== */
+/*  Free batch: Google primary → MyMemory fallback → cleanup           */
+/* ================================================================== */
+async function batchFree(texts, lang, onProg) {
+  const results = [];
+  for (let i = 0; i < texts.length; i++) {
+    const key = lang + ":" + texts[i];
+    if (cache[key]) {
+      results.push(cache[key]);
+      onProg(i + 1, texts.length);
+      continue;
+    }
+
+    const exact = glossaryExact(texts[i], lang);
+    if (exact) {
+      cache[key] = exact;
+      results.push(exact);
+      onProg(i + 1, texts.length);
+      continue;
+    }
+
+    let translated = "";
+    try {
+      translated = await translateGoogle(texts[i], lang);
+    } catch (_e) { /* Google failed, try fallback */ }
+
+    if (!looksTranslated(texts[i], translated)) {
+      try {
+        translated = await translateMyMemory(texts[i], lang);
+      } catch (_e2) { /* both failed */ }
+    }
+
+    translated = stripTags(translated);
+    if (!translated) translated = texts[i];
+
+    cache[key] = translated;
+    results.push(translated);
+    onProg(i + 1, texts.length);
+    if (i < texts.length - 1) await sleep(60);
+  }
+  return results;
+}
+
+/* ================================================================== */
+/*  Translation: OpenAI (pro)                                          */
+/* ================================================================== */
+async function callOpenAI(texts, lang) {
+  const key = $apiKey.value.trim();
+  const model = $model.value;
+  const gl = getGlossary(lang);
+  const glBlock = Object.entries(gl).map(([e,t]) => '  "'+e+'" → "'+t+'"').join("\n");
+
+  const sys =
+    "You are a professional fintech UI/UX translator.\n" +
+    "Translate every string from English to " + LANG_NAMES[lang] + ".\n\n" +
+    "RULES:\n" +
+    "1. Formal, professional tone for financial apps.\n" +
+    "2. Preserve ALL placeholders: {var}, {{var}}, %s, %d, %@, $var.\n" +
+    "3. Preserve numbers, currency symbols, formatting.\n" +
+    "4. Keep unchanged: KYC, AML, IBAN, SWIFT, BIC, API, PIN, OTP, 2FA, CVV, PCI, SEPA.\n" +
+    "5. Keep brand names untranslated.\n" +
+    "6. Concise translations — UI labels, buttons, short text.\n" +
+    "7. No extra punctuation.\n" +
+    "8. Preserve capitalisation (ALL CAPS → ALL CAPS, Title → Title).\n\n" +
+    "GLOSSARY:\n" + glBlock + "\n\n" +
+    "INPUT: JSON array.\nOUTPUT: JSON array, same order, same count.\nReturn ONLY the JSON array.";
+
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+    body: JSON.stringify({
+      model,
+      messages: [{ role: "system", content: sys }, { role: "user", content: JSON.stringify(texts) }],
+      temperature: 0.1,
+    }),
+  });
+
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    throw new Error((e.error && e.error.message) || "OpenAI " + res.status);
+  }
+
+  const data = await res.json();
+  let content = data.choices[0].message.content.trim();
+  if (content.startsWith("```")) content = content.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+
+  const arr = JSON.parse(content);
+  if (!Array.isArray(arr) || arr.length !== texts.length) {
+    throw new Error("Expected " + texts.length + " translations, got " + (Array.isArray(arr) ? arr.length : "non-array"));
+  }
+  return arr;
+}
+
+async function batchOpenAI(texts, lang, onProg) {
+  const BATCH = 40;
+  const results = [];
+
+  for (let i = 0; i < texts.length; i += BATCH) {
+    const batch = texts.slice(i, i + BATCH);
+    const uncachedIdx = [], uncachedTxt = [];
+    const batchRes = new Array(batch.length);
+
+    for (let j = 0; j < batch.length; j++) {
+      const k = lang + ":" + batch[j];
+      if (cache[k] !== undefined) {
+        batchRes[j] = cache[k];
+      } else {
+        const exact = glossaryExact(batch[j], lang);
+        if (exact) {
+          cache[k] = exact;
+          batchRes[j] = exact;
+        } else {
+          uncachedIdx.push(j);
+          uncachedTxt.push(batch[j]);
+        }
+      }
+    }
+
+    if (uncachedTxt.length) {
+      const translated = await callOpenAI(uncachedTxt, lang);
+      for (let k = 0; k < uncachedTxt.length; k++) {
+        const ck = lang + ":" + uncachedTxt[k];
+        cache[ck] = translated[k];
+        batchRes[uncachedIdx[k]] = translated[k];
+      }
+    }
+
+    results.push(...batchRes);
+    onProg(Math.min(i + BATCH, texts.length), texts.length);
+  }
+  return results;
+}
+
+/* ================================================================== */
+/*  Lock terms helpers                                                 */
+/* ================================================================== */
+function getLockedTerms() {
+  return ($lockTerms.value || "").split(",").map(s => s.trim()).filter(Boolean);
+}
+
+function isLockedTerm(text) {
+  const locked = getLockedTerms();
+  const lower = text.toLowerCase().trim();
+  return locked.some(t => t.toLowerCase() === lower);
+}
+
+/* ================================================================== */
+/*  Overflow detection                                                 */
+/* ================================================================== */
+function calcDelta(original, translated) {
+  if (!original || !translated) return 0;
+  return Math.round(((translated.length - original.length) / original.length) * 100);
+}
+
+function deltaClass(pct) {
+  if (pct <= 15) return "ok";
+  if (pct <= 35) return "warn";
+  return "danger";
+}
+
+function deltaLabel(pct) {
+  if (pct === 0) return "=";
+  return (pct > 0 ? "+" : "") + pct + "%";
+}
+
+/* ================================================================== */
+/*  Step 1: Translate (store results, show review)                     */
+/* ================================================================== */
+$translateBtn.addEventListener("click", async () => {
+  if (busy) return;
+  const langs = selectedLangs();
+  if (!langs.length) { log("Select at least one language", "err"); return; }
+  if (!framesData.length) { log("Scan a selection first", "err"); return; }
+  if (provider === "openai" && !$apiKey.value.trim()) { log("Enter OpenAI API key", "err"); return; }
+
+  setBusy(true);
+  $logArea.innerHTML = "";
+  translatedStore = {};
+
+  const steps = langs.length * framesData.length;
+  let done = 0;
+
+  try {
+    for (let li = 0; li < langs.length; li++) {
+      const lang = langs[li];
+      translatedStore[lang] = [];
+
+      for (const frame of framesData) {
+        const allChars = frame.texts.map(t => t.characters);
+        setProgress(0, "[" + lang.toUpperCase() + "] " + frame.name + "…");
+        log("[" + lang.toUpperCase() + "] Translating \"" + frame.name + "\" (" + allChars.length + " strings)", "info");
+
+        const onProg = (cur, tot) => {
+          const gp = Math.round(((done + cur / tot) / steps) * 100);
+          setProgress(gp, "[" + lang.toUpperCase() + "] " + frame.name + " — " + Math.round(cur/tot*100) + "%");
+        };
+
+        const translated = provider === "free"
+          ? await batchFree(allChars, lang, onProg)
+          : await batchOpenAI(allChars, lang, onProg);
+
+        for (let i = 0; i < frame.texts.length; i++) {
+          const isLocked = isLockedTerm(allChars[i]);
+          translatedStore[lang].push({
+            frameId: frame.id,
+            frameName: frame.name,
+            path: frame.texts[i].path,
+            original: allChars[i],
+            translated: isLocked ? allChars[i] : translated[i],
+            locked: isLocked,
+          });
+        }
+
+        done++;
+        setProgress(Math.round(done / steps * 100), "Translated");
+        await sleep(100);
+      }
+    }
+
+    setProgress(100, "Review translations below");
+    log("Translation done — review and edit before applying", "ok");
+    showReviewPanel(langs);
+  } catch (e) {
+    log("Error: " + e.message, "err");
+    setProgress(0, "Error — see log");
+  }
+
+  setBusy(false);
+});
+
+/* ================================================================== */
+/*  Review panel: render                                               */
+/* ================================================================== */
+function showReviewPanel(langs) {
+  $reviewSec.classList.remove("hidden");
+  $translateBtn.classList.add("hidden");
+  $applyBtn.classList.remove("hidden");
+
+  $reviewTabs.innerHTML = "";
+  langs.forEach((lang, i) => {
+    const btn = document.createElement("button");
+    btn.className = "review-tab" + (i === 0 ? " active" : "");
+    btn.dataset.lang = lang;
+
+    const items = translatedStore[lang] || [];
+    const warns = items.filter(r => calcDelta(r.original, r.translated) > 35).length;
+    btn.innerHTML = lang.toUpperCase() + (warns ? ' <span class="warn-dot"></span>' : "");
+
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".review-tab").forEach(t => t.classList.remove("active"));
+      btn.classList.add("active");
+      renderReviewRows(lang);
+    });
+    $reviewTabs.appendChild(btn);
+  });
+
+  renderReviewRows(langs[0]);
+}
+
+function renderReviewRows(lang) {
+  activeReviewLang = lang;
+  const items = translatedStore[lang] || [];
+  $reviewRows.innerHTML = "";
+
+  let okCount = 0, warnCount = 0, dangerCount = 0, lockedCount = 0;
+
+  items.forEach((item, idx) => {
+    const delta = calcDelta(item.original, item.translated);
+    const cls = item.locked ? "" : deltaClass(delta);
+
+    if (item.locked) lockedCount++;
+    else if (cls === "ok") okCount++;
+    else if (cls === "warn") warnCount++;
+    else dangerCount++;
+
+    const row = document.createElement("div");
+    row.className = "review-row" + (cls === "danger" ? " overflow-danger" : cls === "warn" ? " overflow-warn" : "");
+
+    row.innerHTML =
+      '<div class="review-cell review-original">' + esc(item.original) + '</div>' +
+      '<div class="review-cell review-translated" contenteditable="' + (item.locked ? "false" : "true") + '" data-idx="' + idx + '">' +
+        esc(item.translated) +
+      '</div>' +
+      '<div class="review-cell review-delta ' + cls + '">' +
+        (item.locked ? "&#x1F512;" : deltaLabel(delta)) +
+      '</div>';
+
+    const editCell = row.querySelector(".review-translated");
+    editCell.addEventListener("blur", () => {
+      const newText = editCell.textContent.trim();
+      if (newText && newText !== item.translated) {
+        item.translated = newText;
+        const d = calcDelta(item.original, newText);
+        const dc = deltaClass(d);
+        row.querySelector(".review-delta").className = "review-cell review-delta " + dc;
+        row.querySelector(".review-delta").textContent = deltaLabel(d);
+        row.className = "review-row" + (dc === "danger" ? " overflow-danger" : dc === "warn" ? " overflow-warn" : "");
+        updateReviewSummary();
+      }
+    });
+
+    $reviewRows.appendChild(row);
+  });
+
+  updateReviewSummary();
+}
+
+function updateReviewSummary() {
+  if (!activeReviewLang) return;
+  const items = translatedStore[activeReviewLang] || [];
+  let ok = 0, warn = 0, danger = 0, locked = 0;
+  items.forEach(item => {
+    if (item.locked) { locked++; return; }
+    const d = calcDelta(item.original, item.translated);
+    const c = deltaClass(d);
+    if (c === "ok") ok++;
+    else if (c === "warn") warn++;
+    else danger++;
+  });
+
+  $reviewSummary.innerHTML =
+    '<div class="stat"><span class="dot-sm" style="background:var(--green)"></span> ' + ok + ' fit</div>' +
+    (warn ? '<div class="stat"><span class="dot-sm" style="background:var(--yellow)"></span> ' + warn + ' longer</div>' : '') +
+    (danger ? '<div class="stat"><span class="dot-sm" style="background:var(--red)"></span> ' + danger + ' overflow</div>' : '') +
+    (locked ? '<div class="stat"><span class="dot-sm" style="background:var(--txt3)"></span> ' + locked + ' locked</div>' : '') +
+    '<div class="stat" style="margin-left:auto;color:var(--txt3)">Click any translation to edit</div>';
+
+  const total = items.length;
+  const langs = selectedLangs();
+  $applyLbl.textContent = "Apply " + (langs.length * total) + " strings to " + langs.length + " frame(s)";
+}
+
+/* ================================================================== */
+/*  Step 2: Apply reviewed translations to Figma frames                */
+/* ================================================================== */
+$applyBtn.addEventListener("click", async () => {
+  if (busy) return;
+  setBusy(true);
+
+  const langs = Object.keys(translatedStore);
+  let created = 0;
+
+  for (let li = 0; li < langs.length; li++) {
+    const lang = langs[li];
+    const items = translatedStore[lang];
+
+    const byFrame = {};
+    items.forEach(item => {
+      if (!byFrame[item.frameId]) byFrame[item.frameId] = [];
+      byFrame[item.frameId].push({ path: item.path, text: item.translated });
+    });
+
+    for (const frameId of Object.keys(byFrame)) {
+      parent.postMessage({ pluginMessage: {
+        type: "create-frame",
+        frameId,
+        langCode: lang,
+        langIndex: li,
+        translations: byFrame[frameId],
+        fitOptions: {
+          smartWrap: !!($smartWrap && $smartWrap.checked),
+          sidePadding: Number(($sidePadding && $sidePadding.value) || 0),
+        },
+      }}, "*");
+      created++;
+      await sleep(200);
+    }
+  }
+
+  log("Applied! " + created + " frame(s) created", "ok");
+  setProgress(100, "Done — frames created!");
+
+  $applyBtn.classList.add("hidden");
+  $translateBtn.classList.remove("hidden");
+  $translateBtn.disabled = false;
+  setBusy(false);
+});
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ================================================================== */
+/*  Settings persistence                                               */
+/* ================================================================== */
+function saveSettings() {
+  parent.postMessage({ pluginMessage: {
+    type: "save-settings",
+    settings: {
+      provider,
+      model: $model.value,
+      langs: selectedLangs(),
+      lockTerms: $lockTerms.value || "",
+      smartWrap: !!($smartWrap && $smartWrap.checked),
+      sidePadding: Number(($sidePadding && $sidePadding.value) || 16),
+    },
+  }}, "*");
+}
+
+function applySettings(s) {
+  if (!s) return;
+  if (s.provider) {
+    provider = s.provider;
+    document.querySelectorAll(".toggle-opt").forEach(b => {
+      b.classList.toggle("active", b.dataset.provider === provider);
+    });
+    $proSettings.classList.toggle("hidden", provider === "free");
+  }
+  if (s.model) $model.value = s.model;
+  if (typeof s.lockTerms === "string") $lockTerms.value = s.lockTerms;
+  if (typeof s.smartWrap === "boolean") $smartWrap.checked = s.smartWrap;
+  if (typeof s.sidePadding === "number") $sidePadding.value = String(s.sidePadding);
+  if (s.langs) {
+    document.querySelectorAll(".chip").forEach(chip => {
+      const cb = chip.querySelector("input");
+      const on = s.langs.includes(cb.value);
+      cb.checked = on;
+      chip.classList.toggle("on", on);
+    });
+  }
+}
+
+/* ================================================================== */
+/*  Messages from Figma                                                */
+/* ================================================================== */
+window.onmessage = (e) => {
+  const msg = e.data.pluginMessage;
+  if (!msg) return;
+
+  if (msg.type === "init-data") {
+    applySettings(msg.settings);
+    if (msg.key) $apiKey.value = msg.key;
+  }
+
+  if (msg.type === "key-saved") { /* logged already */ }
+
+  if (msg.type === "scanned") {
+    framesData = msg.frames;
+    let total = 0;
+    $previewBox.innerHTML = "";
+
+    for (const f of framesData) {
+      const label = document.createElement("div");
+      label.className = "frame-label";
+      label.textContent = f.name + "  (" + f.texts.length + " texts)";
+      $previewBox.appendChild(label);
+
+      for (let i = 0; i < f.texts.length; i++) {
+        const row = document.createElement("div");
+        row.className = "text-row";
+        row.innerHTML = '<span class="num">' + (i + 1) + '</span><span class="val">' + esc(f.texts[i].characters) + '</span>';
+        $previewBox.appendChild(row);
+        total++;
+      }
+    }
+
+    $countBadge.textContent = "(" + total + ")";
+    $previewSec.classList.remove("hidden");
+    $emptyState.classList.add("hidden");
+    $translateBtn.disabled = false;
+    updateCost();
+    log("Scanned: " + framesData.length + " frame(s), " + total + " text(s)", "ok");
+  }
+
+  if (msg.type === "error") { log(msg.text, "err"); }
+
+  if (msg.type === "frame-done") {
+    const s = msg.fail
+      ? "[" + msg.langCode.toUpperCase() + "] " + msg.ok + " ok, " + msg.fail + " skipped"
+      : "[" + msg.langCode.toUpperCase() + "] " + msg.ok + " texts applied";
+    log(s, msg.fail ? "warn" : "ok");
+  }
+
+  if (msg.type === "frame-error") {
+    log("[" + msg.langCode.toUpperCase() + "] " + msg.text, "err");
+  }
+};
+
+/* ================================================================== */
+/*  Init                                                               */
+/* ================================================================== */
+parent.postMessage({ pluginMessage: { type: "init" } }, "*");
+</script>
+</body>
+</html>

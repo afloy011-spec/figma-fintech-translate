@@ -1,0 +1,13 @@
+{
+  "name": "figma-fintech-translate",
+  "version": "1.0.0",
+  "description": "Figma plugin — translate fintech UI screens to ES/IT/FR via OpenAI",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.98.0",
+    "esbuild": "^0.20.0"
+  }
+}
