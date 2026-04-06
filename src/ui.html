@@ -2572,7 +2572,7 @@ function splitTrailingSentencePunct(s) {
   const after = s.slice(i + 1);
   if (i < 0) return { core: "", punct: "", after: after };
   let j = i;
-  while (j >= 0 && /[.!?…:;\u2026\u3002\uFF01\uFF1F\uFF1A\uFF1B]/.test(s[j])) j--;
+  while (j >= 0 && /[.!?…:;\u2026\u3002\uFF01\uFF1F\uFF1A\uFF1B\uFF0E\uFE52]/.test(s[j])) j--;
   const punct = s.slice(j + 1, i + 1);
   const core = s.slice(0, j + 1);
   return { core, punct, after };
@@ -2619,7 +2619,11 @@ function applySourceFormatting(original, translated) {
   const src = splitTrailingSentencePunct(mid);
   const got = splitTrailingSentencePunct(t);
 
-  const outCore = mirrorLetterCase(src.core, got.core);
+  const outMirrored = mirrorLetterCase(src.core, got.core);
+  /* Drop any terminal punctuation the MT added; keep only what the source had (src.punct + src.after). */
+  const tail = splitTrailingSentencePunct(outMirrored);
+  const outCore = tail.core + tail.after;
+
   return lead + outCore + src.punct + src.after + trail;
 }
 
