@@ -261,19 +261,22 @@ async function applySmartFit(
 const EXPAND_FRAME_PAD = 8;
 const EXPAND_RELAX_PASSES = 4;
 
-function expandFrameForTextOverflow(textNode: TextNode, frame: FrameNode): void {
+function expandFrameForTextOverflow(textNode: TextNode, frame: FrameNode): boolean {
   const tb = textNode.absoluteBoundingBox;
   const fb = frame.absoluteBoundingBox;
-  if (!tb || !fb) return;
+  if (!tb || !fb) return false;
   const overflowW = tb.x + tb.width - (fb.x + fb.width);
   const overflowH = tb.y + tb.height - (fb.y + fb.height);
-  if (overflowW <= 0 && overflowH <= 0) return;
+  if (overflowW <= 0 && overflowH <= 0) return false;
   const addW = overflowW > 0 ? overflowW + EXPAND_FRAME_PAD : 0;
   const addH = overflowH > 0 ? overflowH + EXPAND_FRAME_PAD : 0;
+  const w0 = frame.width;
+  const h0 = frame.height;
   try {
-    frame.resize(frame.width + addW, frame.height + addH);
+    frame.resize(w0 + addW, h0 + addH);
+    return frame.width !== w0 || frame.height !== h0;
   } catch (_e) {
-    /* Instances / locked components */
+    return false;
   }
 }
 
@@ -282,20 +285,22 @@ function expandFrameForTextOverflow(textNode: TextNode, frame: FrameNode): void 
  * the text’s axis-aligned bounds stick out past the frame (common with
  * fixed-height cards after a longer locale).
  */
-function relaxFramesForTranslatedText(textNodes: TextNode[], root: SceneNode): void {
+function relaxFramesForTranslatedText(textNodes: TextNode[], root: SceneNode): number {
+  const resizedIds = new Set<string>();
   for (let pass = 0; pass < EXPAND_RELAX_PASSES; pass++) {
     for (const t of textNodes) {
       let p: BaseNode | null = t.parent;
       while (p) {
         if (p.type === "PAGE") break;
         if (p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE") {
-          expandFrameForTextOverflow(t, p as FrameNode);
+          if (expandFrameForTextOverflow(t, p as FrameNode)) resizedIds.add(p.id);
         }
         if (p.id === root.id) break;
         p = p.parent;
       }
     }
   }
+  return resizedIds.size;
 }
 
 /* ------------------------------------------------------------------ */
@@ -314,7 +319,7 @@ async function applyTranslationsToRoot(
   root: SceneNode,
   translations: Array<{ path: number[]; text: string }>,
   fo: FitOptions,
-): Promise<{ ok: number; fail: number }> {
+): Promise<{ ok: number; fail: number; framesExpanded: number }> {
   const doAutoScale = fo.autoFontScale === true;
   const minFont     = Math.max(6, Number(fo.minFontSize || 8));
 
@@ -389,15 +394,16 @@ async function applyTranslationsToRoot(
     }
   }
 
+  let framesExpanded = 0;
   const expandOn = fo.expandFrames !== false;
   if (expandOn && records.length) {
-    relaxFramesForTranslatedText(
+    framesExpanded = relaxFramesForTranslatedText(
       records.map((r) => r.node),
       root,
     );
   }
 
-  return { ok, fail };
+  return { ok, fail, framesExpanded };
 }
 
 function stripLangSuffix(name: string): string {
@@ -536,10 +542,13 @@ figma.ui.onmessage = async (msg: any) => {
     }
 
     const fo = fitOptions || {};
-    const { ok, fail } = await applyTranslationsToRoot(clone, translations, fo);
+    const { ok, fail, framesExpanded } = await applyTranslationsToRoot(clone, translations, fo);
 
-    figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });
-    figma.notify(`✓ ${clone.name}  —  ${ok} translated` + (fail ? `, ${fail} skipped` : ""));
+    figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail, framesExpanded });
+    let toast = `✓ ${clone.name} — ${ok} translated`;
+    if (fail) toast += `, ${fail} skipped`;
+    if (framesExpanded) toast += ` · ${framesExpanded} frame(s) enlarged`;
+    figma.notify(toast);
   }
 
   /* ---------- Sync: EN master → existing «Name [ES]» frames on page ---------- */
@@ -616,9 +625,11 @@ figma.ui.onmessage = async (msg: any) => {
     }
 
     const fo = fitOptions || {};
-    const { ok, fail } = await applyTranslationsToRoot(root, translations, fo);
-    figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail });
-    figma.notify(`↻ [${langCode.toUpperCase()}] updated — ${ok} text layer(s)`);
+    const { ok, fail, framesExpanded } = await applyTranslationsToRoot(root, translations, fo);
+    figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail, framesExpanded });
+    let st = `↻ [${langCode.toUpperCase()}] — ${ok} text layer(s)`;
+    if (framesExpanded) st += ` · ${framesExpanded} frame(s) enlarged`;
+    figma.notify(st);
   }
 
   /* ---------- Close ---------- */

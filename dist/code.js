@@ -196,19 +196,24 @@
     const tb = textNode.absoluteBoundingBox;
     const fb = frame.absoluteBoundingBox;
     if (!tb || !fb)
-      return;
+      return false;
     const overflowW = tb.x + tb.width - (fb.x + fb.width);
     const overflowH = tb.y + tb.height - (fb.y + fb.height);
     if (overflowW <= 0 && overflowH <= 0)
-      return;
+      return false;
     const addW = overflowW > 0 ? overflowW + EXPAND_FRAME_PAD : 0;
     const addH = overflowH > 0 ? overflowH + EXPAND_FRAME_PAD : 0;
+    const w0 = frame.width;
+    const h0 = frame.height;
     try {
-      frame.resize(frame.width + addW, frame.height + addH);
+      frame.resize(w0 + addW, h0 + addH);
+      return frame.width !== w0 || frame.height !== h0;
     } catch (_e) {
+      return false;
     }
   }
   function relaxFramesForTranslatedText(textNodes, root) {
+    const resizedIds = /* @__PURE__ */ new Set();
     for (let pass = 0; pass < EXPAND_RELAX_PASSES; pass++) {
       for (const t of textNodes) {
         let p = t.parent;
@@ -216,7 +221,8 @@
           if (p.type === "PAGE")
             break;
           if (p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE") {
-            expandFrameForTextOverflow(t, p);
+            if (expandFrameForTextOverflow(t, p))
+              resizedIds.add(p.id);
           }
           if (p.id === root.id)
             break;
@@ -224,6 +230,7 @@
         }
       }
     }
+    return resizedIds.size;
   }
   async function applyTranslationsToRoot(root, translations, fo) {
     const doAutoScale = fo.autoFontScale === true;
@@ -298,14 +305,15 @@
         }
       }
     }
+    let framesExpanded = 0;
     const expandOn = fo.expandFrames !== false;
     if (expandOn && records.length) {
-      relaxFramesForTranslatedText(
+      framesExpanded = relaxFramesForTranslatedText(
         records.map((r) => r.node),
         root
       );
     }
-    return { ok, fail };
+    return { ok, fail, framesExpanded };
   }
   function stripLangSuffix(name) {
     return name.replace(/\s+\[[A-Za-z]{2}\]\s*$/, "").trim();
@@ -405,9 +413,14 @@
         clone.y = absY;
       }
       const fo = fitOptions || {};
-      const { ok, fail } = await applyTranslationsToRoot(clone, translations, fo);
-      figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });
-      figma.notify(`\u2713 ${clone.name}  \u2014  ${ok} translated` + (fail ? `, ${fail} skipped` : ""));
+      const { ok, fail, framesExpanded } = await applyTranslationsToRoot(clone, translations, fo);
+      figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail, framesExpanded });
+      let toast = `\u2713 ${clone.name} \u2014 ${ok} translated`;
+      if (fail)
+        toast += `, ${fail} skipped`;
+      if (framesExpanded)
+        toast += ` \xB7 ${framesExpanded} frame(s) enlarged`;
+      figma.notify(toast);
     }
     if (msg.type === "sync-reference-scan") {
       const langs = msg.langs;
@@ -471,9 +484,12 @@
         return;
       }
       const fo = fitOptions || {};
-      const { ok, fail } = await applyTranslationsToRoot(root, translations, fo);
-      figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail });
-      figma.notify(`\u21BB [${langCode.toUpperCase()}] updated \u2014 ${ok} text layer(s)`);
+      const { ok, fail, framesExpanded } = await applyTranslationsToRoot(root, translations, fo);
+      figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail, framesExpanded });
+      let st = `\u21BB [${langCode.toUpperCase()}] \u2014 ${ok} text layer(s)`;
+      if (framesExpanded)
+        st += ` \xB7 ${framesExpanded} frame(s) enlarged`;
+      figma.notify(st);
     }
     if (msg.type === "close") {
       figma.closePlugin();

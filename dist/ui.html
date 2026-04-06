@@ -3350,13 +3350,15 @@ window.onmessage = (e) => {
       ? "[↻ " + msg.langCode.toUpperCase() + "] " + msg.ok + " ok, " + msg.fail + " skipped"
       : "[↻ " + msg.langCode.toUpperCase() + "] " + msg.ok + " texts updated";
     if (msg.err) s += " — " + msg.err;
+    else if (msg.framesExpanded > 0) s += " · " + msg.framesExpanded + " frame(s) enlarged";
     log(s, msg.fail || msg.err ? "warn" : "info");
   }
 
   if (msg.type === "frame-done") {
-    const s = msg.fail
+    let s = msg.fail
       ? "[" + msg.langCode.toUpperCase() + "] " + msg.ok + " ok, " + msg.fail + " skipped"
       : "[" + msg.langCode.toUpperCase() + "] " + msg.ok + " texts applied";
+    if (!msg.fail && msg.framesExpanded > 0) s += " · " + msg.framesExpanded + " frame(s) enlarged";
     log(s, msg.fail ? "warn" : "info");
   }
 
