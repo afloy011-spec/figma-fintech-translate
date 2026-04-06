@@ -24,19 +24,19 @@
 
 OpenAI (**Pro**) and Google Translate (**Free**) — plugin UI.
 
-<table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
+<table style="border-collapse:collapse;width:100%;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th width="50%" align="center" style="padding:10px 8px;border-bottom:1px solid #30363d;">OpenAI (Pro) — key &amp; model</th>
-      <th width="50%" align="center" style="padding:10px 8px;border-bottom:1px solid #30363d;">Google Translate (Free) — languages &amp; Scan</th>
+      <th style="width:50%;text-align:center;padding:10px 8px;border-bottom:1px solid #30363d;">OpenAI (Pro) — key &amp; model</th>
+      <th style="width:50%;text-align:center;padding:10px 8px;border-bottom:1px solid #30363d;">Google Translate (Free) — languages &amp; Scan</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="50%" align="center" style="vertical-align:top;padding:12px 8px;">
+      <td style="vertical-align:top;padding:12px 8px;text-align:center;">
         <img src="https://raw.githubusercontent.com/afloy011-spec/figma-fintech-translate/main/docs/screenshots/ui-pro-openai.png" alt="Fintech Translator: OpenAI Pro mode, API key, GPT model" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
       </td>
-      <td width="50%" align="center" style="vertical-align:top;padding:12px 8px;">
+      <td style="vertical-align:top;padding:12px 8px;text-align:center;">
         <img src="https://raw.githubusercontent.com/afloy011-spec/figma-fintech-translate/main/docs/screenshots/ui-free-scan.png" alt="Fintech Translator: Free mode, target languages, Scan Selection" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
       </td>
     </tr>
@@ -186,29 +186,29 @@ Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `u
 
 <p style="margin:0 0 12px 0;color:#656d76;font-size:14px;line-height:1.5;">Most issues are a missing build or a blocked network call — quick checks below.</p>
 
-<table width="100%" style="width:100%;border-collapse:collapse;table-layout:fixed;margin:0 0 16px 0;border:1px solid #d0d7de;">
+<table style="border-collapse:collapse;width:100%;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th width="32%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">What you see</th>
-      <th width="68%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">What to try</th>
+      <th style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;text-align:left;font-weight:600;width:50%;">What you see</th>
+      <th style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;text-align:left;font-weight:600;width:50%;">What to try</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;font-weight:600;">Plugin won’t open / error on launch</td>
-      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Run <code>npm run build</code> — you should have <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, and <code>dist/ui.html</code>.</td>
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;font-weight:600;">Plugin won’t open / error on launch</td>
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Run <code>npm run build</code> — you should have <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, and <code>dist/ui.html</code>.</td>
     </tr>
     <tr>
-      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;font-weight:600;"><code style="background:transparent;">Failed to fetch</code></td>
-      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Check <code>manifest.json</code> → <code>networkAccess</code>; try without VPN/proxy or adjust firewall.</td>
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;font-weight:600;"><code style="background:transparent;">Failed to fetch</code></td>
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Check <code>manifest.json</code> → <code>networkAccess</code>; try without VPN/proxy or adjust firewall.</td>
     </tr>
     <tr>
-      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;font-weight:600;">Wrong frames updated</td>
-      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Selection changed after your last scan → run <strong>Scan Selection</strong> again.</td>
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;font-weight:600;">Wrong frames updated</td>
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Selection changed after your last scan → run <strong>Scan Selection</strong> again.</td>
     </tr>
     <tr>
-      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;font-weight:600;">UI script error</td>
-      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Plugin console — first red stack line. Avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> (older WebViews).</td>
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;font-weight:600;">UI script error</td>
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Plugin console — first red stack line. Avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> (older WebViews).</td>
     </tr>
   </tbody>
 </table>
@@ -217,37 +217,37 @@ Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `u
 
 <p style="margin:0 0 12px 0;color:#656d76;font-size:14px;line-height:1.5;">Rough priorities — <strong>Releases</strong> and <strong>Issues</strong> stay the source of truth.</p>
 
-<table width="100%" style="width:100%;border-collapse:collapse;table-layout:fixed;margin:0 0 8px 0;border:1px solid #d0d7de;">
+<table style="border-collapse:collapse;width:100%;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th width="22%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">Priority</th>
-      <th width="78%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">Direction</th>
+      <th style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;text-align:left;font-weight:600;width:50%;">Priority</th>
+      <th style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;text-align:left;font-weight:600;width:50%;">Direction</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;">
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;">
         <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#ffebe9;color:#a40e26;border:1px solid #ffb3ad;">P1</span>
       </td>
-      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
     </tr>
     <tr>
-      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;">
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;">
         <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#fff8c5;color:#9a6700;border:1px solid #e8d96a;">P2</span>
       </td>
-      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
     </tr>
     <tr>
-      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;">
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;">
         <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#ddf4ff;color:#0969da;border:1px solid #79c0ff;">P3</span>
       </td>
-      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
+      <td style="border:1px solid #d0d7de;background:#ffffff;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
     </tr>
     <tr>
-      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;">
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;">
         <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#f6f8fa;color:#57606a;border:1px solid #d0d7de;">P4</span>
       </td>
-      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">In-plugin glossary editor (today: edit source + <code>npm run build</code>).</td>
+      <td style="border:1px solid #d0d7de;background:#f6f8fa;padding:10px 12px;vertical-align:top;line-height:1.55;word-wrap:break-word;">In-plugin glossary editor (today: edit source + <code>npm run build</code>).</td>
     </tr>
   </tbody>
 </table>
