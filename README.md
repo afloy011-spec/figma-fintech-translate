@@ -2,23 +2,26 @@
 
 # Fintech Translator for Figma
 
-<p align="center">
-  <a href="https://www.figma.com/community"><img src="https://img.shields.io/badge/Figma-Plugin-F24E1E?style=for-the-badge&logo=figma&logoColor=white" height="28" alt="Figma"></a>
-  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node.js-%3E%3D18-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="28" alt="Node.js"></a>
-  <a href="https://github.com/afloy011-spec/figma-fintech-translate/actions"><img src="https://img.shields.io/badge/CI-template-555555?style=for-the-badge&logo=githubactions&logoColor=white" height="28" alt="CI"></a>
+*Scan frames, translate, review copy fit, apply to the canvas — Free (Google) or Pro (OpenAI).*
+
+<p>
+  <a href="https://www.figma.com/community"><img src="https://img.shields.io/badge/Figma-Plugin-F24E1E?style=flat-square&logo=figma&logoColor=white" alt="Figma plugin"></a>
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-%E2%89%A518-24292f?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js 18+"></a>
+  <a href="https://github.com/afloy011-spec/figma-fintech-translate/actions"><img src="https://img.shields.io/badge/CI-template-656d76?style=flat-square&logo=githubactions&logoColor=white" alt="CI"></a>
 </p>
 
-**Fintech / crypto UI localization:** EN → ES · IT · FR · DE · PT (plus KO / ZH / JA where glossary defines terms). Lock brands, **Review (Fit %)** before **Apply**, Smart Fit on canvas.
+**Scope:** fintech / crypto UI — **EN** → ES · IT · FR · DE · PT (KO / ZH / JA follow the glossary). Lock brands, check **Fit %** in Review, then **Apply**; Smart Fit adjusts layout on canvas.
 
-<p align="center">
-  <a href="#installation"><img src="https://img.shields.io/badge/Installation-6366F1?style=for-the-badge" height="32" alt="Installation"></a>
-  &nbsp;
-  <a href="#usage"><img src="https://img.shields.io/badge/Quick%20start-6366F1?style=for-the-badge" height="32" alt="Quick start"></a>
-  &nbsp;
-  <a href="https://github.com/afloy011-spec/figma-fintech-translate/releases"><img src="https://img.shields.io/badge/Releases-6366F1?style=for-the-badge&logo=github&logoColor=white" height="32" alt="Releases"></a>
-  &nbsp;
-  <a href="https://github.com/afloy011-spec/figma-fintech-translate/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Download%20source-238636?style=for-the-badge&logo=github&logoColor=white" height="32" alt="Download ZIP"></a>
-</p>
+<table style="border-collapse:separate;border-spacing:10px;width:100%;max-width:720px;table-layout:fixed;margin:20px 0 8px 0;">
+  <tbody>
+    <tr>
+      <td style="width:25%;text-align:center;vertical-align:middle;border:1px solid #d0d7de;border-radius:8px;padding:12px 6px;background:#f6f8fa;"><a href="#installation"><strong>Installation</strong></a></td>
+      <td style="width:25%;text-align:center;vertical-align:middle;border:1px solid #d0d7de;border-radius:8px;padding:12px 6px;background:#f6f8fa;"><a href="#usage"><strong>Quick start</strong></a></td>
+      <td style="width:25%;text-align:center;vertical-align:middle;border:1px solid #d0d7de;border-radius:8px;padding:12px 6px;background:#f6f8fa;"><a href="https://github.com/afloy011-spec/figma-fintech-translate/releases"><strong>Releases</strong></a></td>
+      <td style="width:25%;text-align:center;vertical-align:middle;border:1px solid #d0d7de;border-radius:8px;padding:12px 6px;background:#f6f8fa;"><a href="https://github.com/afloy011-spec/figma-fintech-translate/archive/refs/heads/main.zip"><strong>Source ZIP</strong></a></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Preview
 
