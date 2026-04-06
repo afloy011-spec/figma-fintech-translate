@@ -698,6 +698,17 @@ select.input {
   pointer-events: none;
 }
 .bottom > * { pointer-events: auto; }
+.bottom-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.bottom-row .btn {
+  flex: 1;
+  min-width: 0;
+}
+.bottom-row .btn + .btn { margin-top: 0; }
+.bottom-row + .btn { margin-top: 8px; }
 .bottom .btn + .btn { margin-top: 8px; }
 .bottom .cost-hint {
   text-align: center;
@@ -1216,7 +1227,7 @@ select.input {
 
   <!-- Review panel (revealed after translation) -->
   <div class="section hidden fade-in" id="reviewSection">
-    <div class="section-label">Translation Summary</div>
+    <div class="section-label">Review <span style="font-weight:400;color:var(--txt3)">· Fit % · then Apply</span></div>
     <div class="review-panel">
       <div class="review-tabs" id="reviewTabs"></div>
       <div class="review-header">
@@ -1321,11 +1332,17 @@ select.input {
 <!--  Bottom bar                                                       -->
 <!-- ================================================================ -->
 <div class="bottom">
-  <button class="btn btn-primary btn-full" id="translateBtn" disabled>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
-    <span id="translateLabel">Translate</span>
-  </button>
-  <button class="btn btn-outline btn-full hidden" id="cancelBtn" style="border-color:var(--red);color:var(--red)">
+  <div class="bottom-row">
+    <button class="btn btn-primary" id="translateBtn" disabled type="button">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+      <span id="translateLabel">Translate</span>
+    </button>
+    <button class="btn btn-secondary hidden" id="applyBtn" disabled type="button">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Apply to canvas
+    </button>
+  </div>
+  <button class="btn btn-outline btn-full hidden" id="cancelBtn" type="button" style="border-color:var(--red);color:var(--red)">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     Cancel
   </button>
@@ -2222,7 +2239,7 @@ const $model        = $("model");
 const $scanBtn      = $("scanBtn");
 const $translateBtn = $("translateBtn");
 const $translateLbl = $("translateLabel");
-const $applyBtn     = null;
+const $applyBtn     = $("applyBtn");
 const $applyLbl     = null;
 const $previewSec   = $("previewSection");
 const $previewBox   = $("previewBox");
@@ -2251,6 +2268,7 @@ const $syncRefBtn    = $("syncRefBtn");
 const $cancelBtn     = $("cancelBtn");
 
 let translatedStore = {};  // { "es": [ {original, translated, path, frameId} ], ... }
+let canvasApplied = false;
 let activeReviewLang = null;
 let cancelRequested = false;
 let myMemoryCharsUsed = 0;
@@ -2429,6 +2447,7 @@ function setBusy(v) {
   busy = v;
   $scanBtn.disabled = v;
   $translateBtn.disabled = v;
+  if ($applyBtn) $applyBtn.disabled = v || $applyBtn.classList.contains("hidden");
   if ($syncRefBtn) $syncRefBtn.disabled = v;
 }
 
@@ -2917,11 +2936,15 @@ $translateBtn.addEventListener("click", async () => {
 
   cancelRequested = false;
   myMemoryCharsUsed = 0;
+  canvasApplied = false;
+  if ($applyBtn) {
+    $applyBtn.classList.add("hidden");
+    $applyBtn.disabled = true;
+  }
   setBusy(true);
   $cancelBtn.classList.remove("hidden");
   $cancelBtn.disabled = false;
   $cancelBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel';
-  $translateBtn.classList.add("hidden");
   $logArea.innerHTML = "";
   translatedStore = {};
 
@@ -2966,38 +2989,13 @@ $translateBtn.addEventListener("click", async () => {
       }
     }
 
-    setProgress(95, "Applying to frames…");
-
-    const multiFrame = framesData.length > 1;
-    let created = 0;
-    const applyLangs = Object.keys(translatedStore);
-
-    for (let li = 0; li < applyLangs.length; li++) {
-      const lang = applyLangs[li];
-      const items = translatedStore[lang];
-      const byFrame = {};
-      items.forEach(item => {
-        if (!byFrame[item.frameId]) byFrame[item.frameId] = [];
-        byFrame[item.frameId].push({ path: item.path, text: item.translated });
-      });
-      for (const frameId of Object.keys(byFrame)) {
-        parent.postMessage({ pluginMessage: {
-          type: "create-frame",
-          frameId,
-          langCode: lang,
-          langIndex: li,
-          multiFrame: multiFrame,
-          translations: byFrame[frameId],
-          fitOptions: fitOptionsPayload(),
-        }}, "*");
-        created++;
-        await sleep(200);
-      }
-    }
-
-    setProgress(100, "Done — " + created + " frame(s)!");
-    log(created + " frame(s) created/updated", "ok");
+    setProgress(100, "Done — review Fit %, then Apply to canvas");
+    log("Translation ready. Check overflow hints in Review, then tap Apply to canvas.", "ok");
     showReviewPanel(langs);
+    if ($applyBtn) {
+      $applyBtn.classList.remove("hidden");
+      $applyBtn.disabled = false;
+    }
   } catch (e) {
     if (e.message === "Cancelled") {
       log("Translation cancelled by user", "warn");
@@ -3006,14 +3004,79 @@ $translateBtn.addEventListener("click", async () => {
       log("Error: " + e.message, "err");
       setProgress(0, "Error — see log");
     }
+    translatedStore = {};
+    if ($applyBtn) {
+      $applyBtn.classList.add("hidden");
+      $applyBtn.disabled = true;
+    }
   }
 
   persistCache();
   $cancelBtn.classList.add("hidden");
-  $translateBtn.classList.remove("hidden");
-  $translateBtn.disabled = false;
   setBusy(false);
 });
+
+/* ================================================================== */
+/*  Step 2: Apply (create/update frames on canvas)                    */
+/* ================================================================== */
+if ($applyBtn) {
+  $applyBtn.addEventListener("click", async () => {
+    if (busy) return;
+    const applyLangs = Object.keys(translatedStore);
+    if (!applyLangs.length) {
+      log("Translate first — nothing to apply", "err");
+      return;
+    }
+    if (!framesData.length) {
+      log("Scan a selection first", "err");
+      return;
+    }
+    setBusy(true);
+    $progressSec.classList.remove("hidden");
+    setProgress(0, "Applying to canvas…");
+    try {
+      const multiFrame = framesData.length > 1;
+      const ops = [];
+      for (let li = 0; li < applyLangs.length; li++) {
+        const lang = applyLangs[li];
+        const items = translatedStore[lang];
+        const byFrame = {};
+        items.forEach(item => {
+          if (!byFrame[item.frameId]) byFrame[item.frameId] = [];
+          byFrame[item.frameId].push({ path: item.path, text: item.translated });
+        });
+        for (const frameId of Object.keys(byFrame)) {
+          ops.push({ lang, langIndex: li, frameId, translations: byFrame[frameId] });
+        }
+      }
+      for (let i = 0; i < ops.length; i++) {
+        const op = ops[i];
+        setProgress(
+          ops.length ? Math.round((i / ops.length) * 100) : 100,
+          "Applying " + op.lang.toUpperCase() + "…",
+        );
+        parent.postMessage({ pluginMessage: {
+          type: "create-frame",
+          frameId: op.frameId,
+          langCode: op.lang,
+          langIndex: op.langIndex,
+          multiFrame: multiFrame,
+          translations: op.translations,
+          fitOptions: fitOptionsPayload(),
+        }}, "*");
+        await sleep(200);
+      }
+      setProgress(100, "Done — " + ops.length + " frame op(s)");
+      log(ops.length + " frame(s) created/updated on canvas", "ok");
+      canvasApplied = true;
+      updateReviewSummary();
+    } catch (e) {
+      log("Apply error: " + e.message, "err");
+      setProgress(0, "Apply failed");
+    }
+    setBusy(false);
+  });
+}
 
 /* ================================================================== */
 /*  Review panel: render                                               */
@@ -3132,15 +3195,16 @@ function updateReviewSummary() {
     else danger++;
   });
 
+  const hint = canvasApplied
+    ? "On canvas — edit cells &amp; tap <strong>Apply</strong> again to sync"
+    : "Tap <strong>Apply to canvas</strong> below when ready";
   $reviewSummary.innerHTML =
     '<div class="stat"><span class="dot-sm" style="background:var(--green)"></span> ' + ok + ' fit</div>' +
     (warn ? '<div class="stat"><span class="dot-sm" style="background:var(--yellow)"></span> ' + warn + ' longer</div>' : '') +
-    (danger ? '<div class="stat"><span class="dot-sm" style="background:var(--red)"></span> ' + danger + ' overflow</div>' : '') +
+    (danger ? '<div class="stat"><span class="dot-sm" style="background:var(--red)"></span> ' + danger + ' overflow risk</div>' : '') +
     (locked ? '<div class="stat"><span class="dot-sm" style="background:var(--txt3)"></span> ' + locked + ' locked</div>' : '') +
-    '<div class="stat" style="margin-left:auto;color:var(--txt3)">Applied — click to edit &amp; re-translate</div>';
+    '<div class="stat" style="margin-left:auto;color:var(--txt3)">' + hint + "</div>";
 }
-
-/* Apply step merged into Translate — see $translateBtn handler above */
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -3241,6 +3305,11 @@ window.onmessage = (e) => {
     $reviewSec.classList.add("hidden");
     $cancelBtn.classList.add("hidden");
     translatedStore = {};
+    canvasApplied = false;
+    if ($applyBtn) {
+      $applyBtn.classList.add("hidden");
+      $applyBtn.disabled = true;
+    }
     hideRescanWarn();
     updateCost();
     log("Scanned: " + framesData.length + " frame(s), " + total + " text(s)", "ok", true);
