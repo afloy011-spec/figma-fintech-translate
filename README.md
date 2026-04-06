@@ -22,6 +22,8 @@
 
 ## Preview
 
+Screenshots are committed under [`docs/screenshots/`](docs/screenshots/) on **`main`**. The `<img>` URLs below point at **`raw.githubusercontent.com`** so images load reliably on GitHub (relative paths inside HTML tables sometimes fail to resolve).
+
 <table style="width:100%; border-collapse:collapse;">
   <thead>
     <tr>
@@ -32,10 +34,10 @@
   <tbody>
     <tr>
       <td style="vertical-align:top; padding:12px 8px;">
-        <img src="docs/screenshots/ui-pro-openai.png" alt="Fintech Translator: OpenAI Pro mode, API key, GPT model" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
+        <img src="https://raw.githubusercontent.com/afloy011-spec/figma-fintech-translate/main/docs/screenshots/ui-pro-openai.png" alt="Fintech Translator: OpenAI Pro mode, API key, GPT model" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
       </td>
       <td style="vertical-align:top; padding:12px 8px;">
-        <img src="docs/screenshots/ui-free-scan.png" alt="Fintech Translator: Free mode, target languages, Scan Selection" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
+        <img src="https://raw.githubusercontent.com/afloy011-spec/figma-fintech-translate/main/docs/screenshots/ui-free-scan.png" alt="Fintech Translator: Free mode, target languages, Scan Selection" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
       </td>
     </tr>
   </tbody>
