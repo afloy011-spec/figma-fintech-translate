@@ -190,6 +190,41 @@
         await scaleFontDown(node, ah, minFont);
     }
   }
+  var EXPAND_FRAME_PAD = 8;
+  var EXPAND_RELAX_PASSES = 4;
+  function expandFrameForTextOverflow(textNode, frame) {
+    const tb = textNode.absoluteBoundingBox;
+    const fb = frame.absoluteBoundingBox;
+    if (!tb || !fb)
+      return;
+    const overflowW = tb.x + tb.width - (fb.x + fb.width);
+    const overflowH = tb.y + tb.height - (fb.y + fb.height);
+    if (overflowW <= 0 && overflowH <= 0)
+      return;
+    const addW = overflowW > 0 ? overflowW + EXPAND_FRAME_PAD : 0;
+    const addH = overflowH > 0 ? overflowH + EXPAND_FRAME_PAD : 0;
+    try {
+      frame.resize(frame.width + addW, frame.height + addH);
+    } catch (_e) {
+    }
+  }
+  function relaxFramesForTranslatedText(textNodes, root) {
+    for (let pass = 0; pass < EXPAND_RELAX_PASSES; pass++) {
+      for (const t of textNodes) {
+        let p = t.parent;
+        while (p) {
+          if (p.type === "PAGE")
+            break;
+          if (p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE") {
+            expandFrameForTextOverflow(t, p);
+          }
+          if (p.id === root.id)
+            break;
+          p = p.parent;
+        }
+      }
+    }
+  }
   async function applyTranslationsToRoot(root, translations, fo) {
     const doAutoScale = fo.autoFontScale === true;
     const minFont = Math.max(6, Number(fo.minFontSize || 8));
@@ -262,6 +297,13 @@
           }
         }
       }
+    }
+    const expandOn = fo.expandFrames !== false;
+    if (expandOn && records.length) {
+      relaxFramesForTranslatedText(
+        records.map((r) => r.node),
+        root
+      );
     }
     return { ok, fail };
   }

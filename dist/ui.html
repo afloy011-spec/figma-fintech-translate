@@ -1219,6 +1219,13 @@ select.input {
           </div>
         </div>
         <div class="fit-row">
+          <label class="fit-toggle" id="expandFramesToggle">
+            <input type="checkbox" id="expandFrames" checked />
+            <span class="fit-toggle-track"></span>
+            <span class="fit-toggle-label">Grow frames when text overflows</span>
+          </label>
+        </div>
+        <div class="fit-row">
           <label class="fit-toggle" id="scaleToggle">
             <input type="checkbox" id="autoFontScale" />
             <span class="fit-toggle-track"></span>
@@ -1234,7 +1241,7 @@ select.input {
           </div>
         </div>
       </div>
-      <p class="hint">Wrap turns single-line text into wrapping mode. Auto scale shrinks type to prevent overflow in fixed containers.</p>
+      <p class="hint">Wrap turns single-line text into wrapping mode. <strong>Grow frames</strong> widens/talls fixed cards (e.g. glass panels) so longer translations stay inside. Auto scale shrinks type instead.</p>
     </div>
   </div>
 
@@ -2235,6 +2242,11 @@ if ($smartWrap) {
     saveSettings();
   });
 }
+if ($expandFrames) {
+  $expandFrames.addEventListener("change", () => {
+    saveSettings();
+  });
+}
 
 if ($sidePadding) {
   $sidePadding.addEventListener("input", () => {
@@ -2260,6 +2272,7 @@ if ($padPlus && $sidePadding) {
   });
 }
 
+const $expandFrames  = document.getElementById("expandFrames");
 const $autoFontScale = document.getElementById("autoFontScale");
 const $minFontSize   = document.getElementById("minFontSize");
 const $minFontMinus  = document.getElementById("minFontMinus");
@@ -2434,6 +2447,7 @@ function fitOptionsPayload() {
   return {
     smartWrap:     !!($smartWrap     && $smartWrap.checked),
     sidePadding:   Number(($sidePadding  && $sidePadding.value)  || 0),
+    expandFrames:  $expandFrames == null ? true : !!$expandFrames.checked,
     autoFontScale: !!($autoFontScale && $autoFontScale.checked),
     minFontSize:   Number(($minFontSize  && $minFontSize.value)   || 8),
   };
@@ -3085,6 +3099,7 @@ function saveSettings() {
       lockTerms: $lockTerms.value || "",
       smartWrap:     !!($smartWrap     && $smartWrap.checked),
       sidePadding:   Number(($sidePadding  && $sidePadding.value)  || 16),
+      expandFrames:  $expandFrames == null ? true : !!$expandFrames.checked,
       autoFontScale: !!($autoFontScale && $autoFontScale.checked),
       minFontSize:   Number(($minFontSize  && $minFontSize.value)   || 8),
     },
@@ -3104,6 +3119,9 @@ function applySettings(s) {
   if (typeof s.lockTerms    === "string")  $lockTerms.value        = s.lockTerms;
   if (typeof s.smartWrap    === "boolean") $smartWrap.checked      = s.smartWrap;
   if (typeof s.sidePadding  === "number")  $sidePadding.value      = String(s.sidePadding);
+  if (typeof s.expandFrames === "boolean" && $expandFrames) {
+    $expandFrames.checked = s.expandFrames;
+  }
   if (typeof s.autoFontScale === "boolean" && $autoFontScale) {
     $autoFontScale.checked = s.autoFontScale;
     syncFontScaleUI();
@@ -3246,6 +3264,7 @@ window.onmessage = (e) => {
             fitOptions: {
               smartWrap:     fo.smartWrap,
               sidePadding:   fo.sidePadding,
+              expandFrames:  fo.expandFrames,
               autoFontScale: fo.autoFontScale,
               minFontSize:   fo.minFontSize,
             },

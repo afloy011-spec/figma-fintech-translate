@@ -81,6 +81,8 @@ interface FitOptions {
   sidePadding?: number;
   autoFontScale?: boolean;
   minFontSize?: number;
+  /** Grow ancestor frames when translated text sticks out (fixed / glass cards). Default on. */
+  expandFrames?: boolean;
 }
 
 /* ------------------------------------------------------------------ */
@@ -253,6 +255,50 @@ async function applySmartFit(
 }
 
 /* ------------------------------------------------------------------ */
+/*  Expand frames so longer translations stay inside glass / fixed cards   */
+/* ------------------------------------------------------------------ */
+
+const EXPAND_FRAME_PAD = 8;
+const EXPAND_RELAX_PASSES = 4;
+
+function expandFrameForTextOverflow(textNode: TextNode, frame: FrameNode): void {
+  const tb = textNode.absoluteBoundingBox;
+  const fb = frame.absoluteBoundingBox;
+  if (!tb || !fb) return;
+  const overflowW = tb.x + tb.width - (fb.x + fb.width);
+  const overflowH = tb.y + tb.height - (fb.y + fb.height);
+  if (overflowW <= 0 && overflowH <= 0) return;
+  const addW = overflowW > 0 ? overflowW + EXPAND_FRAME_PAD : 0;
+  const addH = overflowH > 0 ? overflowH + EXPAND_FRAME_PAD : 0;
+  try {
+    frame.resize(frame.width + addW, frame.height + addH);
+  } catch (_e) {
+    /* Instances / locked components */
+  }
+}
+
+/**
+ * Walk each text node’s ancestors up to `root` and widen/tall frames when
+ * the text’s axis-aligned bounds stick out past the frame (common with
+ * fixed-height cards after a longer locale).
+ */
+function relaxFramesForTranslatedText(textNodes: TextNode[], root: SceneNode): void {
+  for (let pass = 0; pass < EXPAND_RELAX_PASSES; pass++) {
+    for (const t of textNodes) {
+      let p: BaseNode | null = t.parent;
+      while (p) {
+        if (p.type === "PAGE") break;
+        if (p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE") {
+          expandFrameForTextOverflow(t, p as FrameNode);
+        }
+        if (p.id === root.id) break;
+        p = p.parent;
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /*  Apply translated strings to an existing subtree (clone or localized frame) */
 /* ------------------------------------------------------------------ */
 
@@ -341,6 +387,14 @@ async function applyTranslationsToRoot(
         } catch (_e2) { /* skip */ }
       }
     }
+  }
+
+  const expandOn = fo.expandFrames !== false;
+  if (expandOn && records.length) {
+    relaxFramesForTranslatedText(
+      records.map((r) => r.node),
+      root,
+    );
   }
 
   return { ok, fail };
