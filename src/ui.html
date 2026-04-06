@@ -217,6 +217,41 @@ header .ver {
   border-top: 1px solid var(--border-lt);
   margin-bottom: 0;
 }
+.smartfit-reset {
+  margin-top: 10px;
+  font-size: 11px;
+}
+.smartfit-reset button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+}
+.designer-tips {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-lt);
+  font-size: 11px;
+  color: var(--txt2);
+  line-height: 1.5;
+}
+.designer-tips summary {
+  cursor: pointer;
+  color: var(--primary-h);
+  font-weight: 600;
+  list-style: none;
+}
+.designer-tips summary::-webkit-details-marker { display: none; }
+.designer-tips ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+.designer-tips li { margin-bottom: 6px; }
+.designer-tips strong { color: var(--txt); font-weight: 600; }
 
 /* Card surfaces — Smart Fit / Sync / Scan / Progress */
 .panel {
@@ -1242,6 +1277,17 @@ select.input {
         </div>
       </div>
       <p class="hint">Wrap turns single-line text into wrapping mode. <strong>Grow frames</strong> widens/talls fixed cards (e.g. glass panels) so longer translations stay inside. Auto scale shrinks type instead.</p>
+      <div class="smartfit-reset">
+        <button type="button" id="smartFitRecommendedBtn">Use recommended defaults</button>
+      </div>
+      <details class="designer-tips">
+        <summary>Layout tips — complex screens &amp; glass cards</summary>
+        <ul>
+          <li><strong>One frame per screen.</strong> Select the whole artboard (e.g. &quot;10&quot;). We clone it as one piece so staggered cards stay aligned with the illustration.</li>
+          <li><strong>Inside each card,</strong> use vertical Auto Layout for list rows (icon + text). When text wraps, rows grow together; <strong>Grow frames</strong> expands the glass panel behind.</li>
+          <li><strong>Long languages (ES, DE…):</strong> keep <strong>Wrap</strong> + <strong>Grow frames</strong> on. Use <strong>Auto scale font</strong> only for fixed-size UI (tiny buttons, badges).</li>
+        </ul>
+      </details>
     </div>
   </div>
 
@@ -2289,6 +2335,18 @@ function syncFontScaleUI() {
 if ($autoFontScale) {
   $autoFontScale.addEventListener("change", function() { syncFontScaleUI(); saveSettings(); });
   syncFontScaleUI();
+}
+const $smartFitRecommendedBtn = $("smartFitRecommendedBtn");
+if ($smartFitRecommendedBtn) {
+  $smartFitRecommendedBtn.addEventListener("click", () => {
+    if ($smartWrap) $smartWrap.checked = true;
+    if ($expandFrames) $expandFrames.checked = true;
+    if ($autoFontScale) $autoFontScale.checked = false;
+    if ($sidePadding) $sidePadding.value = "16";
+    syncFontScaleUI();
+    saveSettings();
+    log("Smart Fit: recommended defaults (wrap + grow on, scale off, padding 16)", "info");
+  });
 }
 if ($minFontMinus && $minFontSize) {
   $minFontMinus.addEventListener("click", () => {
