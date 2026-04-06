@@ -341,26 +341,26 @@
         replaceY = existing[0].y;
         existing[0].remove();
       }
-      const clone = orig.clone();
+      const gap = 80;
+      const origFrame = orig;
+      const absX = origFrame.absoluteTransform[0][2];
+      const absY = origFrame.absoluteTransform[1][2];
+      const ow = origFrame.width || 400;
+      const oh = origFrame.height || 400;
+      const clone = origFrame.clone();
       clone.name = wantName;
-      const needsReparent = clone.parent !== figma.currentPage;
-      if (needsReparent) {
+      if (clone.parent !== figma.currentPage) {
         figma.currentPage.appendChild(clone);
       }
-      const gap = 80;
-      const ow = "width" in orig ? orig.width : 400;
-      const oh = "height" in orig ? orig.height : 400;
-      const baseX = needsReparent ? orig.absoluteTransform[0][2] : orig.x;
-      const baseY = needsReparent ? orig.absoluteTransform[1][2] : orig.y;
       if (replaceX !== null && replaceY !== null) {
         clone.x = replaceX;
         clone.y = replaceY;
       } else if (multiFrame === true) {
-        clone.x = baseX;
-        clone.y = baseY + (oh + gap) * (langIndex + 1);
+        clone.x = absX;
+        clone.y = absY + (oh + gap) * (langIndex + 1);
       } else {
-        clone.x = baseX + (ow + gap) * (langIndex + 1);
-        clone.y = baseY;
+        clone.x = absX + (ow + gap) * (langIndex + 1);
+        clone.y = absY;
       }
       const fo = fitOptions || {};
       const { ok, fail } = await applyTranslationsToRoot(clone, translations, fo);

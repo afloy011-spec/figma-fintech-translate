@@ -453,36 +453,32 @@ figma.ui.onmessage = async (msg: any) => {
       existing[0].remove();
     }
 
-    const clone = (orig as FrameNode).clone();
+    /* Capture position & size BEFORE clone() — cloning into an auto-layout
+       shifts siblings, so reading coords after clone gives wrong values.   */
+    const gap = 80;
+    const origFrame = orig as FrameNode;
+    const absX = origFrame.absoluteTransform[0][2];
+    const absY = origFrame.absoluteTransform[1][2];
+    const ow   = origFrame.width  || 400;
+    const oh   = origFrame.height || 400;
+
+    const clone = origFrame.clone();
     clone.name = wantName;
 
-    /* Smart alignment: if clone landed inside an auto-layout or nested
-       container, pull it out to the page so we can position freely.       */
-    const needsReparent = clone.parent !== figma.currentPage;
-    if (needsReparent) {
+    /* Always move to page root so auto-layouts don't trap the clone. */
+    if (clone.parent !== figma.currentPage) {
       figma.currentPage.appendChild(clone);
     }
-
-    const gap = 80;
-    const ow = "width" in orig ? (orig as FrameNode).width : 400;
-    const oh = "height" in orig ? (orig as FrameNode).height : 400;
-
-    const baseX = needsReparent
-      ? (orig as FrameNode).absoluteTransform[0][2]
-      : orig.x;
-    const baseY = needsReparent
-      ? (orig as FrameNode).absoluteTransform[1][2]
-      : orig.y;
 
     if (replaceX !== null && replaceY !== null) {
       clone.x = replaceX;
       clone.y = replaceY;
     } else if (multiFrame === true) {
-      clone.x = baseX;
-      clone.y = baseY + (oh + gap) * (langIndex + 1);
+      clone.x = absX;
+      clone.y = absY + (oh + gap) * (langIndex + 1);
     } else {
-      clone.x = baseX + (ow + gap) * (langIndex + 1);
-      clone.y = baseY;
+      clone.x = absX + (ow + gap) * (langIndex + 1);
+      clone.y = absY;
     }
 
     const fo = fitOptions || {};
