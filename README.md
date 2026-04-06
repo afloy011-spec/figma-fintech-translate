@@ -1,101 +1,247 @@
+<a id="top"></a>
+
 # Fintech Translator for Figma
 
-Figma plugin for fintech/crypto localization: EN → ES / IT / FR / DE / PT (+ optional KO/ZH/JA in glossary), lock terms, **Review (Fit %)** before **Apply**, and Smart Fit on the canvas so translated UI does not break.
+<p align="center">
+  <a href="https://www.figma.com/community"><img src="https://img.shields.io/badge/Figma-Plugin-F24E1E?style=for-the-badge&logo=figma&logoColor=white" height="28" alt="Figma"></a>
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node.js-%3E%3D18-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" height="28" alt="Node.js"></a>
+  <a href="https://github.com/afloy011-spec/figma-fintech-translate/actions"><img src="https://img.shields.io/badge/CI-template-555555?style=for-the-badge&logo=githubactions&logoColor=white" height="28" alt="CI"></a>
+</p>
+
+**Fintech / crypto UI localization:** EN → ES · IT · FR · DE · PT (plus KO / ZH / JA where glossary defines terms). Lock brands, **Review (Fit %)** before **Apply**, Smart Fit on canvas.
+
+<p align="center">
+  <a href="#installation"><img src="https://img.shields.io/badge/Installation-6366F1?style=for-the-badge" height="32" alt="Installation"></a>
+  &nbsp;
+  <a href="#usage"><img src="https://img.shields.io/badge/Quick%20start-6366F1?style=for-the-badge" height="32" alt="Quick start"></a>
+  &nbsp;
+  <a href="https://github.com/afloy011-spec/figma-fintech-translate/releases"><img src="https://img.shields.io/badge/Releases-6366F1?style=for-the-badge&logo=github&logoColor=white" height="32" alt="Releases"></a>
+  &nbsp;
+  <a href="https://github.com/afloy011-spec/figma-fintech-translate/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/Download%20source-238636?style=for-the-badge&logo=github&logoColor=white" height="32" alt="Download ZIP"></a>
+</p>
 
 ## Preview
 
-| | |
-|--|--|
-| **TODO** | Add a short screen recording (GIF/WebM) or 2–3 screenshots: Scan → Review with Fit % → Apply. Replace this table in a PR. |
+<table style="width:100%; border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th style="width:50%; text-align:center; padding:10px 8px; border-bottom:1px solid #30363d;">OpenAI (Pro) — key &amp; model</th>
+      <th style="width:50%; text-align:center; padding:10px 8px; border-bottom:1px solid #30363d;">Google Translate (Free) — languages &amp; Scan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="vertical-align:top; padding:12px 8px;">
+        <img src="docs/screenshots/ui-pro-openai.png" alt="Fintech Translator: OpenAI Pro mode, API key, GPT model" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
+      </td>
+      <td style="vertical-align:top; padding:12px 8px;">
+        <img src="docs/screenshots/ui-free-scan.png" alt="Fintech Translator: Free mode, target languages, Scan Selection" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-*People install Figma plugins faster when they see the UI first — drop files into `docs/` and link them here.*
+> [!TIP]
+> Add a short **GIF** (Scan → Review → Apply) in `docs/screenshots/` and extend the table above with a third column or a new row when you have it.
+
+<p align="right"><a href="#top">↑ Back to top</a></p>
+
+## Table of contents
+
+- [Features](#features)
+- [Repository layout](#repository-layout)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Free vs Pro](#free-vs-pro)
+- [Testing & CI](#testing--ci)
+- [Compatibility](#compatibility)
+- [Security](#security)
+- [Troubleshooting](#troubleshooting)
+- [Roadmap](#roadmap)
 
 ## Features
 
-- **Languages:** English source → Spanish, Italian, French, German, Portuguese (and extended glossary entries for KO/ZH/JA where defined).
-- **Engines:** **Free** (Google Translate + MyMemory fallback) · **Pro** (OpenAI + key).
-- **Glossary:** Fintech / crowdlending / crypto vocabulary; **exact + case-insensitive + longest substring** match in Free mode (e.g. `P2P lending` inside `P2P lending platform`). Pro still gets glossary in the prompt.
-- **Flow:** **Scan** → **Translate** → **Review & edit** (Fit delta %) → primary button switches to **Apply to canvas** → optional re-apply after edits. New run: **Scan** again.
-- **Smart Fit:** wrap, padding, grow frames on overflow, optional auto font scale (see `src/code.ts`).
-- **Multi-frame:** several scanned frames → translated clones stack **below**; single frame → clones to the **right**.
-- **Cache & settings** in `clientStorage`.
+- **Engines:** **Free** (Google Translate + MyMemory fallback) · **Pro** (OpenAI + your key).
+- **Glossary:** fintech / crowdlending / crypto map + **exact, case-insensitive, longest substring** match in Free mode (e.g. `P2P lending` inside `P2P lending platform`). Pro also gets glossary in the prompt.
+- **Flow:** **Scan** → **Translate** → **Review** (Fit % deltas) → main button becomes **Apply to canvas** → re-apply after edits. New language batch: **Scan** again.
+- **Smart Fit:** wrap, padding, grow frames, optional auto font scale (`src/code.ts`).
+- **Multi-frame:** multiple scanned frames → clones **below**; single frame → clones **to the right**.
+- **Cache & settings** in Figma `clientStorage`.
+
+<p align="right"><a href="#top">↑ Back to top</a></p>
 
 ## Repository layout
 
 ```text
 figma-fintech-translate/
-├── manifest.json          # points at dist/ (build output)
+├── manifest.json           # main: dist/code.js, ui: dist/ui.html
 ├── build.mjs
 ├── package.json
 ├── src/
-│   ├── code.ts            # Figma sandbox
-│   ├── ui.html            # Plugin UI (copied to dist/)
-│   └── glossary-lookup.mjs # Shared glossary logic → dist/glossary-lookup.js
-└── dist/                  # Generated — not committed; run npm run build
+│   ├── code.ts
+│   ├── ui.html
+│   └── glossary-lookup.mjs
+├── dist/                   # gitignored — npm run build
+└── docs/
+    ├── ci-workflow.yml     # copy → .github/workflows/ci.yml to enable Actions
+    └── screenshots/
 ```
 
-## Install (development)
+## Installation
 
-```bash
-npm install
-npm run build
-npm test    # recommended locally; same as CI when enabled
-```
+> [!IMPORTANT]
+> **`dist/` is not in git.** After clone or ZIP download you must run **`npm install`** and **`npm run build`** before importing the plugin in Figma.
 
-In **Figma Desktop:** **Plugins** → **Development** → **Import plugin from manifest…** → choose **`manifest.json`**.
+<table style="width:100%; border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th style="text-align:left; padding:8px; width:34%; border-bottom:1px solid #30363d;">Option</th>
+      <th style="text-align:left; padding:8px; border-bottom:1px solid #30363d;">Steps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="vertical-align:top; padding:10px 8px;"><strong>A. Git clone</strong></td>
+      <td style="vertical-align:top; padding:10px 8px;">
+        <code>git clone https://github.com/afloy011-spec/figma-fintech-translate.git</code><br>
+        <code>cd figma-fintech-translate</code><br>
+        <code>npm install && npm run build</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; padding:10px 8px;"><strong>B. Download ZIP</strong></td>
+      <td style="vertical-align:top; padding:10px 8px;">
+        Use the green <strong>Download source</strong> button above (or Releases). Unzip, then in the folder: <code>npm install && npm run build</code>.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-After pulling changes, run `npm run build` again so `dist/` includes `glossary-lookup.js`, `code.js`, and `ui.html`.
+1. **Figma Desktop** → **Plugins** → **Development** → **Import plugin from manifest…**
+2. Select **`manifest.json`** in the project root.
+3. Run **Plugins → Development → Fintech Translator** (name from manifest).
 
-## Releases & zip files
+Russian walkthrough: **[INSTALL.md](./INSTALL.md)**.
 
-- **Do not commit** `dist/`, `*.zip`, or other build artifacts to `main`.
-- For teammates who do not use Git, attach a **zip of the repo** (without `node_modules`) to **[GitHub Releases](https://github.com/afloy011-spec/figma-fintech-translate/releases)** after `npm run build`, or ask them to clone and build locally.
-- Russian step-by-step: see **[INSTALL.md](./INSTALL.md)**.
+> [!NOTE]
+> Prebuilt zips for non-developers belong in **[GitHub Releases](https://github.com/afloy011-spec/figma-fintech-translate/releases)** (run `npm run build` before zipping). Do not commit `dist/` or large `.zip` files to `main`.
 
-## Usage (short)
+<p align="right"><a href="#top">↑ Back to top</a></p>
+
+## Usage
 
 1. Select frame(s) with text → open the plugin.
-2. **Scan Selection** → **Translate** → check **Review** (red/yellow Fit % = longer strings).
-3. **Apply to canvas** → clones like `Frame [ES]`.
-4. Edit cells in Review if needed → **Apply to canvas** again.
+2. **Scan Selection** → **Translate** → check **Review** (yellow/red **Fit %** = longer copy vs source).
+3. **Apply to canvas** → frames like `Name [ES]`.
+4. Edit Review cells if needed → **Apply to canvas** again.
+
+<p align="right"><a href="#top">↑ Back to top</a></p>
 
 ## Free vs Pro
 
-| | Free | Pro |
-|---|-----|-----|
-| Key | No | OpenAI `sk-…` |
-| Glossary | Map + substring match + prompt (Pro only for LLM) | In prompt + same map |
-| Limits | Public endpoints; MyMemory uses a **session-only** char budget in the UI (resets when the plugin reloads), not a real daily quota from the API | Per OpenAI billing |
+<table style="width:100%; border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th style="text-align:left; padding:8px; width:22%; border-bottom:1px solid #30363d;"></th>
+      <th style="text-align:center; padding:8px; width:39%; border-bottom:1px solid #30363d;">Free</th>
+      <th style="text-align:center; padding:8px; width:39%; border-bottom:1px solid #30363d;">Pro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #21262d;"><strong>API key</strong></td>
+      <td style="text-align:center; padding:8px; border-bottom:1px solid #21262d;">Not required</td>
+      <td style="text-align:center; padding:8px; border-bottom:1px solid #21262d;">OpenAI <code>sk-…</code></td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #21262d;"><strong>Glossary</strong></td>
+      <td style="text-align:center; padding:8px; border-bottom:1px solid #21262d;">Map + substring match</td>
+      <td style="text-align:center; padding:8px; border-bottom:1px solid #21262d;">Prompt + same map</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;"><strong>Limits</strong></td>
+      <td style="text-align:center; padding:8px;">Public endpoints; MyMemory uses a <strong>session-only</strong> char budget in the UI (resets when the plugin reloads)</td>
+      <td style="text-align:center; padding:8px;">Per your OpenAI plan</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Testing & CI
 
-- **Unit tests:** `npm test` — glossary resolution (`src/glossary-lookup.mjs`) and Fit % heuristic (mirrors `ui.html`).
-- **GitHub Actions:** copy [`docs/ci-workflow.yml`](./docs/ci-workflow.yml) to `.github/workflows/ci.yml` and commit (first time you may need to add the file in the GitHub UI if your token lacks the `workflow` scope). Then every push/PR runs `npm ci` → `npm test` → `npm run build`.
-- **Not covered yet:** Figma sandbox (`code.ts`) smart-fit — would need API mocks or harness; glossary/Fit logic is where regressions hurt most today.
+- **Tests:** `npm test` — `src/glossary-lookup.mjs` + Fit % heuristic (mirrors `ui.html`).
+- **CI:** copy [`docs/ci-workflow.yml`](./docs/ci-workflow.yml) to `.github/workflows/ci.yml` (GitHub UI works if your token lacks the `workflow` OAuth scope). Then: `npm ci` → `npm test` → `npm run build` on each push/PR.
+- **Not covered:** Figma sandbox smart-fit (`code.ts`) without a harness.
+
+<p align="right"><a href="#top">↑ Back to top</a></p>
 
 ## Compatibility
 
-- Plugin UI: avoid optional chaining / nullish coalescing in **inline** `ui.html` script where older WebViews break; `code.ts` is compiled to ES2017.
+Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `ui.html` script where older WebViews break. `code.ts` targets **ES2017** via esbuild.
 
 ## Security
 
-- OpenAI key: `clientStorage` only; never commit keys or paste them in screenshots.
+> [!IMPORTANT]
+> OpenAI keys live in **Figma `clientStorage`** only and are sent to **OpenAI** in Pro mode. Never commit keys or show them in screenshots.
 
 ## Troubleshooting
 
-| Issue | Try |
-|-------|-----|
-| Plugin error on open | Run `npm run build`; ensure `dist/glossary-lookup.js` exists next to `dist/ui.html`. |
-| `Failed to fetch` | Check `manifest.json` `networkAccess` and corporate proxy/VPN. |
-| Wrong frames updated | Selection changed after scan → **Scan Selection** again. |
-| UI script error | First red line in the plugin console; avoid `?.` / `??` in `ui.html` inline script. |
+<table style="width:100%; border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th style="text-align:left; padding:8px; width:32%; border-bottom:1px solid #30363d;">Issue</th>
+      <th style="text-align:left; padding:8px; border-bottom:1px solid #30363d;">What to try</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Plugin error on open</td>
+      <td style="padding:8px; border-bottom:1px solid #21262d;"><code>npm run build</code> — ensure <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, <code>dist/ui.html</code> exist.</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #21262d;"><code>Failed to fetch</code></td>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Check <code>manifest.json</code> <code>networkAccess</code> and proxy/VPN.</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Wrong frames updated</td>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Selection changed after scan → <strong>Scan Selection</strong> again.</td>
+    </tr>
+    <tr>
+      <td style="padding:8px;">UI script error</td>
+      <td style="padding:8px;">Plugin console — first red line; avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> script.</td>
+    </tr>
+  </tbody>
+</table>
 
-## Roadmap (prioritized)
+## Roadmap
 
-1. **Quality:** Figma-side smart-fit regression tests (mock `TextNode` / frames) or snapshot tests for `applySmartFit` branches.
-2. **Product:** Translation memory export/import; optional “always horizontal / vertical” clone placement.
-3. **Platform:** Publish to Figma Community when stable; keep Releases for private teams.
-4. **Glossary:** UI editor for custom rows (today: edit source + rebuild).
+<table style="width:100%; border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th style="text-align:left; padding:8px; width:14%; border-bottom:1px solid #30363d;">Priority</th>
+      <th style="text-align:left; padding:8px; border-bottom:1px solid #30363d;">Direction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="vertical-align:top; padding:8px; border-bottom:1px solid #21262d;"><strong>P1</strong></td>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; padding:8px; border-bottom:1px solid #21262d;"><strong>P2</strong></td>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; padding:8px; border-bottom:1px solid #21262d;"><strong>P3</strong></td>
+      <td style="padding:8px; border-bottom:1px solid #21262d;">Figma Community publish when stable; keep Releases for teams.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; padding:8px;"><strong>P4</strong></td>
+      <td style="padding:8px;">In-plugin glossary editor (today: edit source + rebuild).</td>
+    </tr>
+  </tbody>
+</table>
+
+<p align="right"><a href="#top">↑ Back to top</a></p>
 
 ---
 
