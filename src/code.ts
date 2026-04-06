@@ -444,12 +444,13 @@ figma.ui.onmessage = async (msg: any) => {
       (n) => n.name === wantName &&
         (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE"),
     );
+
+    let replaceX: number | null = null;
+    let replaceY: number | null = null;
     if (existing.length > 0) {
-      const fo = fitOptions || {};
-      const { ok, fail } = await applyTranslationsToRoot(existing[0] as SceneNode, translations, fo);
-      figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });
-      figma.notify(`↻ ${wantName} updated — ${ok} translated` + (fail ? `, ${fail} skipped` : ""));
-      return;
+      replaceX = (existing[0] as FrameNode).x;
+      replaceY = (existing[0] as FrameNode).y;
+      existing[0].remove();
     }
 
     const clone = (orig as FrameNode).clone();
@@ -458,9 +459,11 @@ figma.ui.onmessage = async (msg: any) => {
     const gap = 80;
     const ow = "width" in orig ? (orig as FrameNode).width : 400;
     const oh = "height" in orig ? (orig as FrameNode).height : 400;
-    // Single selection: clones to the right (classic deck). Multiple frames in one scan:
-    // horizontal offset would collide with neighbours — stack clones below each source.
-    if (multiFrame === true) {
+
+    if (replaceX !== null && replaceY !== null) {
+      clone.x = replaceX;
+      clone.y = replaceY;
+    } else if (multiFrame === true) {
       clone.x = orig.x;
       clone.y = orig.y + (oh + gap) * (langIndex + 1);
     } else {

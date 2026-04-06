@@ -334,19 +334,22 @@
       const existing = figma.currentPage.findAll(
         (n) => n.name === wantName && (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE")
       );
+      let replaceX = null;
+      let replaceY = null;
       if (existing.length > 0) {
-        const fo2 = fitOptions || {};
-        const { ok: ok2, fail: fail2 } = await applyTranslationsToRoot(existing[0], translations, fo2);
-        figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok: ok2, fail: fail2 });
-        figma.notify(`\u21BB ${wantName} updated \u2014 ${ok2} translated` + (fail2 ? `, ${fail2} skipped` : ""));
-        return;
+        replaceX = existing[0].x;
+        replaceY = existing[0].y;
+        existing[0].remove();
       }
       const clone = orig.clone();
       clone.name = wantName;
       const gap = 80;
       const ow = "width" in orig ? orig.width : 400;
       const oh = "height" in orig ? orig.height : 400;
-      if (multiFrame === true) {
+      if (replaceX !== null && replaceY !== null) {
+        clone.x = replaceX;
+        clone.y = replaceY;
+      } else if (multiFrame === true) {
         clone.x = orig.x;
         clone.y = orig.y + (oh + gap) * (langIndex + 1);
       } else {
