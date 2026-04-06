@@ -27,6 +27,15 @@
     }
     return cur;
   }
+  function tryDisableHyphenation(node) {
+    try {
+      const n = node;
+      if (typeof n.hyphenationEnabled === "boolean") {
+        n.hyphenationEnabled = false;
+      }
+    } catch (_e) {
+    }
+  }
   async function loadFonts(t) {
     if (t.fontName === figma.mixed) {
       const seen = /* @__PURE__ */ new Set();
@@ -147,6 +156,89 @@
         await scaleFontDown(node, ah, minFont);
     }
   }
+  async function applyTranslationsToRoot(root, translations, fo) {
+    const doAutoScale = fo.autoFontScale === true;
+    const minFont = Math.max(6, Number(fo.minFontSize || 8));
+    const records = [];
+    let ok = 0;
+    let fail = 0;
+    const foNoScale = {
+      smartWrap: fo.smartWrap,
+      sidePadding: fo.sidePadding,
+      autoFontScale: false,
+      minFontSize: fo.minFontSize
+    };
+    for (const t of translations) {
+      const node = nodeAtPath(root, t.path);
+      if (node && node.type === "TEXT") {
+        try {
+          const originalWidth = node.width;
+          const originalFontSize = node.fontSize === figma.mixed ? 0 : node.fontSize;
+          const wasWAH = node.textAutoResize === "WIDTH_AND_HEIGHT";
+          const inAL = parentIsAutoLayout(node);
+          await loadFonts(node);
+          node.characters = t.text;
+          tryDisableHyphenation(node);
+          await applySmartFit(node, foNoScale, originalWidth);
+          records.push({ node, originalWidth, originalFontSize, wasWAH, inAutoLayout: inAL });
+          ok++;
+        } catch (_e) {
+          fail++;
+        }
+      } else {
+        fail++;
+      }
+    }
+    if (doAutoScale) {
+      const scaleBySize = {};
+      for (let ri = 0; ri < records.length; ri++) {
+        const r = records[ri];
+        if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
+          continue;
+        if (r.node.width > r.originalWidth && r.originalWidth > 0) {
+          const ratio = r.originalWidth / r.node.width;
+          const key = String(r.originalFontSize);
+          const prev = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
+          scaleBySize[key] = prev < ratio ? prev : ratio;
+        }
+      }
+      for (let ri = 0; ri < records.length; ri++) {
+        const r = records[ri];
+        if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
+          continue;
+        const key = String(r.originalFontSize);
+        const scale = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
+        if (scale >= 1)
+          continue;
+        const newSize = Math.max(minFont, Math.round(r.originalFontSize * scale * 2) / 2);
+        try {
+          await figma.loadFontAsync(r.node.fontName);
+          r.node.setRangeFontSize(0, r.node.characters.length, newSize);
+        } catch (_e2) {
+        }
+      }
+      const spNum = Math.max(0, Number(fo.sidePadding === void 0 || fo.sidePadding === null ? 0 : fo.sidePadding));
+      for (let ri = 0; ri < records.length; ri++) {
+        const r = records[ri];
+        if (r.inAutoLayout)
+          continue;
+        const ah = availableHeight(r.node, spNum);
+        if (r.node.height > ah) {
+          try {
+            await scaleFontDown(r.node, ah, minFont);
+          } catch (_e2) {
+          }
+        }
+      }
+    }
+    return { ok, fail };
+  }
+  function stripLangSuffix(name) {
+    return name.replace(/\s+\[[A-Za-z]{2}\]\s*$/, "").trim();
+  }
+  function localizedFrameName(base, lang) {
+    return base + " [" + lang.toUpperCase() + "]";
+  }
   figma.on("selectionchange", () => {
     const ids = figma.currentPage.selection.map((n) => n.id);
     figma.ui.postMessage({ type: "selection-changed", ids });
@@ -215,81 +307,75 @@
         clone.y = orig.y;
       }
       const fo = fitOptions || {};
-      const doAutoScale = fo.autoFontScale === true;
-      const minFont = Math.max(6, Number(fo.minFontSize || 8));
-      const records = [];
-      let ok = 0;
-      let fail = 0;
-      const foNoScale = {
-        smartWrap: fo.smartWrap,
-        sidePadding: fo.sidePadding,
-        autoFontScale: false,
-        minFontSize: fo.minFontSize
-      };
-      for (const t of translations) {
-        const node = nodeAtPath(clone, t.path);
-        if (node && node.type === "TEXT") {
-          try {
-            const originalWidth = node.width;
-            const originalFontSize = node.fontSize === figma.mixed ? 0 : node.fontSize;
-            const wasWAH = node.textAutoResize === "WIDTH_AND_HEIGHT";
-            const inAL = parentIsAutoLayout(node);
-            await loadFonts(node);
-            node.characters = t.text;
-            await applySmartFit(node, foNoScale, originalWidth);
-            records.push({ node, originalWidth, originalFontSize, wasWAH, inAutoLayout: inAL });
-            ok++;
-          } catch (_e) {
-            fail++;
-          }
-        } else {
-          fail++;
-        }
-      }
-      if (doAutoScale) {
-        const scaleBySize = {};
-        for (let ri = 0; ri < records.length; ri++) {
-          const r = records[ri];
-          if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
-            continue;
-          if (r.node.width > r.originalWidth && r.originalWidth > 0) {
-            const ratio = r.originalWidth / r.node.width;
-            const key = String(r.originalFontSize);
-            const prev = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
-            scaleBySize[key] = prev < ratio ? prev : ratio;
-          }
-        }
-        for (let ri = 0; ri < records.length; ri++) {
-          const r = records[ri];
-          if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
-            continue;
-          const key = String(r.originalFontSize);
-          const scale = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
-          if (scale >= 1)
-            continue;
-          const newSize = Math.max(minFont, Math.round(r.originalFontSize * scale * 2) / 2);
-          try {
-            await figma.loadFontAsync(r.node.fontName);
-            r.node.setRangeFontSize(0, r.node.characters.length, newSize);
-          } catch (_e2) {
-          }
-        }
-        const spNum = Math.max(0, Number(fo.sidePadding === void 0 || fo.sidePadding === null ? 0 : fo.sidePadding));
-        for (let ri = 0; ri < records.length; ri++) {
-          const r = records[ri];
-          if (r.inAutoLayout)
-            continue;
-          const ah = availableHeight(r.node, spNum);
-          if (r.node.height > ah) {
-            try {
-              await scaleFontDown(r.node, ah, minFont);
-            } catch (_e2) {
-            }
-          }
-        }
-      }
+      const { ok, fail } = await applyTranslationsToRoot(clone, translations, fo);
       figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });
       figma.notify(`\u2713 ${clone.name}  \u2014  ${ok} translated` + (fail ? `, ${fail} skipped` : ""));
+    }
+    if (msg.type === "sync-reference-scan") {
+      const langs = msg.langs;
+      if (!langs || langs.length === 0) {
+        figma.ui.postMessage({ type: "error", text: "Pick target languages in the plugin first" });
+        return;
+      }
+      const sel = figma.currentPage.selection;
+      if (sel.length !== 1) {
+        figma.ui.postMessage({
+          type: "error",
+          text: "Select exactly one source frame (edit EN here, then sync to language variants)"
+        });
+        return;
+      }
+      const source = sel[0];
+      if (!("children" in source)) {
+        figma.ui.postMessage({ type: "error", text: "Select a frame, component, or group that contains text" });
+        return;
+      }
+      const texts = collectTexts(source);
+      if (texts.length === 0) {
+        figma.ui.postMessage({ type: "error", text: "No text layers in the selected frame" });
+        return;
+      }
+      const baseName = stripLangSuffix(source.name);
+      const targets = {};
+      for (let li = 0; li < langs.length; li++) {
+        const lang = langs[li];
+        const want = localizedFrameName(baseName, lang);
+        const found = figma.currentPage.findAll(
+          (n) => n.name === want && (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE")
+        );
+        if (found.length > 0)
+          targets[lang] = found[0].id;
+      }
+      figma.ui.postMessage({
+        type: "sync-reference-ready",
+        baseName,
+        sourceId: source.id,
+        texts,
+        targets
+      });
+    }
+    if (msg.type === "sync-reference-apply") {
+      const {
+        targetFrameId,
+        langCode,
+        translations,
+        fitOptions
+      } = msg;
+      const root = figma.getNodeById(targetFrameId);
+      if (!root || !("children" in root)) {
+        figma.ui.postMessage({
+          type: "sync-reference-done",
+          langCode,
+          ok: 0,
+          fail: translations.length,
+          err: "Target frame missing"
+        });
+        return;
+      }
+      const fo = fitOptions || {};
+      const { ok, fail } = await applyTranslationsToRoot(root, translations, fo);
+      figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail });
+      figma.notify(`\u21BB [${langCode.toUpperCase()}] updated \u2014 ${ok} text layer(s)`);
     }
     if (msg.type === "close") {
       figma.closePlugin();

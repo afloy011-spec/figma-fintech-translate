@@ -9,7 +9,8 @@ const opts = {
   entryPoints: ['src/code.ts'],
   bundle: true,
   outfile: 'dist/code.js',
-  target: 'es2020',
+  // Figma plugin runtime: avoid ES2020+ in output (e.g. ??, optional catch).
+  target: 'es2017',
   format: 'iife',
 };
 
