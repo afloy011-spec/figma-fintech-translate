@@ -1,37 +1,37 @@
 # Fintech Translator for Figma
 
-Figma plugin for fintech/crypto localization: EN → ES / IT / FR / DE / PT, glossary, review before apply, and smart layout so translated UI doesn’t break.
+Figma plugin for fintech/crypto localization: EN → ES / IT / FR / DE / PT (+ optional KO/ZH/JA in glossary), lock terms, **Review (Fit %)** before **Apply**, and Smart Fit on the canvas so translated UI does not break.
+
+## Preview
+
+| | |
+|--|--|
+| **TODO** | Add a short screen recording (GIF/WebM) or 2–3 screenshots: Scan → Review with Fit % → Apply. Replace this table in a PR. |
+
+*People install Figma plugins faster when they see the UI first — drop files into `docs/` and link them here.*
 
 ## Features
 
-- **Languages:** English source → Spanish, Italian, French, German, Portuguese.
-- **Engines:**
-  - **Free:** Google Translate (primary) + MyMemory (fallback). No API key.
-  - **Pro:** OpenAI (`sk-...` key + model).
-- **Glossary:** Fintech, crowdlending, crypto/Web3, extended course vocabulary; exact-match in Free mode; prompt + exact-match in Pro.
-- **Do not translate:** Comma-separated lock list (brands, tickers, `KYC`, etc.).
-- **Flow:** Scan → Translate → **Review & Edit** (tabs, inline edits, Fit delta) → **Apply to Frames**.
-- **Smart Fit (canvas):**
-  - Wrap to frame width + side padding (`px`).
-  - **Auto scale font if overflow** with **min font size**; for chips in auto-layout, font scales **uniformly** per original font size (no random size mix per label).
-  - Different behavior for auto-layout parents vs. fixed frames (wrap / scale without trashing button grids).
-- **Multi-frame workflow:** If you scan **more than one** frame, translated clones are placed **below each source** (vertical stack per language) so horizontal decks don’t overlap. **One frame** → clones stay **to the right** (classic strip).
-- **Selection guard:** After a scan, if you change the selection on the canvas, a yellow banner asks you to **Scan again** so you don’t apply translations to the wrong frames.
-- **Cost estimate** (Pro), **translation cache**, **settings + key** in `clientStorage`.
+- **Languages:** English source → Spanish, Italian, French, German, Portuguese (and extended glossary entries for KO/ZH/JA where defined).
+- **Engines:** **Free** (Google Translate + MyMemory fallback) · **Pro** (OpenAI + key).
+- **Glossary:** Fintech / crowdlending / crypto vocabulary; **exact + case-insensitive + longest substring** match in Free mode (e.g. `P2P lending` inside `P2P lending platform`). Pro still gets glossary in the prompt.
+- **Flow:** **Scan** → **Translate** → **Review & edit** (Fit delta %) → primary button switches to **Apply to canvas** → optional re-apply after edits. New run: **Scan** again.
+- **Smart Fit:** wrap, padding, grow frames on overflow, optional auto font scale (see `src/code.ts`).
+- **Multi-frame:** several scanned frames → translated clones stack **below**; single frame → clones to the **right**.
+- **Cache & settings** in `clientStorage`.
 
-## Plugin structure
+## Repository layout
 
 ```text
 figma-fintech-translate/
-├── manifest.json
+├── manifest.json          # points at dist/ (build output)
 ├── build.mjs
 ├── package.json
 ├── src/
-│   ├── code.ts    # Sandbox: scan, clone, apply, smart-fit, selection events
-│   └── ui.html    # UI, APIs, glossary, review, apply batching
-└── dist/
-    ├── code.js
-    └── ui.html
+│   ├── code.ts            # Figma sandbox
+│   ├── ui.html            # Plugin UI (copied to dist/)
+│   └── glossary-lookup.mjs # Shared glossary logic → dist/glossary-lookup.js
+└── dist/                  # Generated — not committed; run npm run build
 ```
 
 ## Install (development)
@@ -39,78 +39,63 @@ figma-fintech-translate/
 ```bash
 npm install
 npm run build
+npm test    # recommended locally; same as CI when enabled
 ```
 
-In **Figma Desktop:** `Plugins` → `Development` → `Import plugin from manifest...` → pick `manifest.json`.
+In **Figma Desktop:** **Plugins** → **Development** → **Import plugin from manifest…** → choose **`manifest.json`**.
 
-Rebuild after changes; for manifest/network changes, re-import the plugin.
+After pulling changes, run `npm run build` again so `dist/` includes `glossary-lookup.js`, `code.js`, and `ui.html`.
 
-## Usage
+## Releases & zip files
 
-1. Select one or more frames (with text).
-2. Open **Fintech Translator**.
-3. Choose **Free** or **Pro** (+ key if Pro).
-4. Toggle target languages.
-5. Optional: **Do Not Translate**, **Smart Fit** (wrap, padding, auto font scale, min size).
-6. **Scan Selection** — wait for preview and counts.
-7. If you change the selection later, use **Scan again** when the banner appears.
-8. **Translate** → review/edit in **Review & Edit**.
-9. **Apply to Frames**.
+- **Do not commit** `dist/`, `*.zip`, or other build artifacts to `main`.
+- For teammates who do not use Git, attach a **zip of the repo** (without `node_modules`) to **[GitHub Releases](https://github.com/afloy011-spec/figma-fintech-translate/releases)** after `npm run build`, or ask them to clone and build locally.
+- Russian step-by-step: see **[INSTALL.md](./INSTALL.md)**.
 
-Clones are named like `Frame name [ES]`, etc.
+## Usage (short)
+
+1. Select frame(s) with text → open the plugin.
+2. **Scan Selection** → **Translate** → check **Review** (red/yellow Fit % = longer strings).
+3. **Apply to canvas** → clones like `Frame [ES]`.
+4. Edit cells in Review if needed → **Apply to canvas** again.
 
 ## Free vs Pro
 
 | | Free | Pro |
 |---|-----|-----|
-| Key | Not required | `sk-...` OpenAI |
-| Quality | Fast drafts | Better context |
-| Glossary | Exact match | Prompt + exact match |
+| Key | No | OpenAI `sk-…` |
+| Glossary | Map + substring match + prompt (Pro only for LLM) | In prompt + same map |
+| Limits | Public endpoints; MyMemory uses a **session-only** char budget in the UI (resets when the plugin reloads), not a real daily quota from the API | Per OpenAI billing |
 
-## Smart Fit (short)
+## Testing & CI
 
-- **WIDTH_AND_HEIGHT** text in **auto-layout:** optional font scale to fit slot width; no forced multi-line chip mess.
-- **Fixed / group parents:** switch to wrapping width + optional height-based font downscale.
-- **Multi-frame apply:** `multiFrame` flag from UI stacks clones vertically per frame.
+- **Unit tests:** `npm test` — glossary resolution (`src/glossary-lookup.mjs`) and Fit % heuristic (mirrors `ui.html`).
+- **GitHub Actions:** copy [`docs/ci-workflow.yml`](./docs/ci-workflow.yml) to `.github/workflows/ci.yml` and commit (first time you may need to add the file in the GitHub UI if your token lacks the `workflow` scope). Then every push/PR runs `npm ci` → `npm test` → `npm run build`.
+- **Not covered yet:** Figma sandbox (`code.ts`) smart-fit — would need API mocks or harness; glossary/Fit logic is where regressions hurt most today.
 
-## Compatibility notes
+## Compatibility
 
-- Plugin UI runs in Figma’s WebView: avoid **optional chaining (`?.`)**, **nullish coalescing (`??`)**, and **object spread** in `ui.html` inline scripts when in doubt; `code.ts` is compiled with esbuild but runtime compatibility is tuned for older engines.
-- `figma.showUI` does **not** use `transparent: true` here (not available on all declared API versions).
+- Plugin UI: avoid optional chaining / nullish coalescing in **inline** `ui.html` script where older WebViews break; `code.ts` is compiled to ES2017.
 
 ## Security
 
-- OpenAI key: `clientStorage` only, sent to OpenAI in Pro mode.
-- Don’t commit keys; don’t paste keys in screenshots.
+- OpenAI key: `clientStorage` only; never commit keys or paste them in screenshots.
 
 ## Troubleshooting
 
-| Issue | What to try |
-|------|-------------|
-| Plugin runtime error | Plugin console → first red line; rebuild; no `?.` / `??` in UI script if error points at `ui.html`. |
-| Failed to fetch | `manifest.json` `networkAccess` domains; network/proxy. |
-| Translates wrong frames | Selection changed after scan → **Scan again** (banner). |
-| Overlapping clones (many frames in one row) | Use latest build: multi-frame uses **below-each** placement. |
-| Wrong OpenAI key | Must start with `sk-` (not Chat session tokens). |
+| Issue | Try |
+|-------|-----|
+| Plugin error on open | Run `npm run build`; ensure `dist/glossary-lookup.js` exists next to `dist/ui.html`. |
+| `Failed to fetch` | Check `manifest.json` `networkAccess` and corporate proxy/VPN. |
+| Wrong frames updated | Selection changed after scan → **Scan Selection** again. |
+| UI script error | First red line in the plugin console; avoid `?.` / `??` in `ui.html` inline script. |
 
-## Commands
+## Roadmap (prioritized)
 
-```bash
-npm run build
-npm run watch
-```
-
-## Limitations
-
-- Free tier depends on public endpoints; behavior can change.
-- Very large selections may need splitting.
-- Corner/chrome artifacts around the plugin window are limited by Figma’s iframe rendering.
-
-## Roadmap ideas
-
-- Translation memory export/import  
-- Retry/backoff for APIs  
-- Optional layout mode toggle (always horizontal / always vertical)
+1. **Quality:** Figma-side smart-fit regression tests (mock `TextNode` / frames) or snapshot tests for `applySmartFit` branches.
+2. **Product:** Translation memory export/import; optional “always horizontal / vertical” clone placement.
+3. **Platform:** Publish to Figma Community when stable; keep Releases for private teams.
+4. **Glossary:** UI editor for custom rows (today: edit source + rebuild).
 
 ---
 

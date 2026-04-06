@@ -16,7 +16,7 @@
    npm run build
    ```
 
-   Должна обновиться папка **`dist/`** (`code.js`, `ui.html`).
+   Должна появиться папка **`dist/`** (`code.js`, `ui.html`, `glossary-lookup.js`).
 
 3. В Figma: **Plugins** → **Development** → **Import plugin from manifest…**
 
@@ -28,10 +28,18 @@
 
 ## Первый запуск
 
-Выделите фрейм(ы) с текстом → откройте плагин → **Scan Selection** → **Translate** → **Apply to Frames**.
+Выделите фрейм(ы) с текстом → откройте плагин → **Scan Selection** → **Translate** → проверьте **Review** → **Apply to canvas**.
 
 Бесплатный перевод без ключа; для **OpenAI** нужен ключ в настройках плагина (режим Pro).
 
-## Подробнее для команды
+## Передать коллеге без Git
 
-См. файл **`COLLEAGUES.md`** в этой же папке.
+- Достаточно архива **исходников** (без `node_modules`): после распаковки коллега выполняет `npm install` и `npm run build`.
+- Готовые **релизные zip** лучше выкладывать в **[GitHub Releases](https://github.com/afloy011-spec/figma-fintech-translate/releases)** — не храните большие `.zip` артефакты в истории репозитория.
+
+## Кратко для команды (EN)
+
+- **Figma Desktop** + **Node 18+**.
+- `git clone` → `npm install` → `npm run build` → импорт **`manifest.json`** из корня.
+- Ключ OpenAI только для Pro; Free работает без ключа.
+- Конфиденциальность: ключ в `clientStorage`, не коммитить, не светить на скриншотах.

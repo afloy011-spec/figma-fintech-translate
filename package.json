@@ -4,7 +4,8 @@
   "description": "Figma plugin — translate fintech UI screens to ES/IT/FR via OpenAI",
   "scripts": {
     "build": "node build.mjs",
-    "watch": "node build.mjs --watch"
+    "watch": "node build.mjs --watch",
+    "test": "node test/glossary-lookup.test.mjs && node test/estimate-width.test.mjs"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.98.0",

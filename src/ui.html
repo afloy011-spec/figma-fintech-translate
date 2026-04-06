@@ -1344,6 +1344,8 @@ select.input {
 <!-- ================================================================ -->
 <!--  Script                                                           -->
 <!-- ================================================================ -->
+<!-- Loads before inline script; produced by npm run build -->
+<script src="glossary-lookup.js"></script>
 <script>
 /* ================================================================== */
 /*  Glossary                                                           */
@@ -2184,12 +2186,14 @@ function getGlossary(lang) {
 }
 
 function glossaryExact(sourceText, lang) {
-  if (isLockedTerm(sourceText)) return sourceText;
   const gl = getGlossary(lang);
-  if (gl[sourceText] !== undefined) return gl[sourceText];
-  const lower = sourceText.toLowerCase();
-  if (gl[lower] !== undefined) return gl[lower];
-  return null;
+  if (typeof FintechGlossary === "undefined" || !FintechGlossary.glossaryResolve) {
+    if (gl[sourceText] !== undefined) return gl[sourceText];
+    const lower = sourceText.toLowerCase();
+    if (gl[lower] !== undefined) return gl[lower];
+    return null;
+  }
+  return FintechGlossary.glossaryResolve(sourceText, gl, { isLocked: isLockedTerm });
 }
 
 const PRICING = {
@@ -2664,11 +2668,13 @@ async function translateGoogle(text, lang) {
 /* ================================================================== */
 /*  Translation: MyMemory (free, fallback)                             */
 /* ================================================================== */
-const MYMEMORY_CHAR_LIMIT = 4500;
+/* MyMemory publishes ~5k chars/day for anonymous usage (see their FAQ); the API does not return a precise remaining quota.
+   This value is a session-only safety budget so we do not spam MyMemory after Google failed; it resets when the plugin UI reloads. */
+const MYMEMORY_SESSION_CHAR_BUDGET = 4500;
 
 async function translateMyMemory(text, lang) {
-  if (myMemoryCharsUsed + text.length > MYMEMORY_CHAR_LIMIT) {
-    throw new Error("MyMemory daily limit approaching (~5000 chars)");
+  if (myMemoryCharsUsed + text.length > MYMEMORY_SESSION_CHAR_BUDGET) {
+    throw new Error("MyMemory session budget exceeded (plugin session counter; reload resets). Use Pro or try later.");
   }
   return withRetry(async function() {
     const url = "https://api.mymemory.translated.net/get?q=" +

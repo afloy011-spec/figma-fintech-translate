@@ -5,23 +5,40 @@ mkdirSync('dist', { recursive: true });
 
 const isWatch = process.argv.includes('--watch');
 
-const opts = {
+const codeOpts = {
   entryPoints: ['src/code.ts'],
   bundle: true,
   outfile: 'dist/code.js',
-  // Figma plugin runtime: avoid ES2020+ in output (e.g. ??, optional catch).
   target: 'es2017',
   format: 'iife',
+};
+
+const glossaryOpts = {
+  entryPoints: ['src/glossary-lookup.mjs'],
+  bundle: true,
+  outfile: 'dist/glossary-lookup.js',
+  target: 'es2017',
+  format: 'iife',
+  globalName: 'FintechGlossary',
 };
 
 copyFileSync('src/ui.html', 'dist/ui.html');
 console.log('✓ ui.html copied');
 
-if (isWatch) {
-  const ctx = await context(opts);
-  await ctx.watch();
-  console.log('Watching src/code.ts …');
-} else {
-  await build(opts);
+async function buildAll() {
+  await build(glossaryOpts);
+  console.log('✓ glossary-lookup.js built');
+  await build(codeOpts);
   console.log('✓ code.js built');
+}
+
+if (isWatch) {
+  await buildAll();
+  const ctxCode = await context(codeOpts);
+  const ctxGl = await context(glossaryOpts);
+  await ctxCode.watch();
+  await ctxGl.watch();
+  console.log('Watching src/code.ts + src/glossary-lookup.mjs …');
+} else {
+  await buildAll();
 }
