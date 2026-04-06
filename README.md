@@ -184,58 +184,70 @@ Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `u
 
 ## Troubleshooting
 
-<table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
+<p style="margin:0 0 12px 0;color:#656d76;font-size:14px;line-height:1.5;">Most issues are a missing build or a blocked network call — quick checks below.</p>
+
+<table width="100%" style="width:100%;border-collapse:collapse;table-layout:fixed;margin:0 0 16px 0;border:1px solid #d0d7de;">
   <thead>
     <tr>
-      <th width="30%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Issue</th>
-      <th width="70%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">What to try</th>
+      <th width="32%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">What you see</th>
+      <th width="68%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">What to try</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="30%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Plugin error on open</td>
-      <td width="70%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;"><code>npm run build</code> — ensure <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, <code>dist/ui.html</code> exist.</td>
+      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;font-weight:600;">Plugin won’t open / error on launch</td>
+      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Run <code>npm run build</code> — you should have <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, and <code>dist/ui.html</code>.</td>
     </tr>
     <tr>
-      <td width="30%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><code>Failed to fetch</code></td>
-      <td width="70%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Check <code>manifest.json</code> <code>networkAccess</code> and proxy/VPN.</td>
+      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;font-weight:600;"><code style="background:transparent;">Failed to fetch</code></td>
+      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Check <code>manifest.json</code> → <code>networkAccess</code>; try without VPN/proxy or adjust firewall.</td>
     </tr>
     <tr>
-      <td width="30%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Wrong frames updated</td>
-      <td width="70%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Selection changed after scan → <strong>Scan Selection</strong> again.</td>
+      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;font-weight:600;">Wrong frames updated</td>
+      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Selection changed after your last scan → run <strong>Scan Selection</strong> again.</td>
     </tr>
     <tr>
-      <td width="30%" align="left" style="padding:8px;vertical-align:top;">UI script error</td>
-      <td width="70%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">Plugin console — first red line; avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> script.</td>
+      <td width="32%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;font-weight:600;">UI script error</td>
+      <td width="68%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Plugin console — first red stack line. Avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> (older WebViews).</td>
     </tr>
   </tbody>
 </table>
 
 ## Roadmap
 
-<table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
+<p style="margin:0 0 12px 0;color:#656d76;font-size:14px;line-height:1.5;">Rough priorities — <strong>Releases</strong> and <strong>Issues</strong> stay the source of truth.</p>
+
+<table width="100%" style="width:100%;border-collapse:collapse;table-layout:fixed;margin:0 0 8px 0;border:1px solid #d0d7de;">
   <thead>
     <tr>
-      <th width="18%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Priority</th>
-      <th width="82%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Direction</th>
+      <th width="22%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">Priority</th>
+      <th width="78%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;font-weight:600;">Direction</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="18%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P1</strong></td>
-      <td width="82%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
+      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;">
+        <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#ffebe9;color:#a40e26;border:1px solid #ffb3ad;">P1</span>
+      </td>
+      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
     </tr>
     <tr>
-      <td width="18%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P2</strong></td>
-      <td width="82%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
+      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;">
+        <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#fff8c5;color:#9a6700;border:1px solid #e8d96a;">P2</span>
+      </td>
+      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
     </tr>
     <tr>
-      <td width="18%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P3</strong></td>
-      <td width="82%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
+      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;">
+        <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#ddf4ff;color:#0969da;border:1px solid #79c0ff;">P3</span>
+      </td>
+      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#ffffff;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
     </tr>
     <tr>
-      <td width="18%" align="left" style="padding:8px;vertical-align:top;"><strong>P4</strong></td>
-      <td width="82%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">In-plugin glossary editor (today: edit source + rebuild).</td>
+      <td width="22%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;">
+        <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.02em;background:#f6f8fa;color:#57606a;border:1px solid #d0d7de;">P4</span>
+      </td>
+      <td width="78%" align="left" style="border:1px solid #d0d7de;background:#f6f8fa;padding:12px 14px;vertical-align:top;line-height:1.55;word-wrap:break-word;">In-plugin glossary editor (today: edit source + <code>npm run build</code>).</td>
     </tr>
   </tbody>
 </table>
