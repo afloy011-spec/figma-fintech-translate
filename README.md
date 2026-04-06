@@ -22,29 +22,26 @@
 
 ## Preview
 
-Screenshots are committed under [`docs/screenshots/`](docs/screenshots/) on **`main`**. The `<img>` URLs below point at **`raw.githubusercontent.com`** so images load reliably on GitHub (relative paths inside HTML tables sometimes fail to resolve).
+OpenAI (**Pro**) and Google Translate (**Free**) — plugin UI.
 
-<table style="width:100%; border-collapse:collapse;">
+<table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th style="width:50%; text-align:center; padding:10px 8px; border-bottom:1px solid #30363d;">OpenAI (Pro) — key &amp; model</th>
-      <th style="width:50%; text-align:center; padding:10px 8px; border-bottom:1px solid #30363d;">Google Translate (Free) — languages &amp; Scan</th>
+      <th width="50%" align="center" style="padding:10px 8px;border-bottom:1px solid #30363d;">OpenAI (Pro) — key &amp; model</th>
+      <th width="50%" align="center" style="padding:10px 8px;border-bottom:1px solid #30363d;">Google Translate (Free) — languages &amp; Scan</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="vertical-align:top; padding:12px 8px;">
+      <td width="50%" align="center" style="vertical-align:top;padding:12px 8px;">
         <img src="https://raw.githubusercontent.com/afloy011-spec/figma-fintech-translate/main/docs/screenshots/ui-pro-openai.png" alt="Fintech Translator: OpenAI Pro mode, API key, GPT model" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
       </td>
-      <td style="vertical-align:top; padding:12px 8px;">
+      <td width="50%" align="center" style="vertical-align:top;padding:12px 8px;">
         <img src="https://raw.githubusercontent.com/afloy011-spec/figma-fintech-translate/main/docs/screenshots/ui-free-scan.png" alt="Fintech Translator: Free mode, target languages, Scan Selection" width="100%" style="max-width:560px; border-radius:10px; border:1px solid #30363d; display:block; margin:0 auto;">
       </td>
     </tr>
   </tbody>
 </table>
-
-> [!TIP]
-> Add a short **GIF** (Scan → Review → Apply) in `docs/screenshots/` and extend the table above with a third column or a new row when you have it.
 
 <p align="right"><a href="#top">↑ Back to top</a></p>
 
@@ -187,58 +184,58 @@ Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `u
 
 ## Troubleshooting
 
-<table style="width:100%; border-collapse:collapse;">
+<table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th style="text-align:left; padding:8px; width:32%; border-bottom:1px solid #30363d;">Issue</th>
-      <th style="text-align:left; padding:8px; border-bottom:1px solid #30363d;">What to try</th>
+      <th width="46%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Issue</th>
+      <th width="54%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">What to try</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Plugin error on open</td>
-      <td style="padding:8px; border-bottom:1px solid #21262d;"><code>npm run build</code> — ensure <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, <code>dist/ui.html</code> exist.</td>
+      <td width="46%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Plugin error on open</td>
+      <td width="54%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;"><code>npm run build</code> — ensure <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, <code>dist/ui.html</code> exist.</td>
     </tr>
     <tr>
-      <td style="padding:8px; border-bottom:1px solid #21262d;"><code>Failed to fetch</code></td>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Check <code>manifest.json</code> <code>networkAccess</code> and proxy/VPN.</td>
+      <td width="46%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><code>Failed to fetch</code></td>
+      <td width="54%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Check <code>manifest.json</code> <code>networkAccess</code> and proxy/VPN.</td>
     </tr>
     <tr>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Wrong frames updated</td>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Selection changed after scan → <strong>Scan Selection</strong> again.</td>
+      <td width="46%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Wrong frames updated</td>
+      <td width="54%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Selection changed after scan → <strong>Scan Selection</strong> again.</td>
     </tr>
     <tr>
-      <td style="padding:8px;">UI script error</td>
-      <td style="padding:8px;">Plugin console — first red line; avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> script.</td>
+      <td width="46%" align="left" style="padding:8px;vertical-align:top;">UI script error</td>
+      <td width="54%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">Plugin console — first red line; avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> script.</td>
     </tr>
   </tbody>
 </table>
 
 ## Roadmap
 
-<table style="width:100%; border-collapse:collapse;">
+<table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th style="text-align:left; padding:8px; width:14%; border-bottom:1px solid #30363d;">Priority</th>
-      <th style="text-align:left; padding:8px; border-bottom:1px solid #30363d;">Direction</th>
+      <th width="38%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Priority</th>
+      <th width="62%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Direction</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="vertical-align:top; padding:8px; border-bottom:1px solid #21262d;"><strong>P1</strong></td>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
+      <td width="38%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P1</strong></td>
+      <td width="62%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
     </tr>
     <tr>
-      <td style="vertical-align:top; padding:8px; border-bottom:1px solid #21262d;"><strong>P2</strong></td>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
+      <td width="38%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P2</strong></td>
+      <td width="62%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
     </tr>
     <tr>
-      <td style="vertical-align:top; padding:8px; border-bottom:1px solid #21262d;"><strong>P3</strong></td>
-      <td style="padding:8px; border-bottom:1px solid #21262d;">Figma Community publish when stable; keep Releases for teams.</td>
+      <td width="38%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P3</strong></td>
+      <td width="62%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
     </tr>
     <tr>
-      <td style="vertical-align:top; padding:8px;"><strong>P4</strong></td>
-      <td style="padding:8px;">In-plugin glossary editor (today: edit source + rebuild).</td>
+      <td width="38%" align="left" style="padding:8px;vertical-align:top;"><strong>P4</strong></td>
+      <td width="62%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">In-plugin glossary editor (today: edit source + rebuild).</td>
     </tr>
   </tbody>
 </table>
