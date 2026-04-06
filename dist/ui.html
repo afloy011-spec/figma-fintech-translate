@@ -698,17 +698,9 @@ select.input {
   pointer-events: none;
 }
 .bottom > * { pointer-events: auto; }
-.bottom-row {
-  display: flex;
-  gap: 8px;
-  align-items: stretch;
-}
-.bottom-row .btn {
-  flex: 1;
-  min-width: 0;
-}
-.bottom-row .btn + .btn { margin-top: 0; }
-.bottom-row + .btn { margin-top: 8px; }
+/* One primary action at a time: Translate ↔ Apply in the same slot */
+.bottom-primary-slot .btn-full { width: 100%; }
+.bottom-primary-slot + .btn { margin-top: 8px; }
 .bottom .btn + .btn { margin-top: 8px; }
 .bottom .cost-hint {
   text-align: center;
@@ -1227,7 +1219,7 @@ select.input {
 
   <!-- Review panel (revealed after translation) -->
   <div class="section hidden fade-in" id="reviewSection">
-    <div class="section-label">Review <span style="font-weight:400;color:var(--txt3)">· Fit % · then Apply</span></div>
+    <div class="section-label">Review <span style="font-weight:400;color:var(--txt3)">· Fit % · next: Apply</span></div>
     <div class="review-panel">
       <div class="review-tabs" id="reviewTabs"></div>
       <div class="review-header">
@@ -1332,12 +1324,12 @@ select.input {
 <!--  Bottom bar                                                       -->
 <!-- ================================================================ -->
 <div class="bottom">
-  <div class="bottom-row">
-    <button class="btn btn-primary" id="translateBtn" disabled type="button">
+  <div class="bottom-primary-slot">
+    <button class="btn btn-primary btn-full" id="translateBtn" disabled type="button">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
       <span id="translateLabel">Translate</span>
     </button>
-    <button class="btn btn-secondary hidden" id="applyBtn" disabled type="button">
+    <button class="btn btn-primary btn-full hidden" id="applyBtn" disabled type="button">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Apply to canvas
     </button>
@@ -2446,9 +2438,15 @@ function setProgress(pct, text) {
 function setBusy(v) {
   busy = v;
   $scanBtn.disabled = v;
-  $translateBtn.disabled = v;
-  if ($applyBtn) $applyBtn.disabled = v || $applyBtn.classList.contains("hidden");
   if ($syncRefBtn) $syncRefBtn.disabled = v;
+  const applyShowing = $applyBtn && !$applyBtn.classList.contains("hidden");
+  if (applyShowing) {
+    $applyBtn.disabled = v;
+    $translateBtn.disabled = true;
+  } else {
+    $translateBtn.disabled = v;
+    if ($applyBtn) $applyBtn.disabled = true;
+  }
 }
 
 function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -2941,6 +2939,7 @@ $translateBtn.addEventListener("click", async () => {
     $applyBtn.classList.add("hidden");
     $applyBtn.disabled = true;
   }
+  $translateBtn.classList.remove("hidden");
   setBusy(true);
   $cancelBtn.classList.remove("hidden");
   $cancelBtn.disabled = false;
@@ -2989,9 +2988,10 @@ $translateBtn.addEventListener("click", async () => {
       }
     }
 
-    setProgress(100, "Done — review Fit %, then Apply to canvas");
-    log("Translation ready. Check overflow hints in Review, then tap Apply to canvas.", "ok");
+    setProgress(100, "Done — review Fit %, then apply");
+    log("Translation ready. Check Review (Fit %), then use the button below to apply.", "ok");
     showReviewPanel(langs);
+    $translateBtn.classList.add("hidden");
     if ($applyBtn) {
       $applyBtn.classList.remove("hidden");
       $applyBtn.disabled = false;
@@ -3005,6 +3005,7 @@ $translateBtn.addEventListener("click", async () => {
       setProgress(0, "Error — see log");
     }
     translatedStore = {};
+    $translateBtn.classList.remove("hidden");
     if ($applyBtn) {
       $applyBtn.classList.add("hidden");
       $applyBtn.disabled = true;
@@ -3196,8 +3197,8 @@ function updateReviewSummary() {
   });
 
   const hint = canvasApplied
-    ? "On canvas — edit cells &amp; tap <strong>Apply</strong> again to sync"
-    : "Tap <strong>Apply to canvas</strong> below when ready";
+    ? "On canvas — edit cells &amp; use the same button again to re-apply"
+    : "Use the primary button below to apply (after Translate finishes it switches to Apply)";
   $reviewSummary.innerHTML =
     '<div class="stat"><span class="dot-sm" style="background:var(--green)"></span> ' + ok + ' fit</div>' +
     (warn ? '<div class="stat"><span class="dot-sm" style="background:var(--yellow)"></span> ' + warn + ' longer</div>' : '') +
