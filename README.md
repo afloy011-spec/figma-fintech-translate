@@ -187,26 +187,26 @@ Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `u
 <table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th width="46%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Issue</th>
-      <th width="54%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">What to try</th>
+      <th width="30%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Issue</th>
+      <th width="70%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">What to try</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="46%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Plugin error on open</td>
-      <td width="54%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;"><code>npm run build</code> — ensure <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, <code>dist/ui.html</code> exist.</td>
+      <td width="30%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Plugin error on open</td>
+      <td width="70%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;"><code>npm run build</code> — ensure <code>dist/glossary-lookup.js</code>, <code>dist/code.js</code>, <code>dist/ui.html</code> exist.</td>
     </tr>
     <tr>
-      <td width="46%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><code>Failed to fetch</code></td>
-      <td width="54%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Check <code>manifest.json</code> <code>networkAccess</code> and proxy/VPN.</td>
+      <td width="30%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><code>Failed to fetch</code></td>
+      <td width="70%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Check <code>manifest.json</code> <code>networkAccess</code> and proxy/VPN.</td>
     </tr>
     <tr>
-      <td width="46%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Wrong frames updated</td>
-      <td width="54%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Selection changed after scan → <strong>Scan Selection</strong> again.</td>
+      <td width="30%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;">Wrong frames updated</td>
+      <td width="70%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Selection changed after scan → <strong>Scan Selection</strong> again.</td>
     </tr>
     <tr>
-      <td width="46%" align="left" style="padding:8px;vertical-align:top;">UI script error</td>
-      <td width="54%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">Plugin console — first red line; avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> script.</td>
+      <td width="30%" align="left" style="padding:8px;vertical-align:top;">UI script error</td>
+      <td width="70%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">Plugin console — first red line; avoid <code>?.</code> / <code>??</code> in inline <code>ui.html</code> script.</td>
     </tr>
   </tbody>
 </table>
@@ -216,26 +216,26 @@ Plugin UI avoids **optional chaining** / **nullish coalescing** in the inline `u
 <table width="100%" style="border-collapse:collapse;table-layout:fixed;margin:8px 0;">
   <thead>
     <tr>
-      <th width="38%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Priority</th>
-      <th width="62%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Direction</th>
+      <th width="18%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Priority</th>
+      <th width="82%" align="left" style="padding:8px;border-bottom:1px solid #30363d;">Direction</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td width="38%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P1</strong></td>
-      <td width="62%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
+      <td width="18%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P1</strong></td>
+      <td width="82%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Regression tests / harness for <code>code.ts</code> smart-fit (mock text + frames).</td>
     </tr>
     <tr>
-      <td width="38%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P2</strong></td>
-      <td width="62%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
+      <td width="18%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P2</strong></td>
+      <td width="82%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Translation memory export/import; optional clone placement presets (always horizontal / vertical).</td>
     </tr>
     <tr>
-      <td width="38%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P3</strong></td>
-      <td width="62%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
+      <td width="18%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;"><strong>P3</strong></td>
+      <td width="82%" align="left" style="padding:8px;border-bottom:1px solid #21262d;vertical-align:top;word-wrap:break-word;">Figma Community publish when stable; keep Releases for teams.</td>
     </tr>
     <tr>
-      <td width="38%" align="left" style="padding:8px;vertical-align:top;"><strong>P4</strong></td>
-      <td width="62%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">In-plugin glossary editor (today: edit source + rebuild).</td>
+      <td width="18%" align="left" style="padding:8px;vertical-align:top;"><strong>P4</strong></td>
+      <td width="82%" align="left" style="padding:8px;vertical-align:top;word-wrap:break-word;">In-plugin glossary editor (today: edit source + rebuild).</td>
     </tr>
   </tbody>
 </table>
