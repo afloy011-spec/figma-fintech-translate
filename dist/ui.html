@@ -1272,6 +1272,10 @@ select.input {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
     <span id="translateLabel">Translate</span>
   </button>
+  <button class="btn btn-outline btn-full hidden" id="cancelBtn" style="border-color:var(--red);color:var(--red)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    Cancel
+  </button>
   <button class="btn btn-success btn-full hidden" id="applyBtn">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
     <span id="applyLabel">Apply to Frames</span>
@@ -2144,7 +2148,19 @@ const PRICING = {
 let provider = "free";
 let framesData = [];
 let busy = false;
-const cache = {};
+let cache = {};
+let cacheLoaded = false;
+let cacheDirty = false;
+
+function persistCache() {
+  if (!cacheDirty) return;
+  cacheDirty = false;
+  const keys = Object.keys(cache);
+  const trimmed = {};
+  const slice = keys.slice(-2000);
+  for (const k of slice) trimmed[k] = cache[k];
+  parent.postMessage({ pluginMessage: { type: "save-cache", data: trimmed } }, "*");
+}
 
 /* ================================================================== */
 /*  DOM                                                                */
@@ -2182,9 +2198,12 @@ const $reviewTabs   = $("reviewTabs");
 const $reviewRows   = $("reviewRows");
 const $reviewSummary = $("reviewSummary");
 const $syncRefBtn    = $("syncRefBtn");
+const $cancelBtn     = $("cancelBtn");
 
 let translatedStore = {};  // { "es": [ {original, translated, path, frameId} ], ... }
 let activeReviewLang = null;
+let cancelRequested = false;
+let myMemoryCharsUsed = 0;
 
 /* ================================================================== */
 /*  Provider toggle                                                    */
@@ -2296,6 +2315,12 @@ $saveKey.addEventListener("click", () => {
   }
   parent.postMessage({ pluginMessage: { type: "save-key", key: k } }, "*");
   log("API key saved", "ok");
+});
+
+$cancelBtn.addEventListener("click", function() {
+  cancelRequested = true;
+  $cancelBtn.disabled = true;
+  $cancelBtn.textContent = "Cancelling…";
 });
 
 $model.addEventListener("change", () => { updateCost(); saveSettings(); });
@@ -2458,7 +2483,7 @@ function splitTrailingSentencePunct(s) {
   const after = s.slice(i + 1);
   if (i < 0) return { core: "", punct: "", after: after };
   let j = i;
-  while (j >= 0 && /[.!?…:;\u2026]/.test(s[j])) j--;
+  while (j >= 0 && /[.!?…:;\u2026\u3002\uFF01\uFF1F\uFF1A\uFF1B]/.test(s[j])) j--;
   const punct = s.slice(j + 1, i + 1);
   const core = s.slice(0, j + 1);
   return { core, punct, after };
@@ -2515,76 +2540,125 @@ function translateApiLang(lang) {
 }
 
 /* ================================================================== */
+/*  Retry helper                                                       */
+/* ================================================================== */
+async function withRetry(fn, retries, baseDelay) {
+  retries = retries || 3;
+  baseDelay = baseDelay || 400;
+  let lastErr;
+  for (let attempt = 0; attempt < retries; attempt++) {
+    if (cancelRequested) throw new Error("Cancelled");
+    try { return await fn(); } catch (e) {
+      lastErr = e;
+      if (attempt < retries - 1) await sleep(baseDelay * Math.pow(2, attempt));
+    }
+  }
+  throw lastErr;
+}
+
+/* ================================================================== */
 /*  Translation: Google Translate (free, primary)                      */
 /* ================================================================== */
 async function translateGoogle(text, lang) {
-  const url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" +
-    translateApiLang(lang) + "&dt=t&q=" + encodeURIComponent(text);
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Google Translate HTTP " + res.status);
-  const data = await res.json();
-  let result = "";
-  if (data && data[0]) {
-    for (const part of data[0]) {
-      if (part && part[0]) result += part[0];
+  return withRetry(async function() {
+    const url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" +
+      translateApiLang(lang) + "&dt=t&q=" + encodeURIComponent(text);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Google Translate HTTP " + res.status);
+    const data = await res.json();
+    let result = "";
+    if (data && data[0]) {
+      for (const part of data[0]) {
+        if (part && part[0]) result += part[0];
+      }
     }
-  }
-  return result.trim();
+    return result.trim();
+  }, 3, 500);
 }
 
 /* ================================================================== */
 /*  Translation: MyMemory (free, fallback)                             */
 /* ================================================================== */
+const MYMEMORY_CHAR_LIMIT = 4500;
+
 async function translateMyMemory(text, lang) {
-  const url = "https://api.mymemory.translated.net/get?q=" +
-    encodeURIComponent(text) + "&langpair=en|" + translateApiLang(lang);
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("MyMemory HTTP " + res.status);
-  const data = await res.json();
-  return stripTags(data.responseData.translatedText || "");
+  if (myMemoryCharsUsed + text.length > MYMEMORY_CHAR_LIMIT) {
+    throw new Error("MyMemory daily limit approaching (~5000 chars)");
+  }
+  return withRetry(async function() {
+    const url = "https://api.mymemory.translated.net/get?q=" +
+      encodeURIComponent(text) + "&langpair=en|" + translateApiLang(lang);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("MyMemory HTTP " + res.status);
+    const data = await res.json();
+    if (data.responseData && data.responseData.match !== undefined && data.responseData.match < 0.3) {
+      throw new Error("MyMemory low-quality match");
+    }
+    myMemoryCharsUsed += text.length;
+    return stripTags(data.responseData.translatedText || "");
+  }, 2, 600);
 }
 
 /* ================================================================== */
-/*  Free batch: Google primary → MyMemory fallback → cleanup           */
+/*  Free batch: Google primary → MyMemory fallback → parallel          */
 /* ================================================================== */
-async function batchFree(texts, lang, onProg) {
-  const results = [];
-  for (let i = 0; i < texts.length; i++) {
-    const key = lang + ":" + texts[i];
-    if (cache[key]) {
-      results.push(cache[key]);
-      onProg(i + 1, texts.length);
-      continue;
-    }
+async function translateOneFree(text, lang) {
+  const key = lang + ":" + text;
+  if (cache[key]) return cache[key];
 
-    const exact = glossaryExact(texts[i], lang);
-    if (exact) {
-      const out = applySourceFormatting(texts[i], exact);
-      cache[key] = out;
-      results.push(out);
-      onProg(i + 1, texts.length);
-      continue;
-    }
+  const exact = glossaryExact(text, lang);
+  if (exact) {
+    const out = applySourceFormatting(text, exact);
+    cache[key] = out;
+    cacheDirty = true;
+    return out;
+  }
 
-    let translated = "";
+  let translated = "";
+  let failedGoogle = false;
+  try {
+    translated = await translateGoogle(text, lang);
+  } catch (e) {
+    failedGoogle = true;
+    if (e.message === "Cancelled") throw e;
+  }
+
+  if (!looksTranslated(text, translated)) {
     try {
-      translated = await translateGoogle(texts[i], lang);
-    } catch (_e) { /* Google failed, try fallback */ }
-
-    if (!looksTranslated(texts[i], translated)) {
-      try {
-        translated = await translateMyMemory(texts[i], lang);
-      } catch (_e2) { /* both failed */ }
+      translated = await translateMyMemory(text, lang);
+    } catch (e2) {
+      if (e2.message === "Cancelled") throw e2;
+      if (failedGoogle) log("Both APIs failed for: " + text.slice(0, 40), "warn");
     }
+  }
 
-    translated = stripTags(translated);
-    if (!translated) translated = texts[i];
+  translated = stripTags(translated);
+  if (!translated) translated = text;
 
-    translated = applySourceFormatting(texts[i], translated);
-    cache[key] = translated;
-    results.push(translated);
-    onProg(i + 1, texts.length);
-    if (i < texts.length - 1) await sleep(60);
+  translated = applySourceFormatting(text, translated);
+  cache[key] = translated;
+  cacheDirty = true;
+  return translated;
+}
+
+async function batchFree(texts, lang, onProg) {
+  const CONCURRENCY = 5;
+  const results = new Array(texts.length);
+  let completed = 0;
+
+  for (let start = 0; start < texts.length; start += CONCURRENCY) {
+    if (cancelRequested) throw new Error("Cancelled");
+    const end = Math.min(start + CONCURRENCY, texts.length);
+    const chunk = [];
+    for (let i = start; i < end; i++) {
+      chunk.push(translateOneFree(texts[i], lang).then(function(r) {
+        results[i] = r;
+        completed++;
+        onProg(completed, texts.length);
+      }));
+    }
+    await Promise.all(chunk);
+    if (end < texts.length) await sleep(30);
   }
   return results;
 }
@@ -2592,10 +2666,19 @@ async function batchFree(texts, lang, onProg) {
 /* ================================================================== */
 /*  Translation: OpenAI (pro)                                          */
 /* ================================================================== */
+function filterGlossary(gl, texts) {
+  const pool = texts.join(" ").toLowerCase();
+  const out = {};
+  for (const [en, loc] of Object.entries(gl)) {
+    if (pool.includes(en.toLowerCase())) out[en] = loc;
+  }
+  return out;
+}
+
 async function callOpenAI(texts, lang) {
   const key = $apiKey.value.trim();
   const model = $model.value;
-  const gl = getGlossary(lang);
+  const gl = filterGlossary(getGlossary(lang), texts);
   const glBlock = Object.entries(gl).map(([e,t]) => '  "'+e+'" → "'+t+'"').join("\n");
 
   const sys =
@@ -2609,34 +2692,53 @@ async function callOpenAI(texts, lang) {
     "5. Keep brand names untranslated.\n" +
     "6. Concise translations — UI labels, buttons, short text.\n" +
     "7. No extra punctuation.\n" +
-    "8. Preserve capitalisation (ALL CAPS → ALL CAPS, Title → Title).\n\n" +
-    "GLOSSARY:\n" + glBlock + "\n\n" +
+    "8. Preserve capitalisation (ALL CAPS → ALL CAPS, Title → Title).\n" +
+    "9. Preserve leading/trailing whitespace and terminal punctuation exactly as in source.\n\n" +
+    (glBlock ? "GLOSSARY:\n" + glBlock + "\n\n" : "") +
     "INPUT: JSON array.\nOUTPUT: JSON array, same order, same count.\nReturn ONLY the JSON array.";
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
-    body: JSON.stringify({
-      model,
-      messages: [{ role: "system", content: sys }, { role: "user", content: JSON.stringify(texts) }],
-      temperature: 0.1,
-    }),
-  });
-
-  if (!res.ok) {
-    const e = await res.json().catch(() => ({}));
-    throw new Error((e.error && e.error.message) || "OpenAI " + res.status);
+  const body = {
+    model,
+    messages: [{ role: "system", content: sys }, { role: "user", content: JSON.stringify(texts) }],
+    temperature: 0.1,
+  };
+  if (model.startsWith("gpt-4") || model.startsWith("gpt-5")) {
+    body.response_format = { type: "json_object" };
   }
 
-  const data = await res.json();
-  let content = data.choices[0].message.content.trim();
-  if (content.startsWith("```")) content = content.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+  return withRetry(async function() {
+    if (cancelRequested) throw new Error("Cancelled");
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+      body: JSON.stringify(body),
+    });
 
-  const arr = JSON.parse(content);
-  if (!Array.isArray(arr) || arr.length !== texts.length) {
-    throw new Error("Expected " + texts.length + " translations, got " + (Array.isArray(arr) ? arr.length : "non-array"));
-  }
-  return arr;
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error((e.error && e.error.message) || "OpenAI " + res.status);
+    }
+
+    const data = await res.json();
+    let content = data.choices[0].message.content.trim();
+    if (content.startsWith("```")) content = content.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+
+    let parsed;
+    try { parsed = JSON.parse(content); } catch (pe) {
+      throw new Error("OpenAI returned invalid JSON: " + content.slice(0, 120));
+    }
+
+    let arr = parsed;
+    if (!Array.isArray(arr) && typeof arr === "object") {
+      const keys = Object.keys(arr);
+      if (keys.length === 1 && Array.isArray(arr[keys[0]])) arr = arr[keys[0]];
+    }
+
+    if (!Array.isArray(arr) || arr.length !== texts.length) {
+      throw new Error("Expected " + texts.length + " translations, got " + (Array.isArray(arr) ? arr.length : "non-array"));
+    }
+    return arr;
+  }, 2, 1000);
 }
 
 async function batchOpenAI(texts, lang, onProg) {
@@ -2657,6 +2759,7 @@ async function batchOpenAI(texts, lang, onProg) {
         if (exact) {
           const out = applySourceFormatting(batch[j], exact);
           cache[k] = out;
+          cacheDirty = true;
           batchRes[j] = out;
         } else {
           uncachedIdx.push(j);
@@ -2666,11 +2769,13 @@ async function batchOpenAI(texts, lang, onProg) {
     }
 
     if (uncachedTxt.length) {
+      if (cancelRequested) throw new Error("Cancelled");
       const translated = await callOpenAI(uncachedTxt, lang);
       for (let k = 0; k < uncachedTxt.length; k++) {
         const ck = lang + ":" + uncachedTxt[k];
         const out = applySourceFormatting(uncachedTxt[k], translated[k]);
         cache[ck] = out;
+        cacheDirty = true;
         batchRes[uncachedIdx[k]] = out;
       }
     }
@@ -2684,22 +2789,41 @@ async function batchOpenAI(texts, lang, onProg) {
 /* ================================================================== */
 /*  Lock terms helpers                                                 */
 /* ================================================================== */
-function getLockedTerms() {
-  return ($lockTerms.value || "").split(",").map(s => s.trim()).filter(Boolean);
+let _lockedSet = null;
+let _lockedRaw = "";
+function getLockedSet() {
+  const raw = $lockTerms.value || "";
+  if (raw === _lockedRaw && _lockedSet) return _lockedSet;
+  _lockedRaw = raw;
+  _lockedSet = new Set(raw.split(",").map(s => s.trim().toLowerCase()).filter(Boolean));
+  return _lockedSet;
 }
 
 function isLockedTerm(text) {
-  const locked = getLockedTerms();
-  const lower = text.toLowerCase().trim();
-  return locked.some(t => t.toLowerCase() === lower);
+  return getLockedSet().has(text.toLowerCase().trim());
 }
 
 /* ================================================================== */
 /*  Overflow detection                                                 */
 /* ================================================================== */
+function estimateWidth(s) {
+  if (!s) return 0;
+  let w = 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    const isCJK = (c >= 0x3000 && c <= 0x9FFF) || (c >= 0xAC00 && c <= 0xD7AF) ||
+                  (c >= 0xF900 && c <= 0xFAFF) || (c >= 0xFF01 && c <= 0xFF60);
+    w += isCJK ? 1.8 : 1;
+  }
+  return w;
+}
+
 function calcDelta(original, translated) {
   if (!original || !translated) return 0;
-  return Math.round(((translated.length - original.length) / original.length) * 100);
+  const ow = estimateWidth(original);
+  const tw = estimateWidth(translated);
+  if (ow === 0) return 0;
+  return Math.round(((tw - ow) / ow) * 100);
 }
 
 function deltaClass(pct) {
@@ -2723,7 +2847,13 @@ $translateBtn.addEventListener("click", async () => {
   if (!framesData.length) { log("Scan a selection first", "err"); return; }
   if (provider === "openai" && !$apiKey.value.trim()) { log("Enter OpenAI API key", "err"); return; }
 
+  cancelRequested = false;
+  myMemoryCharsUsed = 0;
   setBusy(true);
+  $cancelBtn.classList.remove("hidden");
+  $cancelBtn.disabled = false;
+  $cancelBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel';
+  $translateBtn.classList.add("hidden");
   $logArea.innerHTML = "";
   translatedStore = {};
 
@@ -2732,10 +2862,12 @@ $translateBtn.addEventListener("click", async () => {
 
   try {
     for (let li = 0; li < langs.length; li++) {
+      if (cancelRequested) throw new Error("Cancelled");
       const lang = langs[li];
       translatedStore[lang] = [];
 
       for (const frame of framesData) {
+        if (cancelRequested) throw new Error("Cancelled");
         const allChars = frame.texts.map(t => t.characters);
         setProgress(Math.round(done / steps * 100), "[" + lang.toUpperCase() + "] …");
 
@@ -2770,10 +2902,18 @@ $translateBtn.addEventListener("click", async () => {
     log("Translations ready — review or apply", "info");
     showReviewPanel(langs);
   } catch (e) {
-    log("Error: " + e.message, "err");
-    setProgress(0, "Error — see log");
+    if (e.message === "Cancelled") {
+      log("Translation cancelled by user", "warn");
+      setProgress(0, "Cancelled");
+    } else {
+      log("Error: " + e.message, "err");
+      setProgress(0, "Error — see log");
+    }
   }
 
+  persistCache();
+  $cancelBtn.classList.add("hidden");
+  $translateBtn.classList.remove("hidden");
   setBusy(false);
 });
 
@@ -3020,6 +3160,10 @@ window.onmessage = (e) => {
   if (msg.type === "init-data") {
     applySettings(msg.settings);
     if (msg.key) $apiKey.value = msg.key;
+    if (msg.cache && typeof msg.cache === "object") {
+      cache = msg.cache;
+      cacheLoaded = true;
+    }
   }
 
   if (msg.type === "key-saved") { /* logged already */ }

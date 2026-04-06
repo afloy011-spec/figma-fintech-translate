@@ -127,38 +127,70 @@ function availableHeight(node: TextNode, sidePadding: number): number {
 /* ------------------------------------------------------------------ */
 
 // Reduce font size until the wrapping text fits within maxHeight.
+function getMaxFontSize(node: TextNode): number {
+  if (node.fontSize !== figma.mixed) return node.fontSize as number;
+  let max = 0;
+  for (let i = 0; i < node.characters.length; i++) {
+    const s = node.getRangeFontSize(i, i + 1);
+    if (typeof s === "number" && s > max) max = s;
+  }
+  return max;
+}
+
+async function scaleAllFontsBy(node: TextNode, ratio: number, minSize: number): Promise<void> {
+  const len = node.characters.length;
+  if (len === 0) return;
+  await loadFonts(node);
+  if (node.fontSize !== figma.mixed) {
+    const cur = node.fontSize as number;
+    const ns = Math.max(minSize, Math.round(cur * ratio * 2) / 2);
+    node.setRangeFontSize(0, len, ns);
+  } else {
+    let i = 0;
+    while (i < len) {
+      const cur = node.getRangeFontSize(i, i + 1) as number;
+      let j = i + 1;
+      while (j < len) {
+        const nxt = node.getRangeFontSize(j, j + 1) as number;
+        if (nxt !== cur) break;
+        j++;
+      }
+      const ns = Math.max(minSize, Math.round(cur * ratio * 2) / 2);
+      if (ns !== cur) node.setRangeFontSize(i, j, ns);
+      i = j;
+    }
+  }
+}
+
 async function scaleFontDown(
   node: TextNode,
   maxHeight: number,
   minSize: number,
 ): Promise<void> {
-  if (node.fontSize === figma.mixed) return;
-  let size = node.fontSize as number;
+  let size = getMaxFontSize(node);
   if (size <= minSize) return;
   while (node.height > maxHeight && size > minSize) {
-    size = Math.max(minSize, size - 0.5);
+    const ratio = Math.max(minSize / size, (size - 0.5) / size);
     try {
-      await figma.loadFontAsync(node.fontName as FontName);
-      node.setRangeFontSize(0, node.characters.length, size);
+      await scaleAllFontsBy(node, ratio, minSize);
+      size = getMaxFontSize(node);
     } catch (_e) { break; }
   }
 }
 
-// Reduce font size until a WIDTH_AND_HEIGHT node fits within maxWidth.
 async function scaleFontToWidth(
   node: TextNode,
   maxWidth: number,
   minSize: number,
 ): Promise<void> {
-  if (node.fontSize === figma.mixed) return;
   if (node.textAutoResize !== "WIDTH_AND_HEIGHT") return;
-  let size = node.fontSize as number;
+  let size = getMaxFontSize(node);
   if (size <= minSize) return;
   while (node.width > maxWidth && size > minSize) {
-    size = Math.max(minSize, size - 0.5);
+    const ratio = Math.max(minSize / size, (size - 0.5) / size);
     try {
-      await figma.loadFontAsync(node.fontName as FontName);
-      node.setRangeFontSize(0, node.characters.length, size);
+      await scaleAllFontsBy(node, ratio, minSize);
+      size = getMaxFontSize(node);
     } catch (_e) { break; }
   }
 }
@@ -256,7 +288,7 @@ async function applyTranslationsToRoot(
     if (node && node.type === "TEXT") {
       try {
         const originalWidth    = node.width;
-        const originalFontSize = node.fontSize === figma.mixed ? 0 : node.fontSize as number;
+        const originalFontSize = getMaxFontSize(node);
         const wasWAH           = node.textAutoResize === "WIDTH_AND_HEIGHT";
         const inAL             = parentIsAutoLayout(node);
 
@@ -294,10 +326,8 @@ async function applyTranslationsToRoot(
       const key   = String(r.originalFontSize);
       const scale = scaleBySize[key] !== undefined ? scaleBySize[key] : 1;
       if (scale >= 1) continue;
-      const newSize = Math.max(minFont, Math.round(r.originalFontSize * scale * 2) / 2);
       try {
-        await figma.loadFontAsync(r.node.fontName as FontName);
-        r.node.setRangeFontSize(0, r.node.characters.length, newSize);
+        await scaleAllFontsBy(r.node, scale, minFont);
       } catch (_e2) { /* skip */ }
     }
     const spNum = Math.max(0, Number(fo.sidePadding === undefined || fo.sidePadding === null ? 0 : fo.sidePadding));
@@ -336,16 +366,22 @@ figma.on("selectionchange", () => {
 
 figma.ui.onmessage = async (msg: any) => {
 
-  /* ---------- Init: load saved settings + key ---------- */
+  /* ---------- Init: load saved settings + key + cache ---------- */
   if (msg.type === "init") {
     const settings = (await figma.clientStorage.getAsync("ft_settings")) || {};
     const key = (await figma.clientStorage.getAsync("openai_key")) || "";
-    figma.ui.postMessage({ type: "init-data", settings, key });
+    const cached = (await figma.clientStorage.getAsync("ft_cache")) || {};
+    figma.ui.postMessage({ type: "init-data", settings, key, cache: cached });
   }
 
   /* ---------- Save settings ---------- */
   if (msg.type === "save-settings") {
     await figma.clientStorage.setAsync("ft_settings", msg.settings);
+  }
+
+  /* ---------- Save translation cache ---------- */
+  if (msg.type === "save-cache") {
+    await figma.clientStorage.setAsync("ft_cache", msg.data || {});
   }
 
   /* ---------- Save API key ---------- */
@@ -402,8 +438,22 @@ figma.ui.onmessage = async (msg: any) => {
       return;
     }
 
+    const wantName = `${stripLangSuffix(orig.name)} [${langCode.toUpperCase()}]`;
+
+    const existing = figma.currentPage.findAll(
+      (n) => n.name === wantName &&
+        (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE"),
+    );
+    if (existing.length > 0) {
+      const fo = fitOptions || {};
+      const { ok, fail } = await applyTranslationsToRoot(existing[0] as SceneNode, translations, fo);
+      figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });
+      figma.notify(`↻ ${wantName} updated — ${ok} translated` + (fail ? `, ${fail} skipped` : ""));
+      return;
+    }
+
     const clone = (orig as FrameNode).clone();
-    clone.name = `${orig.name} [${langCode.toUpperCase()}]`;
+    clone.name = wantName;
 
     const gap = 80;
     const ow = "width" in orig ? (orig as FrameNode).width : 400;

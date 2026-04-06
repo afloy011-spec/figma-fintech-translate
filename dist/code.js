@@ -80,35 +80,69 @@
     const padB = hasFrame ? pNode.paddingBottom || 0 : 0;
     return Math.max(16, pNode.height - padB - node.y - sidePadding);
   }
-  async function scaleFontDown(node, maxHeight, minSize) {
-    if (node.fontSize === figma.mixed)
+  function getMaxFontSize(node) {
+    if (node.fontSize !== figma.mixed)
+      return node.fontSize;
+    let max = 0;
+    for (let i = 0; i < node.characters.length; i++) {
+      const s = node.getRangeFontSize(i, i + 1);
+      if (typeof s === "number" && s > max)
+        max = s;
+    }
+    return max;
+  }
+  async function scaleAllFontsBy(node, ratio, minSize) {
+    const len = node.characters.length;
+    if (len === 0)
       return;
-    let size = node.fontSize;
+    await loadFonts(node);
+    if (node.fontSize !== figma.mixed) {
+      const cur = node.fontSize;
+      const ns = Math.max(minSize, Math.round(cur * ratio * 2) / 2);
+      node.setRangeFontSize(0, len, ns);
+    } else {
+      let i = 0;
+      while (i < len) {
+        const cur = node.getRangeFontSize(i, i + 1);
+        let j = i + 1;
+        while (j < len) {
+          const nxt = node.getRangeFontSize(j, j + 1);
+          if (nxt !== cur)
+            break;
+          j++;
+        }
+        const ns = Math.max(minSize, Math.round(cur * ratio * 2) / 2);
+        if (ns !== cur)
+          node.setRangeFontSize(i, j, ns);
+        i = j;
+      }
+    }
+  }
+  async function scaleFontDown(node, maxHeight, minSize) {
+    let size = getMaxFontSize(node);
     if (size <= minSize)
       return;
     while (node.height > maxHeight && size > minSize) {
-      size = Math.max(minSize, size - 0.5);
+      const ratio = Math.max(minSize / size, (size - 0.5) / size);
       try {
-        await figma.loadFontAsync(node.fontName);
-        node.setRangeFontSize(0, node.characters.length, size);
+        await scaleAllFontsBy(node, ratio, minSize);
+        size = getMaxFontSize(node);
       } catch (_e) {
         break;
       }
     }
   }
   async function scaleFontToWidth(node, maxWidth, minSize) {
-    if (node.fontSize === figma.mixed)
-      return;
     if (node.textAutoResize !== "WIDTH_AND_HEIGHT")
       return;
-    let size = node.fontSize;
+    let size = getMaxFontSize(node);
     if (size <= minSize)
       return;
     while (node.width > maxWidth && size > minSize) {
-      size = Math.max(minSize, size - 0.5);
+      const ratio = Math.max(minSize / size, (size - 0.5) / size);
       try {
-        await figma.loadFontAsync(node.fontName);
-        node.setRangeFontSize(0, node.characters.length, size);
+        await scaleAllFontsBy(node, ratio, minSize);
+        size = getMaxFontSize(node);
       } catch (_e) {
         break;
       }
@@ -173,7 +207,7 @@
       if (node && node.type === "TEXT") {
         try {
           const originalWidth = node.width;
-          const originalFontSize = node.fontSize === figma.mixed ? 0 : node.fontSize;
+          const originalFontSize = getMaxFontSize(node);
           const wasWAH = node.textAutoResize === "WIDTH_AND_HEIGHT";
           const inAL = parentIsAutoLayout(node);
           await loadFonts(node);
@@ -210,10 +244,8 @@
         const scale = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
         if (scale >= 1)
           continue;
-        const newSize = Math.max(minFont, Math.round(r.originalFontSize * scale * 2) / 2);
         try {
-          await figma.loadFontAsync(r.node.fontName);
-          r.node.setRangeFontSize(0, r.node.characters.length, newSize);
+          await scaleAllFontsBy(r.node, scale, minFont);
         } catch (_e2) {
         }
       }
@@ -247,10 +279,14 @@
     if (msg.type === "init") {
       const settings = await figma.clientStorage.getAsync("ft_settings") || {};
       const key = await figma.clientStorage.getAsync("openai_key") || "";
-      figma.ui.postMessage({ type: "init-data", settings, key });
+      const cached = await figma.clientStorage.getAsync("ft_cache") || {};
+      figma.ui.postMessage({ type: "init-data", settings, key, cache: cached });
     }
     if (msg.type === "save-settings") {
       await figma.clientStorage.setAsync("ft_settings", msg.settings);
+    }
+    if (msg.type === "save-cache") {
+      await figma.clientStorage.setAsync("ft_cache", msg.data || {});
     }
     if (msg.type === "save-key") {
       await figma.clientStorage.setAsync("openai_key", msg.key);
@@ -294,8 +330,19 @@
         figma.ui.postMessage({ type: "frame-error", frameId, langCode, text: "Original frame not found" });
         return;
       }
+      const wantName = `${stripLangSuffix(orig.name)} [${langCode.toUpperCase()}]`;
+      const existing = figma.currentPage.findAll(
+        (n) => n.name === wantName && (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE")
+      );
+      if (existing.length > 0) {
+        const fo2 = fitOptions || {};
+        const { ok: ok2, fail: fail2 } = await applyTranslationsToRoot(existing[0], translations, fo2);
+        figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok: ok2, fail: fail2 });
+        figma.notify(`\u21BB ${wantName} updated \u2014 ${ok2} translated` + (fail2 ? `, ${fail2} skipped` : ""));
+        return;
+      }
       const clone = orig.clone();
-      clone.name = `${orig.name} [${langCode.toUpperCase()}]`;
+      clone.name = wantName;
       const gap = 80;
       const ow = "width" in orig ? orig.width : 400;
       const oh = "height" in orig ? orig.height : 400;
