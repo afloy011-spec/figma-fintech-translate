@@ -456,16 +456,33 @@ figma.ui.onmessage = async (msg: any) => {
     const clone = (orig as FrameNode).clone();
     clone.name = wantName;
 
+    /* Smart alignment: if clone landed inside an auto-layout or nested
+       container, pull it out to the page so we can position freely.       */
+    const needsReparent = clone.parent !== figma.currentPage;
+    if (needsReparent) {
+      figma.currentPage.appendChild(clone);
+    }
+
     const gap = 80;
     const ow = "width" in orig ? (orig as FrameNode).width : 400;
     const oh = "height" in orig ? (orig as FrameNode).height : 400;
 
-    if (multiFrame === true) {
-      clone.x = orig.x;
-      clone.y = orig.y + (oh + gap) * (langIndex + 1);
+    const baseX = needsReparent
+      ? (orig as FrameNode).absoluteTransform[0][2]
+      : orig.x;
+    const baseY = needsReparent
+      ? (orig as FrameNode).absoluteTransform[1][2]
+      : orig.y;
+
+    if (replaceX !== null && replaceY !== null) {
+      clone.x = replaceX;
+      clone.y = replaceY;
+    } else if (multiFrame === true) {
+      clone.x = baseX;
+      clone.y = baseY + (oh + gap) * (langIndex + 1);
     } else {
-      clone.x = orig.x + (ow + gap) * (langIndex + 1);
-      clone.y = orig.y;
+      clone.x = baseX + (ow + gap) * (langIndex + 1);
+      clone.y = baseY;
     }
 
     const fo = fitOptions || {};

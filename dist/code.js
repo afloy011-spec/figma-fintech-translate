@@ -343,15 +343,24 @@
       }
       const clone = orig.clone();
       clone.name = wantName;
+      const needsReparent = clone.parent !== figma.currentPage;
+      if (needsReparent) {
+        figma.currentPage.appendChild(clone);
+      }
       const gap = 80;
       const ow = "width" in orig ? orig.width : 400;
       const oh = "height" in orig ? orig.height : 400;
-      if (multiFrame === true) {
-        clone.x = orig.x;
-        clone.y = orig.y + (oh + gap) * (langIndex + 1);
+      const baseX = needsReparent ? orig.absoluteTransform[0][2] : orig.x;
+      const baseY = needsReparent ? orig.absoluteTransform[1][2] : orig.y;
+      if (replaceX !== null && replaceY !== null) {
+        clone.x = replaceX;
+        clone.y = replaceY;
+      } else if (multiFrame === true) {
+        clone.x = baseX;
+        clone.y = baseY + (oh + gap) * (langIndex + 1);
       } else {
-        clone.x = orig.x + (ow + gap) * (langIndex + 1);
-        clone.y = orig.y;
+        clone.x = baseX + (ow + gap) * (langIndex + 1);
+        clone.y = baseY;
       }
       const fo = fitOptions || {};
       const { ok, fail } = await applyTranslationsToRoot(clone, translations, fo);
