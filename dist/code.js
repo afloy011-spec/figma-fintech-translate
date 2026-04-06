@@ -343,27 +343,18 @@
       }
       const clone = orig.clone();
       clone.name = wantName;
-      if (clone.parent !== figma.currentPage) {
-        figma.currentPage.appendChild(clone);
-      }
       const gap = 80;
-      const origAbsX = orig.absoluteTransform ? orig.absoluteTransform[0][2] : orig.x;
-      const origAbsY = orig.absoluteTransform ? orig.absoluteTransform[1][2] : orig.y;
       const ow = "width" in orig ? orig.width : 400;
       const oh = "height" in orig ? orig.height : 400;
-      if (replaceX !== null && replaceY !== null) {
-        clone.x = replaceX;
-        clone.y = replaceY;
-      } else if (multiFrame === true) {
-        clone.x = origAbsX;
-        clone.y = origAbsY + (oh + gap) * (langIndex + 1);
+      if (multiFrame === true) {
+        clone.x = orig.x;
+        clone.y = orig.y + (oh + gap) * (langIndex + 1);
       } else {
-        clone.x = origAbsX + (ow + gap) * (langIndex + 1);
-        clone.y = origAbsY;
+        clone.x = orig.x + (ow + gap) * (langIndex + 1);
+        clone.y = orig.y;
       }
       const fo = fitOptions || {};
       const { ok, fail } = await applyTranslationsToRoot(clone, translations, fo);
-      figma.viewport.scrollAndZoomIntoView([clone]);
       figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail });
       figma.notify(`\u2713 ${clone.name}  \u2014  ${ok} translated` + (fail ? `, ${fail} skipped` : ""));
     }
