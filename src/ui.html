@@ -2878,16 +2878,17 @@ async function callOpenAI(texts, lang) {
     "9. Preserve leading/trailing whitespace and terminal punctuation exactly as in source.\n" +
     "10. Preserve ALL special characters verbatim: tildes (~), en-dashes (–), em-dashes (—), arrows (→←), bullets (•), pipes (|), slashes (/). Never replace one with another.\n\n" +
     (glBlock ? "GLOSSARY (use these exact translations when the source matches):\n" + glBlock + "\n\n" : "") +
-    "INPUT: JSON array.\nOUTPUT: JSON array, same order, same count.\nReturn ONLY the JSON array.";
+    "INPUT: JSON array of source strings.\n" +
+    "OUTPUT: a JSON object with a single key \"t\" whose value is the translated array (same order, same count).\n" +
+    "Example: {\"t\": [\"translated1\", \"translated2\"]}\n" +
+    "Return ONLY valid JSON. No markdown, no explanation.";
 
   const body = {
     model,
     messages: [{ role: "system", content: sys }, { role: "user", content: JSON.stringify(texts) }],
     temperature: 0.1,
+    response_format: { type: "json_object" },
   };
-  if (model.startsWith("gpt-4") || model.startsWith("gpt-5")) {
-    body.response_format = { type: "json_object" };
-  }
 
   return withRetry(async function() {
     if (cancelRequested) throw new Error("Cancelled");
