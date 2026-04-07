@@ -2919,6 +2919,12 @@ async function callOpenAI(texts, lang) {
       throw new Error("OpenAI returned invalid JSON: " + content.slice(0, 120));
     }
 
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed) && parsed.error) {
+      const em = typeof parsed.error === "string" ? parsed.error
+        : (parsed.error.message || JSON.stringify(parsed.error).slice(0, 200));
+      throw new Error("OpenAI error: " + em);
+    }
+
     let arr = parsed;
 
     if (typeof arr === "string") {
@@ -2931,15 +2937,18 @@ async function callOpenAI(texts, lang) {
         const v = arr[k];
         if (Array.isArray(v) && v.length === texts.length) { arr = v; break; }
       }
-      if (!Array.isArray(arr) && texts.length === 1) {
-        for (const k of keys) {
-          if (typeof arr[k] === "string") { arr = [arr[k]]; break; }
+      if (!Array.isArray(arr)) {
+        const strVals = keys.filter(function(k) { return typeof arr[k] === "string" && k !== "error"; });
+        if (strVals.length === texts.length) {
+          arr = strVals.map(function(k) { return arr[k]; });
+        } else if (texts.length === 1 && strVals.length >= 1) {
+          arr = [arr[strVals[0]]];
         }
       }
     }
 
     if (!Array.isArray(arr) || arr.length !== texts.length) {
-      throw new Error("Expected " + texts.length + " translations, got " + (Array.isArray(arr) ? arr.length : "non-array") + "; raw keys: " + (typeof parsed === "object" && parsed ? Object.keys(parsed).join(",") : typeof parsed));
+      throw new Error("Expected " + texts.length + " translations, got " + (Array.isArray(arr) ? arr.length : "non-array") + "; raw: " + content.slice(0, 150));
     }
     return arr;
   }, 2, 1000);
