@@ -2920,13 +2920,20 @@ async function callOpenAI(texts, lang) {
     }
 
     let arr = parsed;
-    if (!Array.isArray(arr) && typeof arr === "object") {
+
+    if (typeof arr === "string") {
+      arr = [arr];
+    }
+
+    if (!Array.isArray(arr) && typeof arr === "object" && arr !== null) {
       const keys = Object.keys(arr);
-      if (keys.length === 1 && Array.isArray(arr[keys[0]])) {
-        arr = arr[keys[0]];
-      } else {
+      for (const k of keys) {
+        const v = arr[k];
+        if (Array.isArray(v) && v.length === texts.length) { arr = v; break; }
+      }
+      if (!Array.isArray(arr) && texts.length === 1) {
         for (const k of keys) {
-          if (Array.isArray(arr[k]) && arr[k].length === texts.length) { arr = arr[k]; break; }
+          if (typeof arr[k] === "string") { arr = [arr[k]]; break; }
         }
       }
     }
