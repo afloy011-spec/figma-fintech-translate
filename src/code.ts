@@ -1,3 +1,6 @@
+/** Inlined at build time from `dist/ui.html` (see `build.mjs` `define.__html__`). */
+declare const __html__: string;
+
 figma.showUI(__html__, { width: 560, height: 740 });
 
 /* ------------------------------------------------------------------ */
@@ -57,6 +60,142 @@ function tryDisableHyphenation(node: TextNode): void {
     }
   } catch (_e) {
     /* Older Figma builds or read-only nodes */
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Preserve per-character styling across text replacement              */
+/* ------------------------------------------------------------------ */
+
+interface CharStyle {
+  fontName: FontName;
+  fontSize: number;
+  letterSpacing: LetterSpacing;
+  lineHeight: LineHeight;
+  textDecoration: TextDecoration;
+  textCase: TextCase;
+  fills: ReadonlyArray<Paint> | typeof figma.mixed;
+}
+
+function captureCharStyles(node: TextNode): CharStyle[] {
+  const len = node.characters.length;
+  const styles: CharStyle[] = [];
+  for (let i = 0; i < len; i++) {
+    styles.push({
+      fontName:       node.getRangeFontName(i, i + 1) as FontName,
+      fontSize:       node.getRangeFontSize(i, i + 1) as number,
+      letterSpacing:  node.getRangeLetterSpacing(i, i + 1) as LetterSpacing,
+      lineHeight:     node.getRangeLineHeight(i, i + 1) as LineHeight,
+      textDecoration: node.getRangeTextDecoration(i, i + 1) as TextDecoration,
+      textCase:       node.getRangeTextCase(i, i + 1) as TextCase,
+      fills:          node.getRangeFills(i, i + 1),
+    });
+  }
+  return styles;
+}
+
+function isUniformStyle(styles: CharStyle[]): boolean {
+  if (styles.length <= 1) return true;
+  const f = styles[0];
+  for (let i = 1; i < styles.length; i++) {
+    const s = styles[i];
+    if (s.fontName.family !== f.fontName.family || s.fontName.style !== f.fontName.style
+        || s.fontSize !== f.fontSize) return false;
+  }
+  return true;
+}
+
+function mapSegmentStyles(segStyles: CharStyle[], oldSeg: string, newSeg: string): CharStyle[] {
+  const newLen = newSeg.length;
+  if (!segStyles.length || newLen === 0) return [];
+  if (isUniformStyle(segStyles)) {
+    const arr: CharStyle[] = [];
+    for (let i = 0; i < newLen; i++) arr.push(segStyles[0]);
+    return arr;
+  }
+
+  const oldTokens = oldSeg.split(/(\s+)/);
+  const newTokens = newSeg.split(/(\s+)/);
+
+  let pos = 0;
+  const tokenStyle: CharStyle[] = [];
+  for (const tok of oldTokens) {
+    tokenStyle.push(segStyles[Math.min(pos, segStyles.length - 1)]);
+    pos += tok.length;
+  }
+
+  const result: CharStyle[] = [];
+  if (oldTokens.length === newTokens.length) {
+    for (let ti = 0; ti < newTokens.length; ti++) {
+      const st = tokenStyle[ti];
+      for (let ci = 0; ci < newTokens[ti].length; ci++) result.push(st);
+    }
+  } else {
+    for (let ti = 0; ti < newTokens.length; ti++) {
+      const srcTi = Math.min(Math.floor((ti / newTokens.length) * oldTokens.length), oldTokens.length - 1);
+      const st = tokenStyle[srcTi];
+      for (let ci = 0; ci < newTokens[ti].length; ci++) result.push(st);
+    }
+  }
+  return result;
+}
+
+function mapStylesToNewLength(styles: CharStyle[], oldText: string, newText: string): CharStyle[] {
+  const newLen = newText.length;
+  if (!styles.length || newLen === 0) return [];
+
+  const oldLines = oldText.split("\n");
+  const newLines = newText.split("\n");
+
+  if (oldLines.length === newLines.length) {
+    const mapped: CharStyle[] = [];
+    let oldPos = 0;
+    for (let li = 0; li < oldLines.length; li++) {
+      const lineStyles = styles.slice(oldPos, oldPos + oldLines[li].length);
+      const effective = lineStyles.length ? lineStyles : [styles[Math.min(oldPos, styles.length - 1)]];
+      mapped.push(...mapSegmentStyles(effective, oldLines[li], newLines[li]));
+      oldPos += oldLines[li].length;
+
+      if (li < oldLines.length - 1) {
+        mapped.push(styles[Math.min(oldPos, styles.length - 1)]);
+        oldPos += 1;
+      }
+    }
+    while (mapped.length < newLen) mapped.push(styles[styles.length - 1]);
+    return mapped.slice(0, newLen);
+  }
+
+  return mapSegmentStyles(styles, oldText, newText);
+}
+
+async function applyCharStyles(node: TextNode, mapped: CharStyle[]): Promise<void> {
+  const len = node.characters.length;
+  if (!mapped.length || len === 0) return;
+
+  let i = 0;
+  while (i < len) {
+    const s = mapped[i];
+    let j = i + 1;
+    while (j < len && j < mapped.length) {
+      const n = mapped[j];
+      if (n.fontName.family !== s.fontName.family || n.fontName.style !== s.fontName.style
+          || n.fontSize !== s.fontSize) break;
+      j++;
+    }
+
+    try {
+      await figma.loadFontAsync(s.fontName);
+      node.setRangeFontName(i, j, s.fontName);
+      node.setRangeFontSize(i, j, s.fontSize);
+      node.setRangeLetterSpacing(i, j, s.letterSpacing);
+      node.setRangeLineHeight(i, j, s.lineHeight);
+      node.setRangeTextDecoration(i, j, s.textDecoration);
+      node.setRangeTextCase(i, j, s.textCase);
+      if (s.fills !== figma.mixed) {
+        node.setRangeFills(i, j, s.fills as Paint[]);
+      }
+    } catch (_e) { /* font unavailable — keep Figma default */ }
+    i = j;
   }
 }
 
@@ -344,7 +483,11 @@ async function applyTranslationsToRoot(
         const inAL             = parentIsAutoLayout(node);
 
         await loadFonts(node);
+        const savedStyles = captureCharStyles(node);
+        const originalText = node.characters;
         node.characters = t.text;
+        const mapped = mapStylesToNewLength(savedStyles, originalText, t.text);
+        await applyCharStyles(node, mapped);
         tryDisableHyphenation(node);
 
         await applySmartFit(node, foNoScale, originalWidth);

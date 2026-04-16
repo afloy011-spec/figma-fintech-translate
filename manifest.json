@@ -1,6 +1,7 @@
 {
   "name": "Fintech Translator",
   "id": "0000000000000001",
+  "editorType": ["figma"],
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/ui.html",
