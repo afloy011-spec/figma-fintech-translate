@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+"use strict";
+(() => {
+  // src/code.ts
+  figma.showUI(`<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -109,7 +112,7 @@ header .ver {
   margin-bottom: 10px;
 }
 
-/* Static field labels — engine, languages, lock terms, smart fit */
+/* Static field labels \u2014 engine, languages, lock terms, smart fit */
 .field-label {
   font-size: 10px;
   font-weight: 600;
@@ -122,12 +125,12 @@ header .ver {
   gap: 6px;
 }
 
-/* Group title bar — "Setup" / "Translate" */
-/* Logical groups without visible headings — spacing only */
+/* Group title bar \u2014 "Setup" / "Translate" */
+/* Logical groups without visible headings \u2014 spacing only */
 .workflow-group { margin-bottom: 0; }
 .workflow-group + .workflow-group { margin-top: 22px; }
 
-/* ── Advanced: линия-разделитель; сверху отступ от основного потока, снизу плотнее к настройкам ── */
+/* \u2500\u2500 Advanced: \u043B\u0438\u043D\u0438\u044F-\u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C; \u0441\u0432\u0435\u0440\u0445\u0443 \u043E\u0442\u0441\u0442\u0443\u043F \u043E\u0442 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0433\u043E \u043F\u043E\u0442\u043E\u043A\u0430, \u0441\u043D\u0438\u0437\u0443 \u043F\u043B\u043E\u0442\u043D\u0435\u0435 \u043A \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u043C \u2500\u2500 */
 .section-divider {
   display: flex;
   align-items: center;
@@ -147,7 +150,7 @@ header .ver {
   background: var(--border-lt);
 }
 
-/* ── Scan hero ───────────────────────────────────────────────────── */
+/* \u2500\u2500 Scan hero \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
 .scan-cta {
   min-height: 48px;
   border-radius: 10px;
@@ -160,7 +163,7 @@ header .ver {
   box-shadow: 0 6px 26px rgba(99,102,241,.45), 0 2px 6px rgba(0,0,0,.25);
 }
 
-/* ── Sync card ───────────────────────────────────────────────────── */
+/* \u2500\u2500 Sync card \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
 .sync-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -201,7 +204,7 @@ header .ver {
   border-top: 1px solid var(--border-lt);
 }
 
-/* ── Smart Fit inline ────────────────────────────────────────────── */
+/* \u2500\u2500 Smart Fit inline \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
 .smartfit-block {
   background: var(--card);
   border: 1px solid var(--border);
@@ -253,7 +256,7 @@ header .ver {
 .designer-tips li { margin-bottom: 6px; }
 .designer-tips strong { color: var(--txt); font-weight: 600; }
 
-/* Card surfaces — Smart Fit / Sync / Scan / Progress */
+/* Card surfaces \u2014 Smart Fit / Sync / Scan / Progress */
 .panel {
   border-radius: var(--r2);
   border: 1px solid var(--border);
@@ -698,7 +701,7 @@ select.input {
   pointer-events: none;
 }
 .bottom > * { pointer-events: auto; }
-/* One primary action at a time: Translate ↔ Apply in the same slot */
+/* One primary action at a time: Translate \u2194 Apply in the same slot */
 .bottom-primary-slot .btn-full { width: 100%; }
 .bottom-primary-slot + .btn { margin-top: 8px; }
 .bottom .btn + .btn { margin-top: 8px; }
@@ -731,7 +734,7 @@ select.input {
 .rescan-warn strong { font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ================================================================== */
-/*  Scan hint (empty state) — tight to button, same visual group        */
+/*  Scan hint (empty state) \u2014 tight to button, same visual group        */
 /* ================================================================== */
 .workflow-group .section-scan {
   margin-bottom: 16px;
@@ -830,7 +833,7 @@ select.input {
   vertical-align: middle;
 }
 
-/* Only the rows scroll — header stays under tabs (no sticky overlap on main scroll) */
+/* Only the rows scroll \u2014 header stays under tabs (no sticky overlap on main scroll) */
 .review-scroll {
   flex: 1 1 auto;
   min-height: 0;
@@ -1112,14 +1115,14 @@ select.input {
       <div class="mt">
         <div class="field-label">Model</div>
         <select class="input" id="model">
-          <option value="gpt-5.5-nano">GPT-5.5 Nano  —  fastest, ~$0.25/1M</option>
-          <option value="gpt-5.5-mini" selected>GPT-5.5 Mini  —  balanced, ~$0.90/1M</option>
-          <option value="gpt-5.5">GPT-5.5  —  best quality, ~$3.50/1M</option>
-          <option value="gpt-5.4-nano">GPT-5.4 Nano  —  fastest, ~$0.20/1M</option>
-          <option value="gpt-5.4-mini">GPT-5.4 Mini  —  balanced, ~$0.75/1M</option>
-          <option value="gpt-5.4">GPT-5.4  —  best quality, ~$3/1M</option>
-          <option value="gpt-4o-mini">GPT-4o Mini  —  legacy</option>
-          <option value="gpt-4o">GPT-4o  —  legacy</option>
+          <option value="gpt-5.5-nano">GPT-5.5 Nano  \u2014  fastest, ~$0.25/1M</option>
+          <option value="gpt-5.5-mini" selected>GPT-5.5 Mini  \u2014  balanced, ~$0.90/1M</option>
+          <option value="gpt-5.5">GPT-5.5  \u2014  best quality, ~$3.50/1M</option>
+          <option value="gpt-5.4-nano">GPT-5.4 Nano  \u2014  fastest, ~$0.20/1M</option>
+          <option value="gpt-5.4-mini">GPT-5.4 Mini  \u2014  balanced, ~$0.75/1M</option>
+          <option value="gpt-5.4">GPT-5.4  \u2014  best quality, ~$3/1M</option>
+          <option value="gpt-4o-mini">GPT-4o Mini  \u2014  legacy</option>
+          <option value="gpt-4o">GPT-4o  \u2014  legacy</option>
         </select>
       </div>
     </div>
@@ -1151,7 +1154,7 @@ select.input {
         <label class="chip on" data-lang="pt">
           <input type="checkbox" value="pt" checked />
           <span class="flag">&#127477;&#127481;</span>
-          <div class="lang-meta"><div class="name">Português</div><div class="code">PT</div></div>
+          <div class="lang-meta"><div class="name">Portugu\xEAs</div><div class="code">PT</div></div>
         </label>
         <label class="chip" data-lang="pl">
           <input type="checkbox" value="pl" />
@@ -1161,22 +1164,22 @@ select.input {
         <label class="chip" data-lang="el">
           <input type="checkbox" value="el" />
           <span class="flag">&#127468;&#127479;</span>
-          <div class="lang-meta"><div class="name">Ελληνικά</div><div class="code">EL</div></div>
+          <div class="lang-meta"><div class="name">\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC</div><div class="code">EL</div></div>
         </label>
         <label class="chip" data-lang="ko">
           <input type="checkbox" value="ko" />
           <span class="flag">&#127472;&#127479;</span>
-          <div class="lang-meta"><div class="name">한국어</div><div class="code">KO</div></div>
+          <div class="lang-meta"><div class="name">\uD55C\uAD6D\uC5B4</div><div class="code">KO</div></div>
         </label>
         <label class="chip" data-lang="zh">
           <input type="checkbox" value="zh" />
           <span class="flag">&#127464;&#127475;</span>
-          <div class="lang-meta"><div class="name">中文</div><div class="code">ZH</div></div>
+          <div class="lang-meta"><div class="name">\u4E2D\u6587</div><div class="code">ZH</div></div>
         </label>
         <label class="chip" data-lang="ja">
           <input type="checkbox" value="ja" />
           <span class="flag">&#127471;&#127477;</span>
-          <div class="lang-meta"><div class="name">日本語</div><div class="code">JA</div></div>
+          <div class="lang-meta"><div class="name">\u65E5\u672C\u8A9E</div><div class="code">JA</div></div>
         </label>
       </div>
     </div>
@@ -1185,7 +1188,7 @@ select.input {
     <div class="section" style="margin-bottom:0">
       <div class="field-label">Do Not Translate</div>
       <input class="lock-input" id="lockTerms" type="text"
-             placeholder="Maclear, 8lends, USDC, KYC, APR…  (comma-separated)" />
+             placeholder="Maclear, 8lends, USDC, KYC, APR\u2026  (comma-separated)" />
       <p class="hint">These exact terms stay in English across all translations.</p>
     </div>
   </div>
@@ -1194,7 +1197,7 @@ select.input {
     <!-- Selection-changed warning -->
     <div class="rescan-warn hidden" id="rescanWarn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Selection changed — <strong id="rescanLink">Scan again</strong> to update
+      Selection changed \u2014 <strong id="rescanLink">Scan again</strong> to update
     </div>
 
     <!-- Scan: primary hero action -->
@@ -1232,7 +1235,7 @@ select.input {
 
   <!-- Review panel (revealed after translation) -->
   <div class="section hidden fade-in" id="reviewSection">
-    <div class="section-label">Review <span style="font-weight:400;color:var(--txt3)">· Fit % · next: Apply</span></div>
+    <div class="section-label">Review <span style="font-weight:400;color:var(--txt3)">\xB7 Fit % \xB7 next: Apply</span></div>
     <div class="review-panel">
       <div class="review-tabs" id="reviewTabs"></div>
       <div class="review-header">
@@ -1263,7 +1266,7 @@ select.input {
           <div class="fit-control-group">
             <span class="fit-hint-label">Side padding</span>
             <div class="stepper">
-              <button class="stepper-btn" id="padMinus" type="button">−</button>
+              <button class="stepper-btn" id="padMinus" type="button">\u2212</button>
               <input class="stepper-input" id="sidePadding" type="number" min="0" max="80" step="1" value="16" />
               <button class="stepper-btn" id="padPlus" type="button">+</button>
             </div>
@@ -1285,7 +1288,7 @@ select.input {
           <div class="fit-control-group" id="minFontGroup" style="opacity:.4;pointer-events:none">
             <span class="fit-hint-label">Min size</span>
             <div class="stepper">
-              <button class="stepper-btn" id="minFontMinus" type="button">−</button>
+              <button class="stepper-btn" id="minFontMinus" type="button">\u2212</button>
               <input class="stepper-input" id="minFontSize" type="number" min="6" max="24" step="1" value="8" />
               <button class="stepper-btn" id="minFontPlus" type="button">+</button>
             </div>
@@ -1297,11 +1300,11 @@ select.input {
         <button type="button" id="smartFitRecommendedBtn">Use recommended defaults</button>
       </div>
       <details class="designer-tips">
-        <summary>Layout tips — complex screens &amp; glass cards</summary>
+        <summary>Layout tips \u2014 complex screens &amp; glass cards</summary>
         <ul>
           <li><strong>One frame per screen.</strong> Select the whole artboard (e.g. &quot;10&quot;). We clone it as one piece so staggered cards stay aligned with the illustration.</li>
           <li><strong>Inside each card,</strong> use vertical Auto Layout for list rows (icon + text). When text wraps, rows grow together; <strong>Grow frames</strong> expands the glass panel behind.</li>
-          <li><strong>Long languages (ES, DE, PL, EL…):</strong> keep <strong>Wrap</strong> + <strong>Grow frames</strong> on. Use <strong>Auto scale font</strong> only for fixed-size UI (tiny buttons, badges).</li>
+          <li><strong>Long languages (ES, DE, PL, EL\u2026):</strong> keep <strong>Wrap</strong> + <strong>Grow frames</strong> on. Use <strong>Auto scale font</strong> only for fixed-size UI (tiny buttons, badges).</li>
         </ul>
       </details>
     </div>
@@ -1320,7 +1323,7 @@ select.input {
           <div class="sync-card-sub">Edit EN source, push to all locales at once</div>
         </div>
       </div>
-      <p class="hint">Select one source frame. Matching frames on this page — <strong>BaseName [ES]</strong>, <strong>BaseName [PL]</strong>, <strong>BaseName [EL]</strong>, <strong>[KO]</strong>, <strong>[ZH]</strong>, <strong>[JA]</strong>, … — receive fresh translations. Smart Fit settings above apply.</p>
+      <p class="hint">Select one source frame. Matching frames on this page \u2014 <strong>BaseName [ES]</strong>, <strong>BaseName [PL]</strong>, <strong>BaseName [EL]</strong>, <strong>[KO]</strong>, <strong>[ZH]</strong>, <strong>[JA]</strong>, \u2026 \u2014 receive fresh translations. Smart Fit settings above apply.</p>
       <button class="btn btn-secondary btn-full" type="button" id="syncRefBtn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
         Sync Selected Frame to All Languages
@@ -1358,7 +1361,7 @@ select.input {
 <!--  Script                                                           -->
 <!-- ================================================================ -->
 <!-- Loads before inline script; produced by npm run build -->
-<script src="glossary-lookup.js"></script>
+<script src="glossary-lookup.js"><\/script>
 <script>
 /* ================================================================== */
 /*  Glossary                                                           */
@@ -1367,63 +1370,63 @@ const GLOSSARY = {
   es: {
     // Core finance
     "APR":"TAE","Annual Percentage Rate":"Tasa Anual Equivalente",
-    "interest rate":"tasa de interés","annual returns":"rendimientos anuales",
+    "interest rate":"tasa de inter\xE9s","annual returns":"rendimientos anuales",
     "monthly payouts":"pagos mensuales","monthly payments":"pagos mensuales",
     "balance":"saldo","statement":"extracto","account":"cuenta",
-    "deposit":"depósito","withdrawal":"retiro","wire transfer":"transferencia bancaria",
-    "transaction":"transacción","payment":"pago","invoice":"factura",
-    "fee":"comisión","no hidden fees":"sin comisiones ocultas",
+    "deposit":"dep\xF3sito","withdrawal":"retiro","wire transfer":"transferencia bancaria",
+    "transaction":"transacci\xF3n","payment":"pago","invoice":"factura",
+    "fee":"comisi\xF3n","no hidden fees":"sin comisiones ocultas",
     // P2P / Crowdlending (Maclear)
-    "P2P lending":"préstamos P2P","crowdlending":"crowdlending",
-    "crowdfunding":"financiación colectiva","lending platform":"plataforma de préstamos",
-    "investment platform":"plataforma de inversión",
+    "P2P lending":"pr\xE9stamos P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financiaci\xF3n colectiva","lending platform":"plataforma de pr\xE9stamos",
+    "investment platform":"plataforma de inversi\xF3n",
     "investor":"inversor","investors":"inversores",
     "borrower":"prestatario","lender":"prestamista",
-    "loan":"préstamo","loan period":"plazo del préstamo","loan term":"plazo del préstamo",
-    "loan originator":"originador de préstamos",
+    "loan":"pr\xE9stamo","loan period":"plazo del pr\xE9stamo","loan term":"plazo del pr\xE9stamo",
+    "loan originator":"originador de pr\xE9stamos",
     "funded":"financiado","repaid":"reembolsado",
-    "default":"impago","late loans":"préstamos con retraso",
+    "default":"impago","late loans":"pr\xE9stamos con retraso",
     "cash drag":"capital inactivo",
     "primary market":"mercado primario","secondary market":"mercado secundario",
     "total funded":"total financiado","total interest paid":"total de intereses pagados",
     "available funds":"fondos disponibles","invested funds":"fondos invertidos",
     "total funds":"fondos totales",
     // Investment
-    "initial investment":"inversión inicial","investment period":"período de inversión",
+    "initial investment":"inversi\xF3n inicial","investment period":"per\xEDodo de inversi\xF3n",
     "future value":"valor futuro","earned return":"rendimiento obtenido",
     "average annual return":"rendimiento medio anual",
     "portfolio":"cartera","passive income":"ingresos pasivos",
-    "principal repayment":"devolución del capital",
+    "principal repayment":"devoluci\xF3n del capital",
     "interest payment":"pago de intereses",
     "installment":"cuota","recurring payment":"pago recurrente",
     // Compliance & process
-    "due diligence":"diligencia debida","risk assessment":"evaluación de riesgos",
-    "risk scoring":"puntuación de riesgo","AML":"AML",
+    "due diligence":"diligencia debida","risk assessment":"evaluaci\xF3n de riesgos",
+    "risk scoring":"puntuaci\xF3n de riesgo","AML":"AML",
     "compliance":"cumplimiento normativo","regulated":"regulado",
-    "verification":"verificación","KYC":"KYC",
+    "verification":"verificaci\xF3n","KYC":"KYC",
     // Bonuses & rewards
     "referral bonus":"bono de referido","loyalty bonus":"bono de fidelidad",
-    "welcome bonus":"bono de bienvenida","investment reward":"recompensa de inversión",
+    "welcome bonus":"bono de bienvenida","investment reward":"recompensa de inversi\xF3n",
     "invite friends":"invitar amigos",
     // UI actions
-    "sign up":"registrarse","log in":"iniciar sesión","register":"registrarse",
+    "sign up":"registrarse","log in":"iniciar sesi\xF3n","register":"registrarse",
     "invest now":"invertir ahora","start investing":"empezar a invertir",
     "dashboard":"panel de control","onboarding":"alta de cliente",
     // General finance
-    "collateral":"garantía","mortgage":"hipoteca","savings":"ahorros",
-    "credit score":"puntuación crediticia","overdraft":"sobregiro",
-    "chargeback":"contracargo","settlement":"liquidación",
-    "direct debit":"domiciliación bancaria","exchange rate":"tipo de cambio",
+    "collateral":"garant\xEDa","mortgage":"hipoteca","savings":"ahorros",
+    "credit score":"puntuaci\xF3n crediticia","overdraft":"sobregiro",
+    "chargeback":"contracargo","settlement":"liquidaci\xF3n",
+    "direct debit":"domiciliaci\xF3n bancaria","exchange rate":"tipo de cambio",
     "payee":"beneficiario","payer":"pagador","beneficiary":"beneficiario",
     "equity":"capital","liability":"pasivo","asset":"activo",
-    "dividend":"dividendo","spending limit":"límite de gasto",
+    "dividend":"dividendo","spending limit":"l\xEDmite de gasto",
     // Crypto / Web3 (Maclear Crypto Course)
     "blockchain":"blockchain","token":"token","tokens":"tokens",
     "stablecoin":"stablecoin","stablecoins":"stablecoins",
     "cryptocurrency":"criptomoneda","crypto":"cripto",
     "crypto wallet":"monedero cripto","wallet":"monedero",
     "seed phrase":"frase semilla","private key":"clave privada",
-    "public address":"dirección pública","smart contract":"contrato inteligente",
+    "public address":"direcci\xF3n p\xFAblica","smart contract":"contrato inteligente",
     "network fees":"comisiones de red","gas fees":"tarifas de gas",
     "custodial":"custodiado","non-custodial":"no custodiado",
     "custodial wallet":"monedero custodiado",
@@ -1432,30 +1435,30 @@ const GLOSSARY = {
     "decentralized":"descentralizado","centralized":"centralizado",
     "capital provider":"proveedor de capital",
     "repayment schedule":"calendario de pagos",
-    "leverage":"apalancamiento","diversification":"diversificación",
+    "leverage":"apalancamiento","diversification":"diversificaci\xF3n",
     "yield":"rendimiento","returns":"rendimientos",
     "liquidity":"liquidez","protocol":"protocolo",
     "staking":"staking","airdrop":"airdrop",
-    "mining":"minería","validator":"validador",
+    "mining":"miner\xEDa","validator":"validador",
     "consensus":"consenso","bridge":"puente",
     "on-chain":"on-chain","off-chain":"off-chain",
     "scam":"estafa","phishing":"phishing",
     "Learn & Earn":"Aprende y Gana",
     "start learning":"empezar a aprender",
-    "checklist":"lista de verificación",
+    "checklist":"lista de verificaci\xF3n",
     "step-by-step":"paso a paso",
     "beginner":"principiante","beginners":"principiantes",
-    // Tech terms — must stay untranslated
+    // Tech terms \u2014 must stay untranslated
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
-    // Date/era labels — keep verbatim
+    // Date/era labels \u2014 keep verbatim
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    // Infographic card text — concise translations
-    "Evolution of the Web from 1.0 to 3.0":"Evolución de la Web del 1.0 al 3.0",
-    "Static read-only web pages":"Páginas web estáticas de solo lectura",
-    "Information-centric and interactive":"Centrada en la información e interactiva",
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    // Infographic card text \u2014 concise translations
+    "Evolution of the Web from 1.0 to 3.0":"Evoluci\xF3n de la Web del 1.0 al 3.0",
+    "Static read-only web pages":"P\xE1ginas web est\xE1ticas de solo lectura",
+    "Information-centric and interactive":"Centrada en la informaci\xF3n e interactiva",
     "User-centric, decentralized, private and secure":"Centrada en el usuario, descentralizada, privada y segura",
     "read-only":"solo lectura","user-centric":"centrada en el usuario",
     "private and secure":"privada y segura"
@@ -1491,9 +1494,9 @@ const GLOSSARY = {
     "installment":"rata","recurring payment":"pagamento ricorrente",
     "due diligence":"due diligence","risk assessment":"valutazione del rischio",
     "risk scoring":"punteggio di rischio","AML":"AML",
-    "compliance":"conformità normativa","regulated":"regolamentato",
+    "compliance":"conformit\xE0 normativa","regulated":"regolamentato",
     "verification":"verifica","KYC":"KYC",
-    "referral bonus":"bonus referral","loyalty bonus":"bonus fedeltà",
+    "referral bonus":"bonus referral","loyalty bonus":"bonus fedelt\xE0",
     "welcome bonus":"bonus di benvenuto","investment reward":"premio di investimento",
     "invite friends":"invita amici",
     "sign up":"registrati","log in":"accedi","register":"registrati",
@@ -1504,7 +1507,7 @@ const GLOSSARY = {
     "chargeback":"storno","settlement":"regolamento",
     "direct debit":"addebito diretto","exchange rate":"tasso di cambio",
     "payee":"beneficiario","payer":"pagatore","beneficiary":"beneficiario",
-    "equity":"capitale","liability":"passività","asset":"attività",
+    "equity":"capitale","liability":"passivit\xE0","asset":"attivit\xE0",
     "dividend":"dividendo","spending limit":"limite di spesa",
     "blockchain":"blockchain","token":"token","tokens":"token",
     "stablecoin":"stablecoin","stablecoins":"stablecoin",
@@ -1522,7 +1525,7 @@ const GLOSSARY = {
     "repayment schedule":"piano di rimborso",
     "leverage":"leva finanziaria","diversification":"diversificazione",
     "yield":"rendimento","returns":"rendimenti",
-    "liquidity":"liquidità","protocol":"protocollo",
+    "liquidity":"liquidit\xE0","protocol":"protocollo",
     "staking":"staking","airdrop":"airdrop",
     "mining":"mining","validator":"validatore",
     "consensus":"consenso","bridge":"bridge",
@@ -1536,7 +1539,7 @@ const GLOSSARY = {
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
     "Evolution of the Web from 1.0 to 3.0":"Evoluzione del Web dal 1.0 al 3.0",
     "Static read-only web pages":"Pagine web statiche in sola lettura",
     "Information-centric and interactive":"Incentrato sulle informazioni e interattivo",
@@ -1545,95 +1548,95 @@ const GLOSSARY = {
   },
   fr: {
     "APR":"TAEG","Annual Percentage Rate":"Taux Annuel Effectif Global",
-    "interest rate":"taux d'intérêt","annual returns":"rendements annuels",
+    "interest rate":"taux d'int\xE9r\xEAt","annual returns":"rendements annuels",
     "monthly payouts":"versements mensuels","monthly payments":"paiements mensuels",
-    "balance":"solde","statement":"relevé","account":"compte",
-    "deposit":"dépôt","withdrawal":"retrait","wire transfer":"virement bancaire",
+    "balance":"solde","statement":"relev\xE9","account":"compte",
+    "deposit":"d\xE9p\xF4t","withdrawal":"retrait","wire transfer":"virement bancaire",
     "transaction":"transaction","payment":"paiement","invoice":"facture",
-    "fee":"frais","no hidden fees":"aucuns frais cachés",
-    "P2P lending":"prêt P2P","crowdlending":"crowdlending",
-    "crowdfunding":"financement participatif","lending platform":"plateforme de prêt",
+    "fee":"frais","no hidden fees":"aucuns frais cach\xE9s",
+    "P2P lending":"pr\xEAt P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financement participatif","lending platform":"plateforme de pr\xEAt",
     "investment platform":"plateforme d'investissement",
     "investor":"investisseur","investors":"investisseurs",
-    "borrower":"emprunteur","lender":"prêteur",
-    "loan":"prêt","loan period":"durée du prêt","loan term":"durée du prêt",
-    "loan originator":"originateur de prêts",
-    "funded":"financé","repaid":"remboursé",
-    "default":"défaut de paiement","late loans":"prêts en retard",
+    "borrower":"emprunteur","lender":"pr\xEAteur",
+    "loan":"pr\xEAt","loan period":"dur\xE9e du pr\xEAt","loan term":"dur\xE9e du pr\xEAt",
+    "loan originator":"originateur de pr\xEAts",
+    "funded":"financ\xE9","repaid":"rembours\xE9",
+    "default":"d\xE9faut de paiement","late loans":"pr\xEAts en retard",
     "cash drag":"capital inactif",
-    "primary market":"marché primaire","secondary market":"marché secondaire",
-    "total funded":"total financé","total interest paid":"total des intérêts versés",
+    "primary market":"march\xE9 primaire","secondary market":"march\xE9 secondaire",
+    "total funded":"total financ\xE9","total interest paid":"total des int\xE9r\xEAts vers\xE9s",
     "available funds":"fonds disponibles","invested funds":"fonds investis",
     "total funds":"fonds totaux",
-    "initial investment":"investissement initial","investment period":"période d'investissement",
+    "initial investment":"investissement initial","investment period":"p\xE9riode d'investissement",
     "future value":"valeur future","earned return":"rendement obtenu",
     "average annual return":"rendement annuel moyen",
     "portfolio":"portefeuille","passive income":"revenu passif",
     "principal repayment":"remboursement du capital",
-    "interest payment":"paiement des intérêts",
-    "installment":"versement","recurring payment":"paiement récurrent",
-    "due diligence":"vérification préalable","risk assessment":"évaluation des risques",
+    "interest payment":"paiement des int\xE9r\xEAts",
+    "installment":"versement","recurring payment":"paiement r\xE9current",
+    "due diligence":"v\xE9rification pr\xE9alable","risk assessment":"\xE9valuation des risques",
     "risk scoring":"notation du risque","AML":"LCB",
-    "compliance":"conformité réglementaire","regulated":"réglementé",
-    "verification":"vérification","KYC":"KYC",
-    "referral bonus":"prime de parrainage","loyalty bonus":"prime de fidélité",
-    "welcome bonus":"prime de bienvenue","investment reward":"récompense d'investissement",
+    "compliance":"conformit\xE9 r\xE9glementaire","regulated":"r\xE9glement\xE9",
+    "verification":"v\xE9rification","KYC":"KYC",
+    "referral bonus":"prime de parrainage","loyalty bonus":"prime de fid\xE9lit\xE9",
+    "welcome bonus":"prime de bienvenue","investment reward":"r\xE9compense d'investissement",
     "invite friends":"inviter des amis",
     "sign up":"s'inscrire","log in":"se connecter","register":"s'inscrire",
-    "invest now":"investir maintenant","start investing":"commencer à investir",
+    "invest now":"investir maintenant","start investing":"commencer \xE0 investir",
     "dashboard":"tableau de bord","onboarding":"inscription client",
-    "collateral":"garantie","mortgage":"prêt hypothécaire","savings":"épargne",
-    "credit score":"cote de crédit","overdraft":"découvert",
-    "chargeback":"rétrofacturation","settlement":"règlement",
-    "direct debit":"prélèvement automatique","exchange rate":"taux de change",
-    "payee":"bénéficiaire","payer":"payeur","beneficiary":"bénéficiaire",
+    "collateral":"garantie","mortgage":"pr\xEAt hypoth\xE9caire","savings":"\xE9pargne",
+    "credit score":"cote de cr\xE9dit","overdraft":"d\xE9couvert",
+    "chargeback":"r\xE9trofacturation","settlement":"r\xE8glement",
+    "direct debit":"pr\xE9l\xE8vement automatique","exchange rate":"taux de change",
+    "payee":"b\xE9n\xE9ficiaire","payer":"payeur","beneficiary":"b\xE9n\xE9ficiaire",
     "equity":"capitaux propres","liability":"passif","asset":"actif",
-    "dividend":"dividende","spending limit":"plafond de dépenses",
+    "dividend":"dividende","spending limit":"plafond de d\xE9penses",
     "blockchain":"blockchain","token":"jeton","tokens":"jetons",
     "stablecoin":"stablecoin","stablecoins":"stablecoins",
     "cryptocurrency":"cryptomonnaie","crypto":"crypto",
     "crypto wallet":"portefeuille crypto","wallet":"portefeuille",
-    "seed phrase":"phrase de récupération","private key":"clé privée",
+    "seed phrase":"phrase de r\xE9cup\xE9ration","private key":"cl\xE9 priv\xE9e",
     "public address":"adresse publique","smart contract":"contrat intelligent",
-    "network fees":"frais de réseau","gas fees":"frais de gas",
+    "network fees":"frais de r\xE9seau","gas fees":"frais de gas",
     "custodial":"custodial","non-custodial":"non-custodial",
     "custodial wallet":"portefeuille custodial",
     "non-custodial wallet":"portefeuille non-custodial",
-    "fiat":"monnaie fiduciaire","pegged":"indexé",
-    "decentralized":"décentralisé","centralized":"centralisé",
+    "fiat":"monnaie fiduciaire","pegged":"index\xE9",
+    "decentralized":"d\xE9centralis\xE9","centralized":"centralis\xE9",
     "capital provider":"fournisseur de capital",
     "repayment schedule":"calendrier de remboursement",
     "leverage":"effet de levier","diversification":"diversification",
     "yield":"rendement","returns":"rendements",
-    "liquidity":"liquidité","protocol":"protocole",
+    "liquidity":"liquidit\xE9","protocol":"protocole",
     "staking":"staking","airdrop":"airdrop",
     "mining":"minage","validator":"validateur",
     "consensus":"consensus","bridge":"pont",
     "on-chain":"on-chain","off-chain":"off-chain",
-    "scam":"arnaque","phishing":"hameçonnage",
+    "scam":"arnaque","phishing":"hame\xE7onnage",
     "Learn & Earn":"Apprendre et Gagner",
-    "start learning":"commencer à apprendre",
-    "checklist":"liste de contrôle","step-by-step":"étape par étape",
-    "beginner":"débutant","beginners":"débutants",
+    "start learning":"commencer \xE0 apprendre",
+    "checklist":"liste de contr\xF4le","step-by-step":"\xE9tape par \xE9tape",
+    "beginner":"d\xE9butant","beginners":"d\xE9butants",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    "Evolution of the Web from 1.0 to 3.0":"Évolution du Web de 1.0 à 3.0",
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"\xC9volution du Web de 1.0 \xE0 3.0",
     "Static read-only web pages":"Pages web statiques en lecture seule",
-    "Information-centric and interactive":"Centré sur l'information et interactif",
-    "User-centric, decentralized, private and secure":"Centré sur l'utilisateur, décentralisé, privé et sécurisé",
-    "read-only":"lecture seule","user-centric":"centré utilisateur"
+    "Information-centric and interactive":"Centr\xE9 sur l'information et interactif",
+    "User-centric, decentralized, private and secure":"Centr\xE9 sur l'utilisateur, d\xE9centralis\xE9, priv\xE9 et s\xE9curis\xE9",
+    "read-only":"lecture seule","user-centric":"centr\xE9 utilisateur"
   },
   de: {
     "APR":"Eff. Jahreszins","Annual Percentage Rate":"Effektiver Jahreszins",
     "interest rate":"Zinssatz","annual returns":"Jahresrendite",
     "monthly payouts":"monatliche Auszahlungen","monthly payments":"monatliche Zahlungen",
     "balance":"Kontostand","statement":"Kontoauszug","account":"Konto",
-    "deposit":"Einzahlung","withdrawal":"Auszahlung","wire transfer":"Banküberweisung",
+    "deposit":"Einzahlung","withdrawal":"Auszahlung","wire transfer":"Bank\xFCberweisung",
     "transaction":"Transaktion","payment":"Zahlung","invoice":"Rechnung",
-    "fee":"Gebühr","no hidden fees":"keine versteckten Gebühren",
+    "fee":"Geb\xFChr","no hidden fees":"keine versteckten Geb\xFChren",
     "P2P lending":"P2P-Kreditvergabe","crowdlending":"Crowdlending",
     "crowdfunding":"Crowdfunding","lending platform":"Kreditplattform",
     "investment platform":"Investitionsplattform",
@@ -1641,44 +1644,44 @@ const GLOSSARY = {
     "borrower":"Kreditnehmer","lender":"Kreditgeber",
     "loan":"Kredit","loan period":"Kreditlaufzeit","loan term":"Kreditlaufzeit",
     "loan originator":"Kreditanbahner",
-    "funded":"finanziert","repaid":"zurückgezahlt",
-    "default":"Ausfall","late loans":"verspätete Kredite",
-    "cash drag":"Kapitalverzögerung",
-    "primary market":"Primärmarkt","secondary market":"Sekundärmarkt",
+    "funded":"finanziert","repaid":"zur\xFCckgezahlt",
+    "default":"Ausfall","late loans":"versp\xE4tete Kredite",
+    "cash drag":"Kapitalverz\xF6gerung",
+    "primary market":"Prim\xE4rmarkt","secondary market":"Sekund\xE4rmarkt",
     "total funded":"Gesamtfinanzierung","total interest paid":"Gesamtzinsen gezahlt",
-    "available funds":"verfügbare Mittel","invested funds":"investierte Mittel",
+    "available funds":"verf\xFCgbare Mittel","invested funds":"investierte Mittel",
     "total funds":"Gesamtmittel",
     "initial investment":"Erstinvestition","investment period":"Investitionszeitraum",
     "future value":"Endwert","earned return":"erzielter Ertrag",
     "average annual return":"durchschnittliche Jahresrendite",
     "portfolio":"Portfolio","passive income":"passives Einkommen",
-    "principal repayment":"Kapitalrückzahlung",
+    "principal repayment":"Kapitalr\xFCckzahlung",
     "interest payment":"Zinszahlung",
     "installment":"Rate","recurring payment":"Dauerauftrag",
-    "due diligence":"Sorgfaltsprüfung","risk assessment":"Risikobewertung",
+    "due diligence":"Sorgfaltspr\xFCfung","risk assessment":"Risikobewertung",
     "risk scoring":"Risikobewertung","AML":"GwG",
     "compliance":"Compliance","regulated":"reguliert",
     "verification":"Verifizierung","KYC":"KYC",
     "referral bonus":"Empfehlungsbonus","loyalty bonus":"Treuebonus",
-    "welcome bonus":"Willkommensbonus","investment reward":"Investitionsprämie",
+    "welcome bonus":"Willkommensbonus","investment reward":"Investitionspr\xE4mie",
     "invite friends":"Freunde einladen",
     "sign up":"registrieren","log in":"anmelden","register":"registrieren",
     "invest now":"jetzt investieren","start investing":"jetzt anlegen",
-    "dashboard":"Dashboard","onboarding":"Kontoeröffnung",
+    "dashboard":"Dashboard","onboarding":"Kontoer\xF6ffnung",
     "collateral":"Sicherheit","mortgage":"Hypothek","savings":"Ersparnisse",
-    "credit score":"Bonitätsbewertung","overdraft":"Überziehung",
-    "chargeback":"Rückbuchung","settlement":"Abrechnung",
+    "credit score":"Bonit\xE4tsbewertung","overdraft":"\xDCberziehung",
+    "chargeback":"R\xFCckbuchung","settlement":"Abrechnung",
     "direct debit":"Lastschrift","exchange rate":"Wechselkurs",
-    "payee":"Zahlungsempfänger","payer":"Zahler","beneficiary":"Begünstigter",
-    "equity":"Eigenkapital","liability":"Verbindlichkeit","asset":"Vermögenswert",
+    "payee":"Zahlungsempf\xE4nger","payer":"Zahler","beneficiary":"Beg\xFCnstigter",
+    "equity":"Eigenkapital","liability":"Verbindlichkeit","asset":"Verm\xF6genswert",
     "dividend":"Dividende","spending limit":"Ausgabenlimit",
     "blockchain":"Blockchain","token":"Token","tokens":"Token",
     "stablecoin":"Stablecoin","stablecoins":"Stablecoins",
-    "cryptocurrency":"Kryptowährung","crypto":"Krypto",
+    "cryptocurrency":"Kryptow\xE4hrung","crypto":"Krypto",
     "crypto wallet":"Krypto-Wallet","wallet":"Wallet",
-    "seed phrase":"Seed-Phrase","private key":"privater Schlüssel",
-    "public address":"öffentliche Adresse","smart contract":"Smart Contract",
-    "network fees":"Netzwerkgebühren","gas fees":"Gas-Gebühren",
+    "seed phrase":"Seed-Phrase","private key":"privater Schl\xFCssel",
+    "public address":"\xF6ffentliche Adresse","smart contract":"Smart Contract",
+    "network fees":"Netzwerkgeb\xFChren","gas fees":"Gas-Geb\xFChren",
     "custodial":"verwahrt","non-custodial":"nicht-verwahrt",
     "custodial wallet":"verwahrtes Wallet",
     "non-custodial wallet":"nicht-verwahrtes Wallet",
@@ -1687,8 +1690,8 @@ const GLOSSARY = {
     "capital provider":"Kapitalgeber",
     "repayment schedule":"Tilgungsplan",
     "leverage":"Hebelwirkung","diversification":"Diversifizierung",
-    "yield":"Rendite","returns":"Erträge",
-    "liquidity":"Liquidität","protocol":"Protokoll",
+    "yield":"Rendite","returns":"Ertr\xE4ge",
+    "liquidity":"Liquidit\xE4t","protocol":"Protokoll",
     "staking":"Staking","airdrop":"Airdrop",
     "mining":"Mining","validator":"Validator",
     "consensus":"Konsens","bridge":"Bridge",
@@ -1696,590 +1699,590 @@ const GLOSSARY = {
     "scam":"Betrug","phishing":"Phishing",
     "Learn & Earn":"Lernen und Verdienen",
     "start learning":"jetzt lernen",
-    "checklist":"Checkliste","step-by-step":"Schritt für Schritt",
-    "beginner":"Anfänger","beginners":"Anfänger",
+    "checklist":"Checkliste","step-by-step":"Schritt f\xFCr Schritt",
+    "beginner":"Anf\xE4nger","beginners":"Anf\xE4nger",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
     "Evolution of the Web from 1.0 to 3.0":"Entwicklung des Webs von 1.0 bis 3.0",
-    "Static read-only web pages":"Statische, schreibgeschützte Webseiten",
+    "Static read-only web pages":"Statische, schreibgesch\xFCtzte Webseiten",
     "Information-centric and interactive":"Informationszentriert und interaktiv",
     "User-centric, decentralized, private and secure":"Nutzerzentriert, dezentral, privat und sicher",
-    "read-only":"schreibgeschützt","user-centric":"nutzerzentriert"
+    "read-only":"schreibgesch\xFCtzt","user-centric":"nutzerzentriert"
   },
   pt: {
     "APR":"TAEG","Annual Percentage Rate":"Taxa Anual Efetiva Global",
     "interest rate":"taxa de juro","annual returns":"rendimento anual",
     "monthly payouts":"pagamentos mensais","monthly payments":"pagamentos mensais",
     "balance":"saldo","statement":"extrato","account":"conta",
-    "deposit":"depósito","withdrawal":"levantamento","wire transfer":"transferência bancária",
-    "transaction":"transação","payment":"pagamento","invoice":"fatura",
-    "fee":"comissão","no hidden fees":"sem taxas ocultas",
-    "P2P lending":"empréstimos P2P","crowdlending":"crowdlending",
-    "crowdfunding":"financiamento coletivo","lending platform":"plataforma de empréstimos",
+    "deposit":"dep\xF3sito","withdrawal":"levantamento","wire transfer":"transfer\xEAncia banc\xE1ria",
+    "transaction":"transa\xE7\xE3o","payment":"pagamento","invoice":"fatura",
+    "fee":"comiss\xE3o","no hidden fees":"sem taxas ocultas",
+    "P2P lending":"empr\xE9stimos P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financiamento coletivo","lending platform":"plataforma de empr\xE9stimos",
     "investment platform":"plataforma de investimento",
     "investor":"investidor","investors":"investidores",
-    "borrower":"mutuário","lender":"mutuante",
-    "loan":"empréstimo","loan period":"prazo do empréstimo","loan term":"prazo do empréstimo",
-    "loan originator":"originador de empréstimos",
+    "borrower":"mutu\xE1rio","lender":"mutuante",
+    "loan":"empr\xE9stimo","loan period":"prazo do empr\xE9stimo","loan term":"prazo do empr\xE9stimo",
+    "loan originator":"originador de empr\xE9stimos",
     "funded":"financiado","repaid":"reembolsado",
-    "default":"incumprimento","late loans":"empréstimos em atraso",
+    "default":"incumprimento","late loans":"empr\xE9stimos em atraso",
     "cash drag":"capital inativo",
-    "primary market":"mercado primário","secondary market":"mercado secundário",
+    "primary market":"mercado prim\xE1rio","secondary market":"mercado secund\xE1rio",
     "total funded":"total financiado","total interest paid":"total de juros pagos",
-    "available funds":"fundos disponíveis","invested funds":"fundos investidos",
+    "available funds":"fundos dispon\xEDveis","invested funds":"fundos investidos",
     "total funds":"fundos totais",
-    "initial investment":"investimento inicial","investment period":"período de investimento",
+    "initial investment":"investimento inicial","investment period":"per\xEDodo de investimento",
     "future value":"valor futuro","earned return":"rendimento obtido",
-    "average annual return":"rendimento anual médio",
+    "average annual return":"rendimento anual m\xE9dio",
     "portfolio":"carteira","passive income":"rendimento passivo",
     "principal repayment":"reembolso do capital",
     "interest payment":"pagamento de juros",
-    "installment":"prestação","recurring payment":"pagamento recorrente",
-    "due diligence":"auditoria prévia","risk assessment":"avaliação de risco",
-    "risk scoring":"pontuação de risco","AML":"ABC",
+    "installment":"presta\xE7\xE3o","recurring payment":"pagamento recorrente",
+    "due diligence":"auditoria pr\xE9via","risk assessment":"avalia\xE7\xE3o de risco",
+    "risk scoring":"pontua\xE7\xE3o de risco","AML":"ABC",
     "compliance":"conformidade regulamentar","regulated":"regulamentado",
-    "verification":"verificação","KYC":"KYC",
-    "referral bonus":"bónus de referência","loyalty bonus":"bónus de fidelidade",
-    "welcome bonus":"bónus de boas-vindas","investment reward":"recompensa de investimento",
+    "verification":"verifica\xE7\xE3o","KYC":"KYC",
+    "referral bonus":"b\xF3nus de refer\xEAncia","loyalty bonus":"b\xF3nus de fidelidade",
+    "welcome bonus":"b\xF3nus de boas-vindas","investment reward":"recompensa de investimento",
     "invite friends":"convidar amigos",
-    "sign up":"registar","log in":"iniciar sessão","register":"registar",
-    "invest now":"investir agora","start investing":"começar a investir",
+    "sign up":"registar","log in":"iniciar sess\xE3o","register":"registar",
+    "invest now":"investir agora","start investing":"come\xE7ar a investir",
     "dashboard":"painel de controlo","onboarding":"registo de cliente",
-    "collateral":"garantia","mortgage":"hipoteca","savings":"poupanças",
-    "credit score":"pontuação de crédito","overdraft":"descoberto",
-    "chargeback":"estorno","settlement":"liquidação",
-    "direct debit":"débito direto","exchange rate":"taxa de câmbio",
-    "payee":"beneficiário","payer":"pagador","beneficiary":"beneficiário",
-    "equity":"capital próprio","liability":"passivo","asset":"ativo",
+    "collateral":"garantia","mortgage":"hipoteca","savings":"poupan\xE7as",
+    "credit score":"pontua\xE7\xE3o de cr\xE9dito","overdraft":"descoberto",
+    "chargeback":"estorno","settlement":"liquida\xE7\xE3o",
+    "direct debit":"d\xE9bito direto","exchange rate":"taxa de c\xE2mbio",
+    "payee":"benefici\xE1rio","payer":"pagador","beneficiary":"benefici\xE1rio",
+    "equity":"capital pr\xF3prio","liability":"passivo","asset":"ativo",
     "dividend":"dividendo","spending limit":"limite de gastos",
     "blockchain":"blockchain","token":"token","tokens":"tokens",
     "stablecoin":"stablecoin","stablecoins":"stablecoins",
     "cryptocurrency":"criptomoeda","crypto":"cripto",
     "crypto wallet":"carteira cripto","wallet":"carteira",
     "seed phrase":"frase-semente","private key":"chave privada",
-    "public address":"endereço público","smart contract":"contrato inteligente",
+    "public address":"endere\xE7o p\xFAblico","smart contract":"contrato inteligente",
     "network fees":"taxas de rede","gas fees":"taxas de gas",
-    "custodial":"custodial","non-custodial":"não custodial",
+    "custodial":"custodial","non-custodial":"n\xE3o custodial",
     "custodial wallet":"carteira custodial",
-    "non-custodial wallet":"carteira não custodial",
-    "fiat":"moeda fiduciária","pegged":"indexado",
+    "non-custodial wallet":"carteira n\xE3o custodial",
+    "fiat":"moeda fiduci\xE1ria","pegged":"indexado",
     "decentralized":"descentralizado","centralized":"centralizado",
     "capital provider":"provedor de capital",
-    "repayment schedule":"calendário de reembolso",
-    "leverage":"alavancagem","diversification":"diversificação",
+    "repayment schedule":"calend\xE1rio de reembolso",
+    "leverage":"alavancagem","diversification":"diversifica\xE7\xE3o",
     "yield":"rendimento","returns":"rendimentos",
     "liquidity":"liquidez","protocol":"protocolo",
     "staking":"staking","airdrop":"airdrop",
-    "mining":"mineração","validator":"validador",
+    "mining":"minera\xE7\xE3o","validator":"validador",
     "consensus":"consenso","bridge":"ponte",
     "on-chain":"on-chain","off-chain":"off-chain",
     "scam":"fraude","phishing":"phishing",
     "Learn & Earn":"Aprender e Ganhar",
-    "start learning":"começar a aprender",
-    "checklist":"lista de verificação","step-by-step":"passo a passo",
+    "start learning":"come\xE7ar a aprender",
+    "checklist":"lista de verifica\xE7\xE3o","step-by-step":"passo a passo",
     "beginner":"iniciante","beginners":"iniciantes",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    "Evolution of the Web from 1.0 to 3.0":"Evolução da Web de 1.0 a 3.0",
-    "Static read-only web pages":"Páginas web estáticas somente leitura",
-    "Information-centric and interactive":"Centrada na informação e interativa",
-    "User-centric, decentralized, private and secure":"Centrada no usuário, descentralizada, privada e segura",
-    "read-only":"somente leitura","user-centric":"centrada no usuário"
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"Evolu\xE7\xE3o da Web de 1.0 a 3.0",
+    "Static read-only web pages":"P\xE1ginas web est\xE1ticas somente leitura",
+    "Information-centric and interactive":"Centrada na informa\xE7\xE3o e interativa",
+    "User-centric, decentralized, private and secure":"Centrada no usu\xE1rio, descentralizada, privada e segura",
+    "read-only":"somente leitura","user-centric":"centrada no usu\xE1rio"
   },
   pl: {
     "APR":"RRSO","Annual Percentage Rate":"Roczna Rzeczywista Stopa Oprocentowania",
     "interest rate":"oprocentowanie","annual returns":"roczne zwroty",
-    "monthly payouts":"miesięczne wypłaty","monthly payments":"miesięczne płatności",
-    "balance":"saldo","statement":"wyciąg","account":"konto",
-    "deposit":"wpłata","withdrawal":"wypłata","wire transfer":"przelew bankowy",
-    "transaction":"transakcja","payment":"płatność","invoice":"faktura",
-    "fee":"opłata","no hidden fees":"bez ukrytych opłat",
-    "P2P lending":"pożyczki P2P","crowdlending":"crowdlending",
-    "crowdfunding":"crowdfunding","lending platform":"platforma pożyczkowa",
+    "monthly payouts":"miesi\u0119czne wyp\u0142aty","monthly payments":"miesi\u0119czne p\u0142atno\u015Bci",
+    "balance":"saldo","statement":"wyci\u0105g","account":"konto",
+    "deposit":"wp\u0142ata","withdrawal":"wyp\u0142ata","wire transfer":"przelew bankowy",
+    "transaction":"transakcja","payment":"p\u0142atno\u015B\u0107","invoice":"faktura",
+    "fee":"op\u0142ata","no hidden fees":"bez ukrytych op\u0142at",
+    "P2P lending":"po\u017Cyczki P2P","crowdlending":"crowdlending",
+    "crowdfunding":"crowdfunding","lending platform":"platforma po\u017Cyczkowa",
     "investment platform":"platforma inwestycyjna",
     "investor":"inwestor","investors":"inwestorzy",
-    "borrower":"pożyczkobiorca","lender":"pożyczkodawca",
-    "loan":"pożyczka","loan period":"okres pożyczki","loan term":"okres pożyczki",
-    "loan originator":"inicjator pożyczek",
-    "funded":"sfinansowany","repaid":"spłacony",
-    "default":"niewypłacalność","late loans":"pożyczki z opóźnieniem",
-    "cash drag":"nieaktywny kapitał",
-    "primary market":"rynek pierwotny","secondary market":"rynek wtórny",
-    "total funded":"łącznie sfinansowano","total interest paid":"łącznie zapłacone odsetki",
-    "available funds":"dostępne środki","invested funds":"zainwestowane środki",
-    "total funds":"łączne środki",
-    "initial investment":"inwestycja początkowa","investment period":"okres inwestycji",
-    "future value":"wartość przyszła","earned return":"uzyskany zwrot",
-    "average annual return":"średni roczny zwrot",
-    "portfolio":"portfel","passive income":"dochód pasywny",
-    "principal repayment":"spłata kapitału",
-    "interest payment":"spłata odsetek",
-    "installment":"rata","recurring payment":"płatność cykliczna",
+    "borrower":"po\u017Cyczkobiorca","lender":"po\u017Cyczkodawca",
+    "loan":"po\u017Cyczka","loan period":"okres po\u017Cyczki","loan term":"okres po\u017Cyczki",
+    "loan originator":"inicjator po\u017Cyczek",
+    "funded":"sfinansowany","repaid":"sp\u0142acony",
+    "default":"niewyp\u0142acalno\u015B\u0107","late loans":"po\u017Cyczki z op\xF3\u017Anieniem",
+    "cash drag":"nieaktywny kapita\u0142",
+    "primary market":"rynek pierwotny","secondary market":"rynek wt\xF3rny",
+    "total funded":"\u0142\u0105cznie sfinansowano","total interest paid":"\u0142\u0105cznie zap\u0142acone odsetki",
+    "available funds":"dost\u0119pne \u015Brodki","invested funds":"zainwestowane \u015Brodki",
+    "total funds":"\u0142\u0105czne \u015Brodki",
+    "initial investment":"inwestycja pocz\u0105tkowa","investment period":"okres inwestycji",
+    "future value":"warto\u015B\u0107 przysz\u0142a","earned return":"uzyskany zwrot",
+    "average annual return":"\u015Bredni roczny zwrot",
+    "portfolio":"portfel","passive income":"doch\xF3d pasywny",
+    "principal repayment":"sp\u0142ata kapita\u0142u",
+    "interest payment":"sp\u0142ata odsetek",
+    "installment":"rata","recurring payment":"p\u0142atno\u015B\u0107 cykliczna",
     "due diligence":"due diligence","risk assessment":"ocena ryzyka",
     "risk scoring":"scoring ryzyka","AML":"AML",
-    "compliance":"zgodność regulacyjna","regulated":"regulowany",
+    "compliance":"zgodno\u015B\u0107 regulacyjna","regulated":"regulowany",
     "verification":"weryfikacja","KYC":"KYC",
-    "referral bonus":"bonus polecający","loyalty bonus":"bonus lojalnościowy",
+    "referral bonus":"bonus polecaj\u0105cy","loyalty bonus":"bonus lojalno\u015Bciowy",
     "welcome bonus":"bonus powitalny","investment reward":"nagroda inwestycyjna",
-    "invite friends":"zaproś znajomych",
-    "sign up":"zarejestruj się","log in":"zaloguj się","register":"zarejestruj się",
-    "invest now":"zainwestuj teraz","start investing":"zacznij inwestować",
+    "invite friends":"zapro\u015B znajomych",
+    "sign up":"zarejestruj si\u0119","log in":"zaloguj si\u0119","register":"zarejestruj si\u0119",
+    "invest now":"zainwestuj teraz","start investing":"zacznij inwestowa\u0107",
     "dashboard":"panel","onboarding":"onboarding klienta",
-    "collateral":"zabezpieczenie","mortgage":"hipoteka","savings":"oszczędności",
+    "collateral":"zabezpieczenie","mortgage":"hipoteka","savings":"oszcz\u0119dno\u015Bci",
     "credit score":"ocena kredytowa","overdraft":"debet",
     "chargeback":"chargeback","settlement":"rozliczenie",
-    "direct debit":"polecenie zapłaty","exchange rate":"kurs wymiany",
-    "payee":"odbiorca płatności","payer":"płatnik","beneficiary":"beneficjent",
-    "equity":"kapitał własny","liability":"zobowiązanie","asset":"aktywa",
-    "dividend":"dywidenda","spending limit":"limit wydatków",
+    "direct debit":"polecenie zap\u0142aty","exchange rate":"kurs wymiany",
+    "payee":"odbiorca p\u0142atno\u015Bci","payer":"p\u0142atnik","beneficiary":"beneficjent",
+    "equity":"kapita\u0142 w\u0142asny","liability":"zobowi\u0105zanie","asset":"aktywa",
+    "dividend":"dywidenda","spending limit":"limit wydatk\xF3w",
     "blockchain":"blockchain","token":"token","tokens":"tokeny",
     "stablecoin":"stablecoin","stablecoins":"stablecoiny",
     "cryptocurrency":"kryptowaluta","crypto":"krypto",
     "crypto wallet":"portfel krypto","wallet":"portfel",
     "seed phrase":"fraza seed","private key":"klucz prywatny",
     "public address":"adres publiczny","smart contract":"smart kontrakt",
-    "network fees":"opłaty sieciowe","gas fees":"opłaty gas",
+    "network fees":"op\u0142aty sieciowe","gas fees":"op\u0142aty gas",
     "custodial":"powierniczy","non-custodial":"niepowierniczy",
     "custodial wallet":"portfel powierniczy",
     "non-custodial wallet":"portfel niepowierniczy",
-    "fiat":"waluta fiducjarna","pegged":"powiązany",
+    "fiat":"waluta fiducjarna","pegged":"powi\u0105zany",
     "decentralized":"zdecentralizowany","centralized":"scentralizowany",
-    "capital provider":"dostawca kapitału",
-    "repayment schedule":"harmonogram spłat",
-    "leverage":"dźwignia","diversification":"dywersyfikacja",
-    "yield":"rentowność","returns":"zwroty",
-    "liquidity":"płynność","protocol":"protokół",
+    "capital provider":"dostawca kapita\u0142u",
+    "repayment schedule":"harmonogram sp\u0142at",
+    "leverage":"d\u017Awignia","diversification":"dywersyfikacja",
+    "yield":"rentowno\u015B\u0107","returns":"zwroty",
+    "liquidity":"p\u0142ynno\u015B\u0107","protocol":"protok\xF3\u0142",
     "staking":"staking","airdrop":"airdrop",
     "mining":"mining","validator":"walidator",
     "consensus":"konsensus","bridge":"most",
     "on-chain":"on-chain","off-chain":"off-chain",
     "scam":"oszustwo","phishing":"phishing",
-    "Learn & Earn":"Ucz się i zarabiaj",
-    "start learning":"zacznij naukę",
+    "Learn & Earn":"Ucz si\u0119 i zarabiaj",
+    "start learning":"zacznij nauk\u0119",
     "checklist":"lista kontrolna","step-by-step":"krok po kroku",
-    "beginner":"początkujący","beginners":"początkujący",
+    "beginner":"pocz\u0105tkuj\u0105cy","beginners":"pocz\u0105tkuj\u0105cy",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
     "Evolution of the Web from 1.0 to 3.0":"Ewolucja sieci od 1.0 do 3.0",
     "Static read-only web pages":"Statyczne strony tylko do odczytu",
     "Information-centric and interactive":"Skoncentrowana na informacji i interaktywna",
-    "User-centric, decentralized, private and secure":"Skoncentrowana na użytkowniku, zdecentralizowana, prywatna i bezpieczna",
-    "read-only":"tylko do odczytu","user-centric":"skoncentrowana na użytkowniku",
+    "User-centric, decentralized, private and secure":"Skoncentrowana na u\u017Cytkowniku, zdecentralizowana, prywatna i bezpieczna",
+    "read-only":"tylko do odczytu","user-centric":"skoncentrowana na u\u017Cytkowniku",
     "private and secure":"prywatna i bezpieczna"
   },
   el: {
-    "APR":"ΕΤΕ","Annual Percentage Rate":"Ετήσιο Ποσοστό Κόστους",
-    "interest rate":"επιτόκιο","annual returns":"ετήσιες αποδόσεις",
-    "monthly payouts":"μηνιαίες πληρωμές","monthly payments":"μηνιαίες πληρωμές",
-    "balance":"υπόλοιπο","statement":"κατάσταση λογαριασμού","account":"λογαριασμός",
-    "deposit":"κατάθεση","withdrawal":"ανάληψη","wire transfer":"τραπεζική μεταφορά",
-    "transaction":"συναλλαγή","payment":"πληρωμή","invoice":"τιμολόγιο",
-    "fee":"προμήθεια","no hidden fees":"χωρίς κρυφές χρεώσεις",
-    "P2P lending":"δανεισμός P2P","crowdlending":"crowdlending",
-    "crowdfunding":"crowdfunding","lending platform":"πλατφόρμα δανεισμού",
-    "investment platform":"πλατφόρμα επενδύσεων",
-    "investor":"επενδυτής","investors":"επενδυτές",
-    "borrower":"δανειολήπτης","lender":"δανειστής",
-    "loan":"δάνειο","loan period":"διάρκεια δανείου","loan term":"διάρκεια δανείου",
-    "loan originator":"εκδότης δανείων",
-    "funded":"χρηματοδοτημένο","repaid":"αποπληρωμένο",
-    "default":"καθυστέρηση πληρωμής","late loans":"επιβαρυμένα δάνεια",
-    "cash drag":"αδρανές κεφάλαιο",
-    "primary market":"πρωτογενής αγορά","secondary market":"δευτερογενής αγορά",
-    "total funded":"συνολική χρηματοδότηση","total interest paid":"συνολικοί τόκοι",
-    "available funds":"διαθέσιμα κεφάλαια","invested funds":"επενδυμένα κεφάλαια",
-    "total funds":"συνολικά κεφάλαια",
-    "initial investment":"αρχική επένδυση","investment period":"περίοδος επένδυσης",
-    "future value":"μελλοντική αξία","earned return":"αποκτηθείσα απόδοση",
-    "average annual return":"μέση ετήσια απόδοση",
-    "portfolio":"χαρτοφυλάκιο","passive income":"παθητικό εισόδημα",
-    "principal repayment":"αποπληρωμή κεφαλαίου",
-    "interest payment":"πληρωμή τόκων",
-    "installment":"δόση","recurring payment":"επαναλαμβανόμενη πληρωμή",
-    "due diligence":"due diligence","risk assessment":"αξιολόγηση κινδύνου",
-    "risk scoring":"βαθμολόγηση κινδύνου","AML":"AML",
-    "compliance":"συμμόρφωση","regulated":"ρυθμιζόμενο",
-    "verification":"επαλήθευση","KYC":"KYC",
-    "referral bonus":"μπόνους παραπομπής","loyalty bonus":"μπόνους πιστότητας",
-    "welcome bonus":"μπόνους καλωσορίσματος","investment reward":"ανταμοιβή επένδυσης",
-    "invite friends":"προσκαλέστε φίλους",
-    "sign up":"εγγραφή","log in":"σύνδεση","register":"εγγραφή",
-    "invest now":"επενδύστε τώρα","start investing":"ξεκινήστε να επενδύετε",
-    "dashboard":"πίνακας ελέγχου","onboarding":"εγγραφή πελάτη",
-    "collateral":"εξασφάλιση","mortgage":"υποθήκη","savings":"αποταμιεύσεις",
-    "credit score":"πιστοληπτική ικανότητα","overdraft":"υπερανάληψη",
-    "chargeback":"αντιλογισμός","settlement":"διακανονισμός",
-    "direct debit":"άμεση χρέωση","exchange rate":"ισοτιμία",
-    "payee":"δικαιούχος","payer":"πληρωτής","beneficiary":"δικαιούχος",
-    "equity":"ίδια κεφάλαια","liability":"υποχρέωση","asset":"ενεργητικό",
-    "dividend":"μέρισμα","spending limit":"όριο δαπανών",
+    "APR":"\u0395\u03A4\u0395","Annual Percentage Rate":"\u0395\u03C4\u03AE\u03C3\u03B9\u03BF \u03A0\u03BF\u03C3\u03BF\u03C3\u03C4\u03CC \u039A\u03CC\u03C3\u03C4\u03BF\u03C5\u03C2",
+    "interest rate":"\u03B5\u03C0\u03B9\u03C4\u03CC\u03BA\u03B9\u03BF","annual returns":"\u03B5\u03C4\u03AE\u03C3\u03B9\u03B5\u03C2 \u03B1\u03C0\u03BF\u03B4\u03CC\u03C3\u03B5\u03B9\u03C2",
+    "monthly payouts":"\u03BC\u03B7\u03BD\u03B9\u03B1\u03AF\u03B5\u03C2 \u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AD\u03C2","monthly payments":"\u03BC\u03B7\u03BD\u03B9\u03B1\u03AF\u03B5\u03C2 \u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AD\u03C2",
+    "balance":"\u03C5\u03C0\u03CC\u03BB\u03BF\u03B9\u03C0\u03BF","statement":"\u03BA\u03B1\u03C4\u03AC\u03C3\u03C4\u03B1\u03C3\u03B7 \u03BB\u03BF\u03B3\u03B1\u03C1\u03B9\u03B1\u03C3\u03BC\u03BF\u03CD","account":"\u03BB\u03BF\u03B3\u03B1\u03C1\u03B9\u03B1\u03C3\u03BC\u03CC\u03C2",
+    "deposit":"\u03BA\u03B1\u03C4\u03AC\u03B8\u03B5\u03C3\u03B7","withdrawal":"\u03B1\u03BD\u03AC\u03BB\u03B7\u03C8\u03B7","wire transfer":"\u03C4\u03C1\u03B1\u03C0\u03B5\u03B6\u03B9\u03BA\u03AE \u03BC\u03B5\u03C4\u03B1\u03C6\u03BF\u03C1\u03AC",
+    "transaction":"\u03C3\u03C5\u03BD\u03B1\u03BB\u03BB\u03B1\u03B3\u03AE","payment":"\u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AE","invoice":"\u03C4\u03B9\u03BC\u03BF\u03BB\u03CC\u03B3\u03B9\u03BF",
+    "fee":"\u03C0\u03C1\u03BF\u03BC\u03AE\u03B8\u03B5\u03B9\u03B1","no hidden fees":"\u03C7\u03C9\u03C1\u03AF\u03C2 \u03BA\u03C1\u03C5\u03C6\u03AD\u03C2 \u03C7\u03C1\u03B5\u03CE\u03C3\u03B5\u03B9\u03C2",
+    "P2P lending":"\u03B4\u03B1\u03BD\u03B5\u03B9\u03C3\u03BC\u03CC\u03C2 P2P","crowdlending":"crowdlending",
+    "crowdfunding":"crowdfunding","lending platform":"\u03C0\u03BB\u03B1\u03C4\u03C6\u03CC\u03C1\u03BC\u03B1 \u03B4\u03B1\u03BD\u03B5\u03B9\u03C3\u03BC\u03BF\u03CD",
+    "investment platform":"\u03C0\u03BB\u03B1\u03C4\u03C6\u03CC\u03C1\u03BC\u03B1 \u03B5\u03C0\u03B5\u03BD\u03B4\u03CD\u03C3\u03B5\u03C9\u03BD",
+    "investor":"\u03B5\u03C0\u03B5\u03BD\u03B4\u03C5\u03C4\u03AE\u03C2","investors":"\u03B5\u03C0\u03B5\u03BD\u03B4\u03C5\u03C4\u03AD\u03C2",
+    "borrower":"\u03B4\u03B1\u03BD\u03B5\u03B9\u03BF\u03BB\u03AE\u03C0\u03C4\u03B7\u03C2","lender":"\u03B4\u03B1\u03BD\u03B5\u03B9\u03C3\u03C4\u03AE\u03C2",
+    "loan":"\u03B4\u03AC\u03BD\u03B5\u03B9\u03BF","loan period":"\u03B4\u03B9\u03AC\u03C1\u03BA\u03B5\u03B9\u03B1 \u03B4\u03B1\u03BD\u03B5\u03AF\u03BF\u03C5","loan term":"\u03B4\u03B9\u03AC\u03C1\u03BA\u03B5\u03B9\u03B1 \u03B4\u03B1\u03BD\u03B5\u03AF\u03BF\u03C5",
+    "loan originator":"\u03B5\u03BA\u03B4\u03CC\u03C4\u03B7\u03C2 \u03B4\u03B1\u03BD\u03B5\u03AF\u03C9\u03BD",
+    "funded":"\u03C7\u03C1\u03B7\u03BC\u03B1\u03C4\u03BF\u03B4\u03BF\u03C4\u03B7\u03BC\u03AD\u03BD\u03BF","repaid":"\u03B1\u03C0\u03BF\u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AD\u03BD\u03BF",
+    "default":"\u03BA\u03B1\u03B8\u03C5\u03C3\u03C4\u03AD\u03C1\u03B7\u03C3\u03B7 \u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AE\u03C2","late loans":"\u03B5\u03C0\u03B9\u03B2\u03B1\u03C1\u03C5\u03BC\u03AD\u03BD\u03B1 \u03B4\u03AC\u03BD\u03B5\u03B9\u03B1",
+    "cash drag":"\u03B1\u03B4\u03C1\u03B1\u03BD\u03AD\u03C2 \u03BA\u03B5\u03C6\u03AC\u03BB\u03B1\u03B9\u03BF",
+    "primary market":"\u03C0\u03C1\u03C9\u03C4\u03BF\u03B3\u03B5\u03BD\u03AE\u03C2 \u03B1\u03B3\u03BF\u03C1\u03AC","secondary market":"\u03B4\u03B5\u03C5\u03C4\u03B5\u03C1\u03BF\u03B3\u03B5\u03BD\u03AE\u03C2 \u03B1\u03B3\u03BF\u03C1\u03AC",
+    "total funded":"\u03C3\u03C5\u03BD\u03BF\u03BB\u03B9\u03BA\u03AE \u03C7\u03C1\u03B7\u03BC\u03B1\u03C4\u03BF\u03B4\u03CC\u03C4\u03B7\u03C3\u03B7","total interest paid":"\u03C3\u03C5\u03BD\u03BF\u03BB\u03B9\u03BA\u03BF\u03AF \u03C4\u03CC\u03BA\u03BF\u03B9",
+    "available funds":"\u03B4\u03B9\u03B1\u03B8\u03AD\u03C3\u03B9\u03BC\u03B1 \u03BA\u03B5\u03C6\u03AC\u03BB\u03B1\u03B9\u03B1","invested funds":"\u03B5\u03C0\u03B5\u03BD\u03B4\u03C5\u03BC\u03AD\u03BD\u03B1 \u03BA\u03B5\u03C6\u03AC\u03BB\u03B1\u03B9\u03B1",
+    "total funds":"\u03C3\u03C5\u03BD\u03BF\u03BB\u03B9\u03BA\u03AC \u03BA\u03B5\u03C6\u03AC\u03BB\u03B1\u03B9\u03B1",
+    "initial investment":"\u03B1\u03C1\u03C7\u03B9\u03BA\u03AE \u03B5\u03C0\u03AD\u03BD\u03B4\u03C5\u03C3\u03B7","investment period":"\u03C0\u03B5\u03C1\u03AF\u03BF\u03B4\u03BF\u03C2 \u03B5\u03C0\u03AD\u03BD\u03B4\u03C5\u03C3\u03B7\u03C2",
+    "future value":"\u03BC\u03B5\u03BB\u03BB\u03BF\u03BD\u03C4\u03B9\u03BA\u03AE \u03B1\u03BE\u03AF\u03B1","earned return":"\u03B1\u03C0\u03BF\u03BA\u03C4\u03B7\u03B8\u03B5\u03AF\u03C3\u03B1 \u03B1\u03C0\u03CC\u03B4\u03BF\u03C3\u03B7",
+    "average annual return":"\u03BC\u03AD\u03C3\u03B7 \u03B5\u03C4\u03AE\u03C3\u03B9\u03B1 \u03B1\u03C0\u03CC\u03B4\u03BF\u03C3\u03B7",
+    "portfolio":"\u03C7\u03B1\u03C1\u03C4\u03BF\u03C6\u03C5\u03BB\u03AC\u03BA\u03B9\u03BF","passive income":"\u03C0\u03B1\u03B8\u03B7\u03C4\u03B9\u03BA\u03CC \u03B5\u03B9\u03C3\u03CC\u03B4\u03B7\u03BC\u03B1",
+    "principal repayment":"\u03B1\u03C0\u03BF\u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AE \u03BA\u03B5\u03C6\u03B1\u03BB\u03B1\u03AF\u03BF\u03C5",
+    "interest payment":"\u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AE \u03C4\u03CC\u03BA\u03C9\u03BD",
+    "installment":"\u03B4\u03CC\u03C3\u03B7","recurring payment":"\u03B5\u03C0\u03B1\u03BD\u03B1\u03BB\u03B1\u03BC\u03B2\u03B1\u03BD\u03CC\u03BC\u03B5\u03BD\u03B7 \u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AE",
+    "due diligence":"due diligence","risk assessment":"\u03B1\u03BE\u03B9\u03BF\u03BB\u03CC\u03B3\u03B7\u03C3\u03B7 \u03BA\u03B9\u03BD\u03B4\u03CD\u03BD\u03BF\u03C5",
+    "risk scoring":"\u03B2\u03B1\u03B8\u03BC\u03BF\u03BB\u03CC\u03B3\u03B7\u03C3\u03B7 \u03BA\u03B9\u03BD\u03B4\u03CD\u03BD\u03BF\u03C5","AML":"AML",
+    "compliance":"\u03C3\u03C5\u03BC\u03BC\u03CC\u03C1\u03C6\u03C9\u03C3\u03B7","regulated":"\u03C1\u03C5\u03B8\u03BC\u03B9\u03B6\u03CC\u03BC\u03B5\u03BD\u03BF",
+    "verification":"\u03B5\u03C0\u03B1\u03BB\u03AE\u03B8\u03B5\u03C5\u03C3\u03B7","KYC":"KYC",
+    "referral bonus":"\u03BC\u03C0\u03CC\u03BD\u03BF\u03C5\u03C2 \u03C0\u03B1\u03C1\u03B1\u03C0\u03BF\u03BC\u03C0\u03AE\u03C2","loyalty bonus":"\u03BC\u03C0\u03CC\u03BD\u03BF\u03C5\u03C2 \u03C0\u03B9\u03C3\u03C4\u03CC\u03C4\u03B7\u03C4\u03B1\u03C2",
+    "welcome bonus":"\u03BC\u03C0\u03CC\u03BD\u03BF\u03C5\u03C2 \u03BA\u03B1\u03BB\u03C9\u03C3\u03BF\u03C1\u03AF\u03C3\u03BC\u03B1\u03C4\u03BF\u03C2","investment reward":"\u03B1\u03BD\u03C4\u03B1\u03BC\u03BF\u03B9\u03B2\u03AE \u03B5\u03C0\u03AD\u03BD\u03B4\u03C5\u03C3\u03B7\u03C2",
+    "invite friends":"\u03C0\u03C1\u03BF\u03C3\u03BA\u03B1\u03BB\u03AD\u03C3\u03C4\u03B5 \u03C6\u03AF\u03BB\u03BF\u03C5\u03C2",
+    "sign up":"\u03B5\u03B3\u03B3\u03C1\u03B1\u03C6\u03AE","log in":"\u03C3\u03CD\u03BD\u03B4\u03B5\u03C3\u03B7","register":"\u03B5\u03B3\u03B3\u03C1\u03B1\u03C6\u03AE",
+    "invest now":"\u03B5\u03C0\u03B5\u03BD\u03B4\u03CD\u03C3\u03C4\u03B5 \u03C4\u03CE\u03C1\u03B1","start investing":"\u03BE\u03B5\u03BA\u03B9\u03BD\u03AE\u03C3\u03C4\u03B5 \u03BD\u03B1 \u03B5\u03C0\u03B5\u03BD\u03B4\u03CD\u03B5\u03C4\u03B5",
+    "dashboard":"\u03C0\u03AF\u03BD\u03B1\u03BA\u03B1\u03C2 \u03B5\u03BB\u03AD\u03B3\u03C7\u03BF\u03C5","onboarding":"\u03B5\u03B3\u03B3\u03C1\u03B1\u03C6\u03AE \u03C0\u03B5\u03BB\u03AC\u03C4\u03B7",
+    "collateral":"\u03B5\u03BE\u03B1\u03C3\u03C6\u03AC\u03BB\u03B9\u03C3\u03B7","mortgage":"\u03C5\u03C0\u03BF\u03B8\u03AE\u03BA\u03B7","savings":"\u03B1\u03C0\u03BF\u03C4\u03B1\u03BC\u03B9\u03B5\u03CD\u03C3\u03B5\u03B9\u03C2",
+    "credit score":"\u03C0\u03B9\u03C3\u03C4\u03BF\u03BB\u03B7\u03C0\u03C4\u03B9\u03BA\u03AE \u03B9\u03BA\u03B1\u03BD\u03CC\u03C4\u03B7\u03C4\u03B1","overdraft":"\u03C5\u03C0\u03B5\u03C1\u03B1\u03BD\u03AC\u03BB\u03B7\u03C8\u03B7",
+    "chargeback":"\u03B1\u03BD\u03C4\u03B9\u03BB\u03BF\u03B3\u03B9\u03C3\u03BC\u03CC\u03C2","settlement":"\u03B4\u03B9\u03B1\u03BA\u03B1\u03BD\u03BF\u03BD\u03B9\u03C3\u03BC\u03CC\u03C2",
+    "direct debit":"\u03AC\u03BC\u03B5\u03C3\u03B7 \u03C7\u03C1\u03AD\u03C9\u03C3\u03B7","exchange rate":"\u03B9\u03C3\u03BF\u03C4\u03B9\u03BC\u03AF\u03B1",
+    "payee":"\u03B4\u03B9\u03BA\u03B1\u03B9\u03BF\u03CD\u03C7\u03BF\u03C2","payer":"\u03C0\u03BB\u03B7\u03C1\u03C9\u03C4\u03AE\u03C2","beneficiary":"\u03B4\u03B9\u03BA\u03B1\u03B9\u03BF\u03CD\u03C7\u03BF\u03C2",
+    "equity":"\u03AF\u03B4\u03B9\u03B1 \u03BA\u03B5\u03C6\u03AC\u03BB\u03B1\u03B9\u03B1","liability":"\u03C5\u03C0\u03BF\u03C7\u03C1\u03AD\u03C9\u03C3\u03B7","asset":"\u03B5\u03BD\u03B5\u03C1\u03B3\u03B7\u03C4\u03B9\u03BA\u03CC",
+    "dividend":"\u03BC\u03AD\u03C1\u03B9\u03C3\u03BC\u03B1","spending limit":"\u03CC\u03C1\u03B9\u03BF \u03B4\u03B1\u03C0\u03B1\u03BD\u03CE\u03BD",
     "blockchain":"blockchain","token":"token","tokens":"tokens",
     "stablecoin":"stablecoin","stablecoins":"stablecoins",
-    "cryptocurrency":"κρυπτονόμισμα","crypto":"κρύπτο",
-    "crypto wallet":"πορτοφόλι κρύπτο","wallet":"πορτοφόλι",
-    "seed phrase":"φράση seed","private key":"ιδιωτικό κλειδί",
-    "public address":"δημόσια διεύθυνση","smart contract":"έξυπνο συμβόλαιο",
-    "network fees":"δικτυακές χρεώσεις","gas fees":"χρεώσεις gas",
-    "custodial":"θεματοφυλακή","non-custodial":"μη θεματοφυλακή",
-    "custodial wallet":"πορτοφόλι θεματοφυλακής",
-    "non-custodial wallet":"πορτοφόλι αυτοδιαχείρισης",
-    "fiat":"νομισματικό νόμισμα","pegged":"συνδεδεμένο",
-    "decentralized":"αποκεντρωμένο","centralized":"κεντρικό",
-    "capital provider":"πάροχος κεφαλαίου",
-    "repayment schedule":"πρόγραμμα αποπληρωμής",
-    "leverage":"μόχλευση","diversification":"διασπορά",
-    "yield":"απόδοση","returns":"αποδόσεις",
-    "liquidity":"ρευστότητα","protocol":"πρωτόκολλο",
+    "cryptocurrency":"\u03BA\u03C1\u03C5\u03C0\u03C4\u03BF\u03BD\u03CC\u03BC\u03B9\u03C3\u03BC\u03B1","crypto":"\u03BA\u03C1\u03CD\u03C0\u03C4\u03BF",
+    "crypto wallet":"\u03C0\u03BF\u03C1\u03C4\u03BF\u03C6\u03CC\u03BB\u03B9 \u03BA\u03C1\u03CD\u03C0\u03C4\u03BF","wallet":"\u03C0\u03BF\u03C1\u03C4\u03BF\u03C6\u03CC\u03BB\u03B9",
+    "seed phrase":"\u03C6\u03C1\u03AC\u03C3\u03B7 seed","private key":"\u03B9\u03B4\u03B9\u03C9\u03C4\u03B9\u03BA\u03CC \u03BA\u03BB\u03B5\u03B9\u03B4\u03AF",
+    "public address":"\u03B4\u03B7\u03BC\u03CC\u03C3\u03B9\u03B1 \u03B4\u03B9\u03B5\u03CD\u03B8\u03C5\u03BD\u03C3\u03B7","smart contract":"\u03AD\u03BE\u03C5\u03C0\u03BD\u03BF \u03C3\u03C5\u03BC\u03B2\u03CC\u03BB\u03B1\u03B9\u03BF",
+    "network fees":"\u03B4\u03B9\u03BA\u03C4\u03C5\u03B1\u03BA\u03AD\u03C2 \u03C7\u03C1\u03B5\u03CE\u03C3\u03B5\u03B9\u03C2","gas fees":"\u03C7\u03C1\u03B5\u03CE\u03C3\u03B5\u03B9\u03C2 gas",
+    "custodial":"\u03B8\u03B5\u03BC\u03B1\u03C4\u03BF\u03C6\u03C5\u03BB\u03B1\u03BA\u03AE","non-custodial":"\u03BC\u03B7 \u03B8\u03B5\u03BC\u03B1\u03C4\u03BF\u03C6\u03C5\u03BB\u03B1\u03BA\u03AE",
+    "custodial wallet":"\u03C0\u03BF\u03C1\u03C4\u03BF\u03C6\u03CC\u03BB\u03B9 \u03B8\u03B5\u03BC\u03B1\u03C4\u03BF\u03C6\u03C5\u03BB\u03B1\u03BA\u03AE\u03C2",
+    "non-custodial wallet":"\u03C0\u03BF\u03C1\u03C4\u03BF\u03C6\u03CC\u03BB\u03B9 \u03B1\u03C5\u03C4\u03BF\u03B4\u03B9\u03B1\u03C7\u03B5\u03AF\u03C1\u03B9\u03C3\u03B7\u03C2",
+    "fiat":"\u03BD\u03BF\u03BC\u03B9\u03C3\u03BC\u03B1\u03C4\u03B9\u03BA\u03CC \u03BD\u03CC\u03BC\u03B9\u03C3\u03BC\u03B1","pegged":"\u03C3\u03C5\u03BD\u03B4\u03B5\u03B4\u03B5\u03BC\u03AD\u03BD\u03BF",
+    "decentralized":"\u03B1\u03C0\u03BF\u03BA\u03B5\u03BD\u03C4\u03C1\u03C9\u03BC\u03AD\u03BD\u03BF","centralized":"\u03BA\u03B5\u03BD\u03C4\u03C1\u03B9\u03BA\u03CC",
+    "capital provider":"\u03C0\u03AC\u03C1\u03BF\u03C7\u03BF\u03C2 \u03BA\u03B5\u03C6\u03B1\u03BB\u03B1\u03AF\u03BF\u03C5",
+    "repayment schedule":"\u03C0\u03C1\u03CC\u03B3\u03C1\u03B1\u03BC\u03BC\u03B1 \u03B1\u03C0\u03BF\u03C0\u03BB\u03B7\u03C1\u03C9\u03BC\u03AE\u03C2",
+    "leverage":"\u03BC\u03CC\u03C7\u03BB\u03B5\u03C5\u03C3\u03B7","diversification":"\u03B4\u03B9\u03B1\u03C3\u03C0\u03BF\u03C1\u03AC",
+    "yield":"\u03B1\u03C0\u03CC\u03B4\u03BF\u03C3\u03B7","returns":"\u03B1\u03C0\u03BF\u03B4\u03CC\u03C3\u03B5\u03B9\u03C2",
+    "liquidity":"\u03C1\u03B5\u03C5\u03C3\u03C4\u03CC\u03C4\u03B7\u03C4\u03B1","protocol":"\u03C0\u03C1\u03C9\u03C4\u03CC\u03BA\u03BF\u03BB\u03BB\u03BF",
     "staking":"staking","airdrop":"airdrop",
-    "mining":"mining","validator":"επικυρωτής",
-    "consensus":"συναίνεση","bridge":"γέφυρα",
+    "mining":"mining","validator":"\u03B5\u03C0\u03B9\u03BA\u03C5\u03C1\u03C9\u03C4\u03AE\u03C2",
+    "consensus":"\u03C3\u03C5\u03BD\u03B1\u03AF\u03BD\u03B5\u03C3\u03B7","bridge":"\u03B3\u03AD\u03C6\u03C5\u03C1\u03B1",
     "on-chain":"on-chain","off-chain":"off-chain",
-    "scam":"απάτη","phishing":"phishing",
-    "Learn & Earn":"Μάθε και κέρδισε",
-    "start learning":"ξεκινήστε τη μάθηση",
-    "checklist":"λίστα ελέγχου","step-by-step":"βήμα προς βήμα",
-    "beginner":"αρχάριος","beginners":"αρχάριοι",
+    "scam":"\u03B1\u03C0\u03AC\u03C4\u03B7","phishing":"phishing",
+    "Learn & Earn":"\u039C\u03AC\u03B8\u03B5 \u03BA\u03B1\u03B9 \u03BA\u03AD\u03C1\u03B4\u03B9\u03C3\u03B5",
+    "start learning":"\u03BE\u03B5\u03BA\u03B9\u03BD\u03AE\u03C3\u03C4\u03B5 \u03C4\u03B7 \u03BC\u03AC\u03B8\u03B7\u03C3\u03B7",
+    "checklist":"\u03BB\u03AF\u03C3\u03C4\u03B1 \u03B5\u03BB\u03AD\u03B3\u03C7\u03BF\u03C5","step-by-step":"\u03B2\u03AE\u03BC\u03B1 \u03C0\u03C1\u03BF\u03C2 \u03B2\u03AE\u03BC\u03B1",
+    "beginner":"\u03B1\u03C1\u03C7\u03AC\u03C1\u03B9\u03BF\u03C2","beginners":"\u03B1\u03C1\u03C7\u03AC\u03C1\u03B9\u03BF\u03B9",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
     "Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    "Evolution of the Web from 1.0 to 3.0":"Εξέλιξη του Διαδικτύου από 1.0 σε 3.0",
-    "Static read-only web pages":"Στατικές σελίδες μόνο για ανάγνωση",
-    "Information-centric and interactive":"Εστιασμένη στην πληροφορία και διαδραστική",
-    "User-centric, decentralized, private and secure":"Εστιασμένη στον χρήστη, αποκεντρωμένη, ιδιωτική και ασφαλής",
-    "read-only":"μόνο για ανάγνωση","user-centric":"εστιασμένη στον χρήστη",
-    "private and secure":"ιδιωτική και ασφαλής"
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"\u0395\u03BE\u03AD\u03BB\u03B9\u03BE\u03B7 \u03C4\u03BF\u03C5 \u0394\u03B9\u03B1\u03B4\u03B9\u03BA\u03C4\u03CD\u03BF\u03C5 \u03B1\u03C0\u03CC 1.0 \u03C3\u03B5 3.0",
+    "Static read-only web pages":"\u03A3\u03C4\u03B1\u03C4\u03B9\u03BA\u03AD\u03C2 \u03C3\u03B5\u03BB\u03AF\u03B4\u03B5\u03C2 \u03BC\u03CC\u03BD\u03BF \u03B3\u03B9\u03B1 \u03B1\u03BD\u03AC\u03B3\u03BD\u03C9\u03C3\u03B7",
+    "Information-centric and interactive":"\u0395\u03C3\u03C4\u03B9\u03B1\u03C3\u03BC\u03AD\u03BD\u03B7 \u03C3\u03C4\u03B7\u03BD \u03C0\u03BB\u03B7\u03C1\u03BF\u03C6\u03BF\u03C1\u03AF\u03B1 \u03BA\u03B1\u03B9 \u03B4\u03B9\u03B1\u03B4\u03C1\u03B1\u03C3\u03C4\u03B9\u03BA\u03AE",
+    "User-centric, decentralized, private and secure":"\u0395\u03C3\u03C4\u03B9\u03B1\u03C3\u03BC\u03AD\u03BD\u03B7 \u03C3\u03C4\u03BF\u03BD \u03C7\u03C1\u03AE\u03C3\u03C4\u03B7, \u03B1\u03C0\u03BF\u03BA\u03B5\u03BD\u03C4\u03C1\u03C9\u03BC\u03AD\u03BD\u03B7, \u03B9\u03B4\u03B9\u03C9\u03C4\u03B9\u03BA\u03AE \u03BA\u03B1\u03B9 \u03B1\u03C3\u03C6\u03B1\u03BB\u03AE\u03C2",
+    "read-only":"\u03BC\u03CC\u03BD\u03BF \u03B3\u03B9\u03B1 \u03B1\u03BD\u03AC\u03B3\u03BD\u03C9\u03C3\u03B7","user-centric":"\u03B5\u03C3\u03C4\u03B9\u03B1\u03C3\u03BC\u03AD\u03BD\u03B7 \u03C3\u03C4\u03BF\u03BD \u03C7\u03C1\u03AE\u03C3\u03C4\u03B7",
+    "private and secure":"\u03B9\u03B4\u03B9\u03C9\u03C4\u03B9\u03BA\u03AE \u03BA\u03B1\u03B9 \u03B1\u03C3\u03C6\u03B1\u03BB\u03AE\u03C2"
   },
   ko: {
-    "APR":"연이율","Annual Percentage Rate":"연이율",
-    "interest rate":"이자율","annual returns":"연간 수익률",
-    "monthly payouts":"월별 지급","monthly payments":"월별 결제",
-    "balance":"잔액","statement":"명세서","account":"계정",
-    "deposit":"입금","withdrawal":"출금","wire transfer":"계좌이체",
-    "transaction":"거래","payment":"결제","invoice":"청구서",
-    "fee":"수수료","no hidden fees":"숨겨진 수수료 없음",
-    "P2P lending":"P2P 대출","crowdlending":"크라우드 렌딩",
-    "crowdfunding":"크라우드 펀딩","lending platform":"대출 플랫폼",
-    "investment platform":"투자 플랫폼",
-    "investor":"투자자","investors":"투자자",
-    "borrower":"차입자","lender":"대출자",
-    "loan":"대출","loan period":"대출 기간","loan term":"대출 기간",
-    "loan originator":"대출 발행사",
-    "funded":"펀딩 완료","repaid":"상환 완료",
-    "default":"부실","late loans":"연체 대출",
-    "cash drag":"현금 유동성 지연",
-    "primary market":"1차 시장","secondary market":"2차 시장",
-    "total funded":"총 펀딩액","total interest paid":"지급 이자 합계",
-    "available funds":"사용 가능 자금","invested funds":"투자 자금",
-    "total funds":"총 자금",
-    "initial investment":"초기 투자","investment period":"투자 기간",
-    "future value":"미래 가치","earned return":"획득 수익",
-    "average annual return":"평균 연간 수익률",
-    "portfolio":"포트폴리오","passive income":"패시브 인컴",
-    "principal repayment":"원금 상환",
-    "interest payment":"이자 지급",
-    "installment":"할부","recurring payment":"정기 결제",
-    "due diligence":"실사","risk assessment":"리스크 평가",
-    "risk scoring":"리스크 점수","AML":"AML",
-    "compliance":"컴플라이언스","regulated":"규제 대상",
-    "verification":"본인 확인","KYC":"KYC",
-    "referral bonus":"추천 보너스","loyalty bonus":"로열티 보너스",
-    "welcome bonus":"웰컴 보너스","investment reward":"투자 리워드",
-    "invite friends":"친구 초대",
-    "sign up":"회원가입","log in":"로그인","register":"회원가입",
-    "invest now":"지금 투자하기","start investing":"투자 시작하기",
-    "dashboard":"대시보드","onboarding":"온보딩",
-    "collateral":"담보","mortgage":"모기지","savings":"저축",
-    "credit score":"신용 점수","overdraft":"당좌대월",
-    "chargeback":"지급 거절","settlement":"결제",
-    "direct debit":"자동이체","exchange rate":"환율",
-    "payee":"수취인","payer":"지급인","beneficiary":"수익자",
-    "equity":"자본","liability":"부채","asset":"자산",
-    "dividend":"배당","spending limit":"지출 한도",
-    "minimum investment":"최소 투자금","maximum investment":"최대 투자금","investment amount":"투자 금액",
-    "account holder":"예금주","IBAN":"IBAN","processing time":"처리 소요 시간","business days":"영업일",
-    "credit rating":"신용 등급","risk grade":"리스크 등급","maturity":"만기","amortization":"상각",
-    "early repayment":"조기 상환","monthly interest":"월 이자","accrued interest":"미수 이자",
-    "total return":"총 수익","net return":"순수익","gross return":"총수익(세전)",
-    "fixed rate":"고정 금리","variable rate":"변동 금리","compound interest":"복리","simple interest":"단리",
-    "capital at risk":"원금 손실 위험","past performance":"과거 실적","past performance is not a guarantee of future results":"과거 실적이 미래 수익을 보장하지 않습니다",
-    "financial intermediary":"금융 중개업자","payment institution":"결제 기관","electronic money":"전자화폐",
-    "digital assets":"디지털 자산","securities":"유가증권","transfer fee":"송금 수수료",
-    "available balance":"출금 가능 잔액","wallet balance":"지갑 잔액","reserved balance":"예약 잔액",
-    "pending":"대기 중","completed":"완료","failed":"실패","verification pending":"본인 확인 대기",
-    "two-factor authentication":"2단계 인증","regulatory":"규제","SME":"중소기업","borrower company":"차입 기업",
-    "payment protection":"지급 보호","buyback guarantee":"매입약정","interest accrual":"이자 발생",
-    "GDPR":"GDPR","EEA":"EEA","privacy policy":"개인정보 처리방침","terms of service":"이용약관","AML policy":"AML 정책",
-    "payout":"지급","payouts":"지급","refund":"환불","top up":"충전","disbursement":"송금",
-    "loyalty program":"로열티 프로그램","referral program":"추천 프로그램","welcome offer":"웰컴 혜택",
-    "annualized return":"연환산 수익률","internal rate of return":"내부수익률","holding period":"보유 기간",
-    "liquidity risk":"유동성 리스크","credit risk":"신용 리스크","market risk":"시장 리스크",
-    "collateralized loan":"담보 대출","unsecured loan":"무담보 대출","loan book":"대출 포트폴리오",
-    "underwriting":"심사","origination fee":"발행 수수료","servicing":"대출 관리",
-    "escrow":"에스크로","settlement date":"결제일","value date":"가치일",
-    "KYC verification":"KYC 인증","identity verification":"신원 확인","proof of address":"주소 증명",
-    "iban":"IBAN","swift":"SWIFT","remittance":"해외 송금",
-    "slippage":"슬리피지","liquidity pool":"유동성 풀","impermanent loss":"비영구적 손실",
-    "DEX":"DEX","CEX":"CEX","order book":"호가창","yield farming":"이자 파밍","APY":"APY","TVL":"TVL",
-    "blockchain":"블록체인","token":"토큰","tokens":"토큰",
-    "stablecoin":"스테이블코인","stablecoins":"스테이블코인",
-    "cryptocurrency":"암호화폐","crypto":"크립토",
-    "crypto wallet":"크립토 지갑","wallet":"지갑",
-    "seed phrase":"시드 구문","private key":"개인 키",
-    "public address":"공개 주소","smart contract":"스마트 컨트랙트",
-    "network fees":"네트워크 수수료","gas fees":"가스 수수료",
-    "custodial":"수탁형","non-custodial":"비수탁형",
-    "custodial wallet":"수탁형 지갑",
-    "non-custodial wallet":"비수탁형 지갑",
-    "fiat":"법정화폐","pegged":"연동",
-    "decentralized":"탈중앙화","centralized":"중앙화",
-    "capital provider":"자본 공급자",
-    "repayment schedule":"상환 일정",
-    "leverage":"레버리지","diversification":"분산 투자",
-    "yield":"수익률","returns":"수익",
-    "liquidity":"유동성","protocol":"프로토콜",
-    "staking":"스테이킹","airdrop":"에어드롭",
-    "mining":"채굴","validator":"검증자",
-    "consensus":"합의","bridge":"브리지",
-    "on-chain":"온체인","off-chain":"오프체인",
-    "scam":"사기","phishing":"피싱",
-    "Learn & Earn":"학습하고 적립하기",
-    "start learning":"학습 시작",
-    "checklist":"체크리스트","step-by-step":"단계별",
-    "beginner":"초보자","beginners":"초보자",
+    "APR":"\uC5F0\uC774\uC728","Annual Percentage Rate":"\uC5F0\uC774\uC728",
+    "interest rate":"\uC774\uC790\uC728","annual returns":"\uC5F0\uAC04 \uC218\uC775\uB960",
+    "monthly payouts":"\uC6D4\uBCC4 \uC9C0\uAE09","monthly payments":"\uC6D4\uBCC4 \uACB0\uC81C",
+    "balance":"\uC794\uC561","statement":"\uBA85\uC138\uC11C","account":"\uACC4\uC815",
+    "deposit":"\uC785\uAE08","withdrawal":"\uCD9C\uAE08","wire transfer":"\uACC4\uC88C\uC774\uCCB4",
+    "transaction":"\uAC70\uB798","payment":"\uACB0\uC81C","invoice":"\uCCAD\uAD6C\uC11C",
+    "fee":"\uC218\uC218\uB8CC","no hidden fees":"\uC228\uACA8\uC9C4 \uC218\uC218\uB8CC \uC5C6\uC74C",
+    "P2P lending":"P2P \uB300\uCD9C","crowdlending":"\uD06C\uB77C\uC6B0\uB4DC \uB80C\uB529",
+    "crowdfunding":"\uD06C\uB77C\uC6B0\uB4DC \uD380\uB529","lending platform":"\uB300\uCD9C \uD50C\uB7AB\uD3FC",
+    "investment platform":"\uD22C\uC790 \uD50C\uB7AB\uD3FC",
+    "investor":"\uD22C\uC790\uC790","investors":"\uD22C\uC790\uC790",
+    "borrower":"\uCC28\uC785\uC790","lender":"\uB300\uCD9C\uC790",
+    "loan":"\uB300\uCD9C","loan period":"\uB300\uCD9C \uAE30\uAC04","loan term":"\uB300\uCD9C \uAE30\uAC04",
+    "loan originator":"\uB300\uCD9C \uBC1C\uD589\uC0AC",
+    "funded":"\uD380\uB529 \uC644\uB8CC","repaid":"\uC0C1\uD658 \uC644\uB8CC",
+    "default":"\uBD80\uC2E4","late loans":"\uC5F0\uCCB4 \uB300\uCD9C",
+    "cash drag":"\uD604\uAE08 \uC720\uB3D9\uC131 \uC9C0\uC5F0",
+    "primary market":"1\uCC28 \uC2DC\uC7A5","secondary market":"2\uCC28 \uC2DC\uC7A5",
+    "total funded":"\uCD1D \uD380\uB529\uC561","total interest paid":"\uC9C0\uAE09 \uC774\uC790 \uD569\uACC4",
+    "available funds":"\uC0AC\uC6A9 \uAC00\uB2A5 \uC790\uAE08","invested funds":"\uD22C\uC790 \uC790\uAE08",
+    "total funds":"\uCD1D \uC790\uAE08",
+    "initial investment":"\uCD08\uAE30 \uD22C\uC790","investment period":"\uD22C\uC790 \uAE30\uAC04",
+    "future value":"\uBBF8\uB798 \uAC00\uCE58","earned return":"\uD68D\uB4DD \uC218\uC775",
+    "average annual return":"\uD3C9\uADE0 \uC5F0\uAC04 \uC218\uC775\uB960",
+    "portfolio":"\uD3EC\uD2B8\uD3F4\uB9AC\uC624","passive income":"\uD328\uC2DC\uBE0C \uC778\uCEF4",
+    "principal repayment":"\uC6D0\uAE08 \uC0C1\uD658",
+    "interest payment":"\uC774\uC790 \uC9C0\uAE09",
+    "installment":"\uD560\uBD80","recurring payment":"\uC815\uAE30 \uACB0\uC81C",
+    "due diligence":"\uC2E4\uC0AC","risk assessment":"\uB9AC\uC2A4\uD06C \uD3C9\uAC00",
+    "risk scoring":"\uB9AC\uC2A4\uD06C \uC810\uC218","AML":"AML",
+    "compliance":"\uCEF4\uD50C\uB77C\uC774\uC5B8\uC2A4","regulated":"\uADDC\uC81C \uB300\uC0C1",
+    "verification":"\uBCF8\uC778 \uD655\uC778","KYC":"KYC",
+    "referral bonus":"\uCD94\uCC9C \uBCF4\uB108\uC2A4","loyalty bonus":"\uB85C\uC5F4\uD2F0 \uBCF4\uB108\uC2A4",
+    "welcome bonus":"\uC6F0\uCEF4 \uBCF4\uB108\uC2A4","investment reward":"\uD22C\uC790 \uB9AC\uC6CC\uB4DC",
+    "invite friends":"\uCE5C\uAD6C \uCD08\uB300",
+    "sign up":"\uD68C\uC6D0\uAC00\uC785","log in":"\uB85C\uADF8\uC778","register":"\uD68C\uC6D0\uAC00\uC785",
+    "invest now":"\uC9C0\uAE08 \uD22C\uC790\uD558\uAE30","start investing":"\uD22C\uC790 \uC2DC\uC791\uD558\uAE30",
+    "dashboard":"\uB300\uC2DC\uBCF4\uB4DC","onboarding":"\uC628\uBCF4\uB529",
+    "collateral":"\uB2F4\uBCF4","mortgage":"\uBAA8\uAE30\uC9C0","savings":"\uC800\uCD95",
+    "credit score":"\uC2E0\uC6A9 \uC810\uC218","overdraft":"\uB2F9\uC88C\uB300\uC6D4",
+    "chargeback":"\uC9C0\uAE09 \uAC70\uC808","settlement":"\uACB0\uC81C",
+    "direct debit":"\uC790\uB3D9\uC774\uCCB4","exchange rate":"\uD658\uC728",
+    "payee":"\uC218\uCDE8\uC778","payer":"\uC9C0\uAE09\uC778","beneficiary":"\uC218\uC775\uC790",
+    "equity":"\uC790\uBCF8","liability":"\uBD80\uCC44","asset":"\uC790\uC0B0",
+    "dividend":"\uBC30\uB2F9","spending limit":"\uC9C0\uCD9C \uD55C\uB3C4",
+    "minimum investment":"\uCD5C\uC18C \uD22C\uC790\uAE08","maximum investment":"\uCD5C\uB300 \uD22C\uC790\uAE08","investment amount":"\uD22C\uC790 \uAE08\uC561",
+    "account holder":"\uC608\uAE08\uC8FC","IBAN":"IBAN","processing time":"\uCC98\uB9AC \uC18C\uC694 \uC2DC\uAC04","business days":"\uC601\uC5C5\uC77C",
+    "credit rating":"\uC2E0\uC6A9 \uB4F1\uAE09","risk grade":"\uB9AC\uC2A4\uD06C \uB4F1\uAE09","maturity":"\uB9CC\uAE30","amortization":"\uC0C1\uAC01",
+    "early repayment":"\uC870\uAE30 \uC0C1\uD658","monthly interest":"\uC6D4 \uC774\uC790","accrued interest":"\uBBF8\uC218 \uC774\uC790",
+    "total return":"\uCD1D \uC218\uC775","net return":"\uC21C\uC218\uC775","gross return":"\uCD1D\uC218\uC775(\uC138\uC804)",
+    "fixed rate":"\uACE0\uC815 \uAE08\uB9AC","variable rate":"\uBCC0\uB3D9 \uAE08\uB9AC","compound interest":"\uBCF5\uB9AC","simple interest":"\uB2E8\uB9AC",
+    "capital at risk":"\uC6D0\uAE08 \uC190\uC2E4 \uC704\uD5D8","past performance":"\uACFC\uAC70 \uC2E4\uC801","past performance is not a guarantee of future results":"\uACFC\uAC70 \uC2E4\uC801\uC774 \uBBF8\uB798 \uC218\uC775\uC744 \uBCF4\uC7A5\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4",
+    "financial intermediary":"\uAE08\uC735 \uC911\uAC1C\uC5C5\uC790","payment institution":"\uACB0\uC81C \uAE30\uAD00","electronic money":"\uC804\uC790\uD654\uD3D0",
+    "digital assets":"\uB514\uC9C0\uD138 \uC790\uC0B0","securities":"\uC720\uAC00\uC99D\uAD8C","transfer fee":"\uC1A1\uAE08 \uC218\uC218\uB8CC",
+    "available balance":"\uCD9C\uAE08 \uAC00\uB2A5 \uC794\uC561","wallet balance":"\uC9C0\uAC11 \uC794\uC561","reserved balance":"\uC608\uC57D \uC794\uC561",
+    "pending":"\uB300\uAE30 \uC911","completed":"\uC644\uB8CC","failed":"\uC2E4\uD328","verification pending":"\uBCF8\uC778 \uD655\uC778 \uB300\uAE30",
+    "two-factor authentication":"2\uB2E8\uACC4 \uC778\uC99D","regulatory":"\uADDC\uC81C","SME":"\uC911\uC18C\uAE30\uC5C5","borrower company":"\uCC28\uC785 \uAE30\uC5C5",
+    "payment protection":"\uC9C0\uAE09 \uBCF4\uD638","buyback guarantee":"\uB9E4\uC785\uC57D\uC815","interest accrual":"\uC774\uC790 \uBC1C\uC0DD",
+    "GDPR":"GDPR","EEA":"EEA","privacy policy":"\uAC1C\uC778\uC815\uBCF4 \uCC98\uB9AC\uBC29\uCE68","terms of service":"\uC774\uC6A9\uC57D\uAD00","AML policy":"AML \uC815\uCC45",
+    "payout":"\uC9C0\uAE09","payouts":"\uC9C0\uAE09","refund":"\uD658\uBD88","top up":"\uCDA9\uC804","disbursement":"\uC1A1\uAE08",
+    "loyalty program":"\uB85C\uC5F4\uD2F0 \uD504\uB85C\uADF8\uB7A8","referral program":"\uCD94\uCC9C \uD504\uB85C\uADF8\uB7A8","welcome offer":"\uC6F0\uCEF4 \uD61C\uD0DD",
+    "annualized return":"\uC5F0\uD658\uC0B0 \uC218\uC775\uB960","internal rate of return":"\uB0B4\uBD80\uC218\uC775\uB960","holding period":"\uBCF4\uC720 \uAE30\uAC04",
+    "liquidity risk":"\uC720\uB3D9\uC131 \uB9AC\uC2A4\uD06C","credit risk":"\uC2E0\uC6A9 \uB9AC\uC2A4\uD06C","market risk":"\uC2DC\uC7A5 \uB9AC\uC2A4\uD06C",
+    "collateralized loan":"\uB2F4\uBCF4 \uB300\uCD9C","unsecured loan":"\uBB34\uB2F4\uBCF4 \uB300\uCD9C","loan book":"\uB300\uCD9C \uD3EC\uD2B8\uD3F4\uB9AC\uC624",
+    "underwriting":"\uC2EC\uC0AC","origination fee":"\uBC1C\uD589 \uC218\uC218\uB8CC","servicing":"\uB300\uCD9C \uAD00\uB9AC",
+    "escrow":"\uC5D0\uC2A4\uD06C\uB85C","settlement date":"\uACB0\uC81C\uC77C","value date":"\uAC00\uCE58\uC77C",
+    "KYC verification":"KYC \uC778\uC99D","identity verification":"\uC2E0\uC6D0 \uD655\uC778","proof of address":"\uC8FC\uC18C \uC99D\uBA85",
+    "iban":"IBAN","swift":"SWIFT","remittance":"\uD574\uC678 \uC1A1\uAE08",
+    "slippage":"\uC2AC\uB9AC\uD53C\uC9C0","liquidity pool":"\uC720\uB3D9\uC131 \uD480","impermanent loss":"\uBE44\uC601\uAD6C\uC801 \uC190\uC2E4",
+    "DEX":"DEX","CEX":"CEX","order book":"\uD638\uAC00\uCC3D","yield farming":"\uC774\uC790 \uD30C\uBC0D","APY":"APY","TVL":"TVL",
+    "blockchain":"\uBE14\uB85D\uCCB4\uC778","token":"\uD1A0\uD070","tokens":"\uD1A0\uD070",
+    "stablecoin":"\uC2A4\uD14C\uC774\uBE14\uCF54\uC778","stablecoins":"\uC2A4\uD14C\uC774\uBE14\uCF54\uC778",
+    "cryptocurrency":"\uC554\uD638\uD654\uD3D0","crypto":"\uD06C\uB9BD\uD1A0",
+    "crypto wallet":"\uD06C\uB9BD\uD1A0 \uC9C0\uAC11","wallet":"\uC9C0\uAC11",
+    "seed phrase":"\uC2DC\uB4DC \uAD6C\uBB38","private key":"\uAC1C\uC778 \uD0A4",
+    "public address":"\uACF5\uAC1C \uC8FC\uC18C","smart contract":"\uC2A4\uB9C8\uD2B8 \uCEE8\uD2B8\uB799\uD2B8",
+    "network fees":"\uB124\uD2B8\uC6CC\uD06C \uC218\uC218\uB8CC","gas fees":"\uAC00\uC2A4 \uC218\uC218\uB8CC",
+    "custodial":"\uC218\uD0C1\uD615","non-custodial":"\uBE44\uC218\uD0C1\uD615",
+    "custodial wallet":"\uC218\uD0C1\uD615 \uC9C0\uAC11",
+    "non-custodial wallet":"\uBE44\uC218\uD0C1\uD615 \uC9C0\uAC11",
+    "fiat":"\uBC95\uC815\uD654\uD3D0","pegged":"\uC5F0\uB3D9",
+    "decentralized":"\uD0C8\uC911\uC559\uD654","centralized":"\uC911\uC559\uD654",
+    "capital provider":"\uC790\uBCF8 \uACF5\uAE09\uC790",
+    "repayment schedule":"\uC0C1\uD658 \uC77C\uC815",
+    "leverage":"\uB808\uBC84\uB9AC\uC9C0","diversification":"\uBD84\uC0B0 \uD22C\uC790",
+    "yield":"\uC218\uC775\uB960","returns":"\uC218\uC775",
+    "liquidity":"\uC720\uB3D9\uC131","protocol":"\uD504\uB85C\uD1A0\uCF5C",
+    "staking":"\uC2A4\uD14C\uC774\uD0B9","airdrop":"\uC5D0\uC5B4\uB4DC\uB86D",
+    "mining":"\uCC44\uAD74","validator":"\uAC80\uC99D\uC790",
+    "consensus":"\uD569\uC758","bridge":"\uBE0C\uB9AC\uC9C0",
+    "on-chain":"\uC628\uCCB4\uC778","off-chain":"\uC624\uD504\uCCB4\uC778",
+    "scam":"\uC0AC\uAE30","phishing":"\uD53C\uC2F1",
+    "Learn & Earn":"\uD559\uC2B5\uD558\uACE0 \uC801\uB9BD\uD558\uAE30",
+    "start learning":"\uD559\uC2B5 \uC2DC\uC791",
+    "checklist":"\uCCB4\uD06C\uB9AC\uC2A4\uD2B8","step-by-step":"\uB2E8\uACC4\uBCC4",
+    "beginner":"\uCD08\uBCF4\uC790","beginners":"\uCD08\uBCF4\uC790",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    "Evolution of the Web from 1.0 to 3.0":"웹의 진화: 1.0에서 3.0까지",
-    "Static read-only web pages":"정적 읽기 전용 웹 페이지",
-    "Information-centric and interactive":"정보 중심의 인터랙티브 웹",
-    "User-centric, decentralized, private and secure":"사용자 중심, 탈중앙화, 프라이버시 및 보안",
-    "read-only":"읽기 전용","user-centric":"사용자 중심"
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"\uC6F9\uC758 \uC9C4\uD654: 1.0\uC5D0\uC11C 3.0\uAE4C\uC9C0",
+    "Static read-only web pages":"\uC815\uC801 \uC77D\uAE30 \uC804\uC6A9 \uC6F9 \uD398\uC774\uC9C0",
+    "Information-centric and interactive":"\uC815\uBCF4 \uC911\uC2EC\uC758 \uC778\uD130\uB799\uD2F0\uBE0C \uC6F9",
+    "User-centric, decentralized, private and secure":"\uC0AC\uC6A9\uC790 \uC911\uC2EC, \uD0C8\uC911\uC559\uD654, \uD504\uB77C\uC774\uBC84\uC2DC \uBC0F \uBCF4\uC548",
+    "read-only":"\uC77D\uAE30 \uC804\uC6A9","user-centric":"\uC0AC\uC6A9\uC790 \uC911\uC2EC"
   },
   zh: {
-    "APR":"年化利率","Annual Percentage Rate":"年化利率",
-    "interest rate":"利率","annual returns":"年化收益",
-    "monthly payouts":"按月支付","monthly payments":"每月还款",
-    "balance":"余额","statement":"对账单","account":"账户",
-    "deposit":"充值","withdrawal":"提现","wire transfer":"银行转账",
-    "transaction":"交易","payment":"付款","invoice":"发票",
-    "fee":"费用","no hidden fees":"无隐藏费用",
-    "P2P lending":"P2P 借贷","crowdlending":"众筹借贷",
-    "crowdfunding":"众筹","lending platform":"借贷平台",
-    "investment platform":"投资平台",
-    "investor":"投资者","investors":"投资者",
-    "borrower":"借款人","lender":"出借人",
-    "loan":"贷款","loan period":"贷款期限","loan term":"贷款期限",
-    "loan originator":"贷款发起方",
-    "funded":"已融资","repaid":"已偿还",
-    "default":"违约","late loans":"逾期贷款",
-    "cash drag":"资金闲置",
-    "primary market":"一级市场","secondary market":"二级市场",
-    "total funded":"总融资额","total interest paid":"已付利息总额",
-    "available funds":"可用资金","invested funds":"已投资资金",
-    "total funds":"总资金",
-    "initial investment":"初始投资","investment period":"投资期限",
-    "future value":"未来价值","earned return":"已获得收益",
-    "average annual return":"平均年化收益",
-    "portfolio":"投资组合","passive income":"被动收入",
-    "principal repayment":"本金偿还",
-    "interest payment":"利息支付",
-    "installment":"分期","recurring payment":"定期付款",
-    "due diligence":"尽职调查","risk assessment":"风险评估",
-    "risk scoring":"风险评分","AML":"反洗钱",
-    "compliance":"合规","regulated":"受监管",
-    "verification":"身份验证","KYC":"KYC",
-    "referral bonus":"推荐奖励","loyalty bonus":"忠诚度奖励",
-    "welcome bonus":"欢迎奖励","investment reward":"投资奖励",
-    "invite friends":"邀请好友",
-    "sign up":"注册","log in":"登录","register":"注册",
-    "invest now":"立即投资","start investing":"开始投资",
-    "dashboard":"控制台","onboarding":"开户引导",
-    "collateral":"抵押品","mortgage":"按揭","savings":"储蓄",
-    "credit score":"信用评分","overdraft":"透支",
-    "chargeback":"拒付","settlement":"结算",
-    "direct debit":"直接扣款","exchange rate":"汇率",
-    "payee":"收款人","payer":"付款人","beneficiary":"受益人",
-    "equity":"权益","liability":"负债","asset":"资产",
-    "dividend":"股息","spending limit":"消费限额",
-    "minimum investment":"最低投资额","maximum investment":"最高投资额","investment amount":"投资金额",
-    "account holder":"账户持有人","IBAN":"IBAN","processing time":"处理时间","business days":"工作日",
-    "credit rating":"信用评级","risk grade":"风险等级","maturity":"到期","amortization":"摊销",
-    "early repayment":"提前还款","monthly interest":"月息","accrued interest":"应计利息",
-    "total return":"总回报","net return":"净收益","gross return":"总收益（税前）",
-    "fixed rate":"固定利率","variable rate":"浮动利率","compound interest":"复利","simple interest":"单利",
-    "capital at risk":"本金风险","past performance":"历史业绩","past performance is not a guarantee of future results":"过往业绩不代表未来表现",
-    "financial intermediary":"金融中介","payment institution":"支付机构","electronic money":"电子货币",
-    "digital assets":"数字资产","securities":"证券","transfer fee":"转账手续费",
-    "available balance":"可用余额","wallet balance":"钱包余额","reserved balance":"冻结余额",
-    "pending":"处理中","completed":"已完成","failed":"失败","verification pending":"验证审核中",
-    "two-factor authentication":"双因素认证","regulatory":"监管","SME":"中小企业","borrower company":"借款企业",
-    "payment protection":"付款保障","buyback guarantee":"回购担保","interest accrual":"利息计提",
-    "GDPR":"GDPR","EEA":"欧洲经济区","privacy policy":"隐私政策","terms of service":"服务条款","AML policy":"反洗钱政策",
-    "payout":"到账","payouts":"付款","refund":"退款","top up":"充值","disbursement":"放款",
-    "loyalty program":"忠诚度计划","referral program":"推荐计划","welcome offer":"新人礼遇",
-    "annualized return":"年化收益","internal rate of return":"内部收益率","holding period":"持有期",
-    "liquidity risk":"流动性风险","credit risk":"信用风险","market risk":"市场风险",
-    "collateralized loan":"抵押贷款","unsecured loan":"信用贷款","loan book":"贷款组合",
-    "underwriting":"授信审批","origination fee":"发起费","servicing":"贷后服务",
-    "escrow":"托管账户","settlement date":"结算日","value date":"起息日",
-    "KYC verification":"KYC 认证","identity verification":"身份验证","proof of address":"地址证明",
-    "iban":"IBAN","swift":"SWIFT","remittance":"汇款",
-    "slippage":"滑点","liquidity pool":"流动性池","impermanent loss":"无常损失",
-    "DEX":"DEX","CEX":"CEX","order book":"订单簿","yield farming":"流动性挖矿","APY":"APY","TVL":"TVL",
-    "blockchain":"区块链","token":"代币","tokens":"代币",
-    "stablecoin":"稳定币","stablecoins":"稳定币",
-    "cryptocurrency":"加密货币","crypto":"加密资产",
-    "crypto wallet":"加密钱包","wallet":"钱包",
-    "seed phrase":"助记词","private key":"私钥",
-    "public address":"公开地址","smart contract":"智能合约",
-    "network fees":"网络费用","gas fees":"Gas 费用",
-    "custodial":"托管","non-custodial":"非托管",
-    "custodial wallet":"托管钱包",
-    "non-custodial wallet":"非托管钱包",
-    "fiat":"法币","pegged":"锚定",
-    "decentralized":"去中心化","centralized":"中心化",
-    "capital provider":"资金提供方",
-    "repayment schedule":"还款计划",
-    "leverage":"杠杆","diversification":"分散投资",
-    "yield":"收益","returns":"回报",
-    "liquidity":"流动性","protocol":"协议",
-    "staking":"质押","airdrop":"空投",
-    "mining":"挖矿","validator":"验证节点",
-    "consensus":"共识","bridge":"跨链桥",
-    "on-chain":"链上","off-chain":"链下",
-    "scam":"诈骗","phishing":"钓鱼",
-    "Learn & Earn":"学习即赚",
-    "start learning":"开始学习",
-    "checklist":"清单","step-by-step":"分步",
-    "beginner":"初学者","beginners":"初学者",
+    "APR":"\u5E74\u5316\u5229\u7387","Annual Percentage Rate":"\u5E74\u5316\u5229\u7387",
+    "interest rate":"\u5229\u7387","annual returns":"\u5E74\u5316\u6536\u76CA",
+    "monthly payouts":"\u6309\u6708\u652F\u4ED8","monthly payments":"\u6BCF\u6708\u8FD8\u6B3E",
+    "balance":"\u4F59\u989D","statement":"\u5BF9\u8D26\u5355","account":"\u8D26\u6237",
+    "deposit":"\u5145\u503C","withdrawal":"\u63D0\u73B0","wire transfer":"\u94F6\u884C\u8F6C\u8D26",
+    "transaction":"\u4EA4\u6613","payment":"\u4ED8\u6B3E","invoice":"\u53D1\u7968",
+    "fee":"\u8D39\u7528","no hidden fees":"\u65E0\u9690\u85CF\u8D39\u7528",
+    "P2P lending":"P2P \u501F\u8D37","crowdlending":"\u4F17\u7B79\u501F\u8D37",
+    "crowdfunding":"\u4F17\u7B79","lending platform":"\u501F\u8D37\u5E73\u53F0",
+    "investment platform":"\u6295\u8D44\u5E73\u53F0",
+    "investor":"\u6295\u8D44\u8005","investors":"\u6295\u8D44\u8005",
+    "borrower":"\u501F\u6B3E\u4EBA","lender":"\u51FA\u501F\u4EBA",
+    "loan":"\u8D37\u6B3E","loan period":"\u8D37\u6B3E\u671F\u9650","loan term":"\u8D37\u6B3E\u671F\u9650",
+    "loan originator":"\u8D37\u6B3E\u53D1\u8D77\u65B9",
+    "funded":"\u5DF2\u878D\u8D44","repaid":"\u5DF2\u507F\u8FD8",
+    "default":"\u8FDD\u7EA6","late loans":"\u903E\u671F\u8D37\u6B3E",
+    "cash drag":"\u8D44\u91D1\u95F2\u7F6E",
+    "primary market":"\u4E00\u7EA7\u5E02\u573A","secondary market":"\u4E8C\u7EA7\u5E02\u573A",
+    "total funded":"\u603B\u878D\u8D44\u989D","total interest paid":"\u5DF2\u4ED8\u5229\u606F\u603B\u989D",
+    "available funds":"\u53EF\u7528\u8D44\u91D1","invested funds":"\u5DF2\u6295\u8D44\u8D44\u91D1",
+    "total funds":"\u603B\u8D44\u91D1",
+    "initial investment":"\u521D\u59CB\u6295\u8D44","investment period":"\u6295\u8D44\u671F\u9650",
+    "future value":"\u672A\u6765\u4EF7\u503C","earned return":"\u5DF2\u83B7\u5F97\u6536\u76CA",
+    "average annual return":"\u5E73\u5747\u5E74\u5316\u6536\u76CA",
+    "portfolio":"\u6295\u8D44\u7EC4\u5408","passive income":"\u88AB\u52A8\u6536\u5165",
+    "principal repayment":"\u672C\u91D1\u507F\u8FD8",
+    "interest payment":"\u5229\u606F\u652F\u4ED8",
+    "installment":"\u5206\u671F","recurring payment":"\u5B9A\u671F\u4ED8\u6B3E",
+    "due diligence":"\u5C3D\u804C\u8C03\u67E5","risk assessment":"\u98CE\u9669\u8BC4\u4F30",
+    "risk scoring":"\u98CE\u9669\u8BC4\u5206","AML":"\u53CD\u6D17\u94B1",
+    "compliance":"\u5408\u89C4","regulated":"\u53D7\u76D1\u7BA1",
+    "verification":"\u8EAB\u4EFD\u9A8C\u8BC1","KYC":"KYC",
+    "referral bonus":"\u63A8\u8350\u5956\u52B1","loyalty bonus":"\u5FE0\u8BDA\u5EA6\u5956\u52B1",
+    "welcome bonus":"\u6B22\u8FCE\u5956\u52B1","investment reward":"\u6295\u8D44\u5956\u52B1",
+    "invite friends":"\u9080\u8BF7\u597D\u53CB",
+    "sign up":"\u6CE8\u518C","log in":"\u767B\u5F55","register":"\u6CE8\u518C",
+    "invest now":"\u7ACB\u5373\u6295\u8D44","start investing":"\u5F00\u59CB\u6295\u8D44",
+    "dashboard":"\u63A7\u5236\u53F0","onboarding":"\u5F00\u6237\u5F15\u5BFC",
+    "collateral":"\u62B5\u62BC\u54C1","mortgage":"\u6309\u63ED","savings":"\u50A8\u84C4",
+    "credit score":"\u4FE1\u7528\u8BC4\u5206","overdraft":"\u900F\u652F",
+    "chargeback":"\u62D2\u4ED8","settlement":"\u7ED3\u7B97",
+    "direct debit":"\u76F4\u63A5\u6263\u6B3E","exchange rate":"\u6C47\u7387",
+    "payee":"\u6536\u6B3E\u4EBA","payer":"\u4ED8\u6B3E\u4EBA","beneficiary":"\u53D7\u76CA\u4EBA",
+    "equity":"\u6743\u76CA","liability":"\u8D1F\u503A","asset":"\u8D44\u4EA7",
+    "dividend":"\u80A1\u606F","spending limit":"\u6D88\u8D39\u9650\u989D",
+    "minimum investment":"\u6700\u4F4E\u6295\u8D44\u989D","maximum investment":"\u6700\u9AD8\u6295\u8D44\u989D","investment amount":"\u6295\u8D44\u91D1\u989D",
+    "account holder":"\u8D26\u6237\u6301\u6709\u4EBA","IBAN":"IBAN","processing time":"\u5904\u7406\u65F6\u95F4","business days":"\u5DE5\u4F5C\u65E5",
+    "credit rating":"\u4FE1\u7528\u8BC4\u7EA7","risk grade":"\u98CE\u9669\u7B49\u7EA7","maturity":"\u5230\u671F","amortization":"\u644A\u9500",
+    "early repayment":"\u63D0\u524D\u8FD8\u6B3E","monthly interest":"\u6708\u606F","accrued interest":"\u5E94\u8BA1\u5229\u606F",
+    "total return":"\u603B\u56DE\u62A5","net return":"\u51C0\u6536\u76CA","gross return":"\u603B\u6536\u76CA\uFF08\u7A0E\u524D\uFF09",
+    "fixed rate":"\u56FA\u5B9A\u5229\u7387","variable rate":"\u6D6E\u52A8\u5229\u7387","compound interest":"\u590D\u5229","simple interest":"\u5355\u5229",
+    "capital at risk":"\u672C\u91D1\u98CE\u9669","past performance":"\u5386\u53F2\u4E1A\u7EE9","past performance is not a guarantee of future results":"\u8FC7\u5F80\u4E1A\u7EE9\u4E0D\u4EE3\u8868\u672A\u6765\u8868\u73B0",
+    "financial intermediary":"\u91D1\u878D\u4E2D\u4ECB","payment institution":"\u652F\u4ED8\u673A\u6784","electronic money":"\u7535\u5B50\u8D27\u5E01",
+    "digital assets":"\u6570\u5B57\u8D44\u4EA7","securities":"\u8BC1\u5238","transfer fee":"\u8F6C\u8D26\u624B\u7EED\u8D39",
+    "available balance":"\u53EF\u7528\u4F59\u989D","wallet balance":"\u94B1\u5305\u4F59\u989D","reserved balance":"\u51BB\u7ED3\u4F59\u989D",
+    "pending":"\u5904\u7406\u4E2D","completed":"\u5DF2\u5B8C\u6210","failed":"\u5931\u8D25","verification pending":"\u9A8C\u8BC1\u5BA1\u6838\u4E2D",
+    "two-factor authentication":"\u53CC\u56E0\u7D20\u8BA4\u8BC1","regulatory":"\u76D1\u7BA1","SME":"\u4E2D\u5C0F\u4F01\u4E1A","borrower company":"\u501F\u6B3E\u4F01\u4E1A",
+    "payment protection":"\u4ED8\u6B3E\u4FDD\u969C","buyback guarantee":"\u56DE\u8D2D\u62C5\u4FDD","interest accrual":"\u5229\u606F\u8BA1\u63D0",
+    "GDPR":"GDPR","EEA":"\u6B27\u6D32\u7ECF\u6D4E\u533A","privacy policy":"\u9690\u79C1\u653F\u7B56","terms of service":"\u670D\u52A1\u6761\u6B3E","AML policy":"\u53CD\u6D17\u94B1\u653F\u7B56",
+    "payout":"\u5230\u8D26","payouts":"\u4ED8\u6B3E","refund":"\u9000\u6B3E","top up":"\u5145\u503C","disbursement":"\u653E\u6B3E",
+    "loyalty program":"\u5FE0\u8BDA\u5EA6\u8BA1\u5212","referral program":"\u63A8\u8350\u8BA1\u5212","welcome offer":"\u65B0\u4EBA\u793C\u9047",
+    "annualized return":"\u5E74\u5316\u6536\u76CA","internal rate of return":"\u5185\u90E8\u6536\u76CA\u7387","holding period":"\u6301\u6709\u671F",
+    "liquidity risk":"\u6D41\u52A8\u6027\u98CE\u9669","credit risk":"\u4FE1\u7528\u98CE\u9669","market risk":"\u5E02\u573A\u98CE\u9669",
+    "collateralized loan":"\u62B5\u62BC\u8D37\u6B3E","unsecured loan":"\u4FE1\u7528\u8D37\u6B3E","loan book":"\u8D37\u6B3E\u7EC4\u5408",
+    "underwriting":"\u6388\u4FE1\u5BA1\u6279","origination fee":"\u53D1\u8D77\u8D39","servicing":"\u8D37\u540E\u670D\u52A1",
+    "escrow":"\u6258\u7BA1\u8D26\u6237","settlement date":"\u7ED3\u7B97\u65E5","value date":"\u8D77\u606F\u65E5",
+    "KYC verification":"KYC \u8BA4\u8BC1","identity verification":"\u8EAB\u4EFD\u9A8C\u8BC1","proof of address":"\u5730\u5740\u8BC1\u660E",
+    "iban":"IBAN","swift":"SWIFT","remittance":"\u6C47\u6B3E",
+    "slippage":"\u6ED1\u70B9","liquidity pool":"\u6D41\u52A8\u6027\u6C60","impermanent loss":"\u65E0\u5E38\u635F\u5931",
+    "DEX":"DEX","CEX":"CEX","order book":"\u8BA2\u5355\u7C3F","yield farming":"\u6D41\u52A8\u6027\u6316\u77FF","APY":"APY","TVL":"TVL",
+    "blockchain":"\u533A\u5757\u94FE","token":"\u4EE3\u5E01","tokens":"\u4EE3\u5E01",
+    "stablecoin":"\u7A33\u5B9A\u5E01","stablecoins":"\u7A33\u5B9A\u5E01",
+    "cryptocurrency":"\u52A0\u5BC6\u8D27\u5E01","crypto":"\u52A0\u5BC6\u8D44\u4EA7",
+    "crypto wallet":"\u52A0\u5BC6\u94B1\u5305","wallet":"\u94B1\u5305",
+    "seed phrase":"\u52A9\u8BB0\u8BCD","private key":"\u79C1\u94A5",
+    "public address":"\u516C\u5F00\u5730\u5740","smart contract":"\u667A\u80FD\u5408\u7EA6",
+    "network fees":"\u7F51\u7EDC\u8D39\u7528","gas fees":"Gas \u8D39\u7528",
+    "custodial":"\u6258\u7BA1","non-custodial":"\u975E\u6258\u7BA1",
+    "custodial wallet":"\u6258\u7BA1\u94B1\u5305",
+    "non-custodial wallet":"\u975E\u6258\u7BA1\u94B1\u5305",
+    "fiat":"\u6CD5\u5E01","pegged":"\u951A\u5B9A",
+    "decentralized":"\u53BB\u4E2D\u5FC3\u5316","centralized":"\u4E2D\u5FC3\u5316",
+    "capital provider":"\u8D44\u91D1\u63D0\u4F9B\u65B9",
+    "repayment schedule":"\u8FD8\u6B3E\u8BA1\u5212",
+    "leverage":"\u6760\u6746","diversification":"\u5206\u6563\u6295\u8D44",
+    "yield":"\u6536\u76CA","returns":"\u56DE\u62A5",
+    "liquidity":"\u6D41\u52A8\u6027","protocol":"\u534F\u8BAE",
+    "staking":"\u8D28\u62BC","airdrop":"\u7A7A\u6295",
+    "mining":"\u6316\u77FF","validator":"\u9A8C\u8BC1\u8282\u70B9",
+    "consensus":"\u5171\u8BC6","bridge":"\u8DE8\u94FE\u6865",
+    "on-chain":"\u94FE\u4E0A","off-chain":"\u94FE\u4E0B",
+    "scam":"\u8BC8\u9A97","phishing":"\u9493\u9C7C",
+    "Learn & Earn":"\u5B66\u4E60\u5373\u8D5A",
+    "start learning":"\u5F00\u59CB\u5B66\u4E60",
+    "checklist":"\u6E05\u5355","step-by-step":"\u5206\u6B65",
+    "beginner":"\u521D\u5B66\u8005","beginners":"\u521D\u5B66\u8005",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    "Evolution of the Web from 1.0 to 3.0":"Web的演进：从1.0到3.0",
-    "Static read-only web pages":"静态只读网页",
-    "Information-centric and interactive":"以信息为中心的交互式网络",
-    "User-centric, decentralized, private and secure":"以用户为中心、去中心化、隐私与安全",
-    "read-only":"只读","user-centric":"以用户为中心"
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"Web\u7684\u6F14\u8FDB\uFF1A\u4ECE1.0\u52303.0",
+    "Static read-only web pages":"\u9759\u6001\u53EA\u8BFB\u7F51\u9875",
+    "Information-centric and interactive":"\u4EE5\u4FE1\u606F\u4E3A\u4E2D\u5FC3\u7684\u4EA4\u4E92\u5F0F\u7F51\u7EDC",
+    "User-centric, decentralized, private and secure":"\u4EE5\u7528\u6237\u4E3A\u4E2D\u5FC3\u3001\u53BB\u4E2D\u5FC3\u5316\u3001\u9690\u79C1\u4E0E\u5B89\u5168",
+    "read-only":"\u53EA\u8BFB","user-centric":"\u4EE5\u7528\u6237\u4E3A\u4E2D\u5FC3"
   },
   ja: {
-    "APR":"年利","Annual Percentage Rate":"年利",
-    "interest rate":"金利","annual returns":"年間リターン",
-    "monthly payouts":"月次払い出し","monthly payments":"月次支払い",
-    "balance":"残高","statement":"明細","account":"口座",
-    "deposit":"入金","withdrawal":"出金","wire transfer":"銀行振込",
-    "transaction":"取引","payment":"支払い","invoice":"請求書",
-    "fee":"手数料","no hidden fees":"隠れた手数料なし",
-    "P2P lending":"P2Pレンディング","crowdlending":"クラウドレンディング",
-    "crowdfunding":"クラウドファンディング","lending platform":"融資プラットフォーム",
-    "investment platform":"投資プラットフォーム",
-    "investor":"投資家","investors":"投資家",
-    "borrower":"借り手","lender":"貸し手",
-    "loan":"融資","loan period":"融資期間","loan term":"融資期間",
-    "loan originator":"ローンオリジネーター",
-    "funded":"調達済み","repaid":"返済済み",
-    "default":"デフォルト","late loans":"延滞ローン",
-    "cash drag":"キャッシュドラッグ",
-    "primary market":"プライマリーマーケット","secondary market":"セカンダリーマーケット",
-    "total funded":"総調達額","total interest paid":"支払利息合計",
-    "available funds":"利用可能資金","invested funds":"投資済み資金",
-    "total funds":"総資金",
-    "initial investment":"初期投資","investment period":"投資期間",
-    "future value":"将来価値","earned return":"獲得リターン",
-    "average annual return":"平均年間リターン",
-    "portfolio":"ポートフォリオ","passive income":"不労所得",
-    "principal repayment":"元本返済",
-    "interest payment":"利息支払い",
-    "installment":"分割払い","recurring payment":"定期支払い",
-    "due diligence":"デューデリジェンス","risk assessment":"リスク評価",
-    "risk scoring":"リスクスコア","AML":"AML",
-    "compliance":"コンプライアンス","regulated":"規制下",
-    "verification":"本人確認","KYC":"KYC",
-    "referral bonus":"紹介ボーナス","loyalty bonus":"ロイヤルティボーナス",
-    "welcome bonus":"ウェルカムボーナス","investment reward":"投資リワード",
-    "invite friends":"友達を招待",
-    "sign up":"新規登録","log in":"ログイン","register":"登録",
-    "invest now":"今すぐ投資","start investing":"投資を始める",
-    "dashboard":"ダッシュボード","onboarding":"オンボーディング",
-    "collateral":"担保","mortgage":"住宅ローン","savings":"貯蓄",
-    "credit score":"信用スコア","overdraft":"当座貸越",
-    "chargeback":"チャージバック","settlement":"決済",
-    "direct debit":"口座振替","exchange rate":"為替レート",
-    "payee":"受取人","payer":"支払人","beneficiary":"受益者",
-    "equity":"資本","liability":"負債","asset":"資産",
-    "dividend":"配当","spending limit":"支出上限",
-    "minimum investment":"最低投資額","maximum investment":"最大投資額","investment amount":"投資金額",
-    "account holder":"口座名義人","IBAN":"IBAN","processing time":"処理時間","business days":"営業日",
-    "credit rating":"信用格付け","risk grade":"リスクグレード","maturity":"満期","amortization":"償却",
-    "early repayment":"早期返済","monthly interest":"月次利子","accrued interest":"未収利息",
-    "total return":"総リターン","net return":"純リターン","gross return":"総リターン（税引前）",
-    "fixed rate":"固定金利","variable rate":"変動金利","compound interest":"複利","simple interest":"単利",
-    "capital at risk":"元本リスク","past performance":"過去の実績","past performance is not a guarantee of future results":"過去の実績は将来の成果を保証するものではありません",
-    "financial intermediary":"金融仲介業者","payment institution":"決済事業者","electronic money":"電子マネー",
-    "digital assets":"デジタル資産","securities":"有価証券","transfer fee":"振込手数料",
-    "available balance":"利用可能残高","wallet balance":"ウォレット残高","reserved balance":"留保残高",
-    "pending":"保留中","completed":"完了","failed":"失敗","verification pending":"本人確認待ち",
-    "two-factor authentication":"二要素認証","regulatory":"規制","SME":"中小企業","borrower company":"借入企業",
-    "payment protection":"支払保護","buyback guarantee":"買取保証","interest accrual":"利息発生",
-    "GDPR":"GDPR","EEA":"EEA","privacy policy":"プライバシーポリシー","terms of service":"利用規約","AML policy":"AML方針",
-    "payout":"支払い","payouts":"支払い","refund":"返金","top up":"チャージ","disbursement":"送金",
-    "loyalty program":"ロイヤルティプログラム","referral program":"紹介プログラム","welcome offer":"ウェルカム特典",
-    "annualized return":"年換算リターン","internal rate of return":"内部収益率","holding period":"保有期間",
-    "liquidity risk":"流動性リスク","credit risk":"信用リスク","market risk":"市場リスク",
-    "collateralized loan":"担保付ローン","unsecured loan":"無担保ローン","loan book":"ローンブック",
-    "underwriting":"与信審査","origination fee":"手数料（組成）","servicing":"サービシング",
-    "escrow":"エスクロー","settlement date":"決済日","value date":"バリュー日",
-    "KYC verification":"KYC認証","identity verification":"本人確認","proof of address":"住所証明",
-    "iban":"IBAN","swift":"SWIFT","remittance":"送金",
-    "slippage":"スリッページ","liquidity pool":"流動性プール","impermanent loss":"一時的損失",
-    "DEX":"DEX","CEX":"CEX","order book":"オーダーブック","yield farming":"イールドファーミング","APY":"APY","TVL":"TVL",
-    "blockchain":"ブロックチェーン","token":"トークン","tokens":"トークン",
-    "stablecoin":"ステーブルコイン","stablecoins":"ステーブルコイン",
-    "cryptocurrency":"暗号資産","crypto":"クリプト",
-    "crypto wallet":"暗号資産ウォレット","wallet":"ウォレット",
-    "seed phrase":"シードフレーズ","private key":"秘密鍵",
-    "public address":"公開アドレス","smart contract":"スマートコントラクト",
-    "network fees":"ネットワーク手数料","gas fees":"ガス代",
-    "custodial":"カストディアル","non-custodial":"ノンカストディアル",
-    "custodial wallet":"カストディアルウォレット",
-    "non-custodial wallet":"ノンカストディアルウォレット",
-    "fiat":"法定通貨","pegged":"ペッグ",
-    "decentralized":"分散型","centralized":"中央集権型",
-    "capital provider":"資本提供者",
-    "repayment schedule":"返済スケジュール",
-    "leverage":"レバレッジ","diversification":"分散投資",
-    "yield":"利回り","returns":"リターン",
-    "liquidity":"流動性","protocol":"プロトコル",
-    "staking":"ステーキング","airdrop":"エアドロップ",
-    "mining":"マイニング","validator":"バリデーター",
-    "consensus":"コンセンサス","bridge":"ブリッジ",
-    "on-chain":"オンチェーン","off-chain":"オフチェーン",
-    "scam":"詐欺","phishing":"フィッシング",
-    "Learn & Earn":"学んで稼ぐ",
-    "start learning":"学習を始める",
-    "checklist":"チェックリスト","step-by-step":"ステップバイステップ",
-    "beginner":"初心者","beginners":"初心者",
+    "APR":"\u5E74\u5229","Annual Percentage Rate":"\u5E74\u5229",
+    "interest rate":"\u91D1\u5229","annual returns":"\u5E74\u9593\u30EA\u30BF\u30FC\u30F3",
+    "monthly payouts":"\u6708\u6B21\u6255\u3044\u51FA\u3057","monthly payments":"\u6708\u6B21\u652F\u6255\u3044",
+    "balance":"\u6B8B\u9AD8","statement":"\u660E\u7D30","account":"\u53E3\u5EA7",
+    "deposit":"\u5165\u91D1","withdrawal":"\u51FA\u91D1","wire transfer":"\u9280\u884C\u632F\u8FBC",
+    "transaction":"\u53D6\u5F15","payment":"\u652F\u6255\u3044","invoice":"\u8ACB\u6C42\u66F8",
+    "fee":"\u624B\u6570\u6599","no hidden fees":"\u96A0\u308C\u305F\u624B\u6570\u6599\u306A\u3057",
+    "P2P lending":"P2P\u30EC\u30F3\u30C7\u30A3\u30F3\u30B0","crowdlending":"\u30AF\u30E9\u30A6\u30C9\u30EC\u30F3\u30C7\u30A3\u30F3\u30B0",
+    "crowdfunding":"\u30AF\u30E9\u30A6\u30C9\u30D5\u30A1\u30F3\u30C7\u30A3\u30F3\u30B0","lending platform":"\u878D\u8CC7\u30D7\u30E9\u30C3\u30C8\u30D5\u30A9\u30FC\u30E0",
+    "investment platform":"\u6295\u8CC7\u30D7\u30E9\u30C3\u30C8\u30D5\u30A9\u30FC\u30E0",
+    "investor":"\u6295\u8CC7\u5BB6","investors":"\u6295\u8CC7\u5BB6",
+    "borrower":"\u501F\u308A\u624B","lender":"\u8CB8\u3057\u624B",
+    "loan":"\u878D\u8CC7","loan period":"\u878D\u8CC7\u671F\u9593","loan term":"\u878D\u8CC7\u671F\u9593",
+    "loan originator":"\u30ED\u30FC\u30F3\u30AA\u30EA\u30B8\u30CD\u30FC\u30BF\u30FC",
+    "funded":"\u8ABF\u9054\u6E08\u307F","repaid":"\u8FD4\u6E08\u6E08\u307F",
+    "default":"\u30C7\u30D5\u30A9\u30EB\u30C8","late loans":"\u5EF6\u6EDE\u30ED\u30FC\u30F3",
+    "cash drag":"\u30AD\u30E3\u30C3\u30B7\u30E5\u30C9\u30E9\u30C3\u30B0",
+    "primary market":"\u30D7\u30E9\u30A4\u30DE\u30EA\u30FC\u30DE\u30FC\u30B1\u30C3\u30C8","secondary market":"\u30BB\u30AB\u30F3\u30C0\u30EA\u30FC\u30DE\u30FC\u30B1\u30C3\u30C8",
+    "total funded":"\u7DCF\u8ABF\u9054\u984D","total interest paid":"\u652F\u6255\u5229\u606F\u5408\u8A08",
+    "available funds":"\u5229\u7528\u53EF\u80FD\u8CC7\u91D1","invested funds":"\u6295\u8CC7\u6E08\u307F\u8CC7\u91D1",
+    "total funds":"\u7DCF\u8CC7\u91D1",
+    "initial investment":"\u521D\u671F\u6295\u8CC7","investment period":"\u6295\u8CC7\u671F\u9593",
+    "future value":"\u5C06\u6765\u4FA1\u5024","earned return":"\u7372\u5F97\u30EA\u30BF\u30FC\u30F3",
+    "average annual return":"\u5E73\u5747\u5E74\u9593\u30EA\u30BF\u30FC\u30F3",
+    "portfolio":"\u30DD\u30FC\u30C8\u30D5\u30A9\u30EA\u30AA","passive income":"\u4E0D\u52B4\u6240\u5F97",
+    "principal repayment":"\u5143\u672C\u8FD4\u6E08",
+    "interest payment":"\u5229\u606F\u652F\u6255\u3044",
+    "installment":"\u5206\u5272\u6255\u3044","recurring payment":"\u5B9A\u671F\u652F\u6255\u3044",
+    "due diligence":"\u30C7\u30E5\u30FC\u30C7\u30EA\u30B8\u30A7\u30F3\u30B9","risk assessment":"\u30EA\u30B9\u30AF\u8A55\u4FA1",
+    "risk scoring":"\u30EA\u30B9\u30AF\u30B9\u30B3\u30A2","AML":"AML",
+    "compliance":"\u30B3\u30F3\u30D7\u30E9\u30A4\u30A2\u30F3\u30B9","regulated":"\u898F\u5236\u4E0B",
+    "verification":"\u672C\u4EBA\u78BA\u8A8D","KYC":"KYC",
+    "referral bonus":"\u7D39\u4ECB\u30DC\u30FC\u30CA\u30B9","loyalty bonus":"\u30ED\u30A4\u30E4\u30EB\u30C6\u30A3\u30DC\u30FC\u30CA\u30B9",
+    "welcome bonus":"\u30A6\u30A7\u30EB\u30AB\u30E0\u30DC\u30FC\u30CA\u30B9","investment reward":"\u6295\u8CC7\u30EA\u30EF\u30FC\u30C9",
+    "invite friends":"\u53CB\u9054\u3092\u62DB\u5F85",
+    "sign up":"\u65B0\u898F\u767B\u9332","log in":"\u30ED\u30B0\u30A4\u30F3","register":"\u767B\u9332",
+    "invest now":"\u4ECA\u3059\u3050\u6295\u8CC7","start investing":"\u6295\u8CC7\u3092\u59CB\u3081\u308B",
+    "dashboard":"\u30C0\u30C3\u30B7\u30E5\u30DC\u30FC\u30C9","onboarding":"\u30AA\u30F3\u30DC\u30FC\u30C7\u30A3\u30F3\u30B0",
+    "collateral":"\u62C5\u4FDD","mortgage":"\u4F4F\u5B85\u30ED\u30FC\u30F3","savings":"\u8CAF\u84C4",
+    "credit score":"\u4FE1\u7528\u30B9\u30B3\u30A2","overdraft":"\u5F53\u5EA7\u8CB8\u8D8A",
+    "chargeback":"\u30C1\u30E3\u30FC\u30B8\u30D0\u30C3\u30AF","settlement":"\u6C7A\u6E08",
+    "direct debit":"\u53E3\u5EA7\u632F\u66FF","exchange rate":"\u70BA\u66FF\u30EC\u30FC\u30C8",
+    "payee":"\u53D7\u53D6\u4EBA","payer":"\u652F\u6255\u4EBA","beneficiary":"\u53D7\u76CA\u8005",
+    "equity":"\u8CC7\u672C","liability":"\u8CA0\u50B5","asset":"\u8CC7\u7523",
+    "dividend":"\u914D\u5F53","spending limit":"\u652F\u51FA\u4E0A\u9650",
+    "minimum investment":"\u6700\u4F4E\u6295\u8CC7\u984D","maximum investment":"\u6700\u5927\u6295\u8CC7\u984D","investment amount":"\u6295\u8CC7\u91D1\u984D",
+    "account holder":"\u53E3\u5EA7\u540D\u7FA9\u4EBA","IBAN":"IBAN","processing time":"\u51E6\u7406\u6642\u9593","business days":"\u55B6\u696D\u65E5",
+    "credit rating":"\u4FE1\u7528\u683C\u4ED8\u3051","risk grade":"\u30EA\u30B9\u30AF\u30B0\u30EC\u30FC\u30C9","maturity":"\u6E80\u671F","amortization":"\u511F\u5374",
+    "early repayment":"\u65E9\u671F\u8FD4\u6E08","monthly interest":"\u6708\u6B21\u5229\u5B50","accrued interest":"\u672A\u53CE\u5229\u606F",
+    "total return":"\u7DCF\u30EA\u30BF\u30FC\u30F3","net return":"\u7D14\u30EA\u30BF\u30FC\u30F3","gross return":"\u7DCF\u30EA\u30BF\u30FC\u30F3\uFF08\u7A0E\u5F15\u524D\uFF09",
+    "fixed rate":"\u56FA\u5B9A\u91D1\u5229","variable rate":"\u5909\u52D5\u91D1\u5229","compound interest":"\u8907\u5229","simple interest":"\u5358\u5229",
+    "capital at risk":"\u5143\u672C\u30EA\u30B9\u30AF","past performance":"\u904E\u53BB\u306E\u5B9F\u7E3E","past performance is not a guarantee of future results":"\u904E\u53BB\u306E\u5B9F\u7E3E\u306F\u5C06\u6765\u306E\u6210\u679C\u3092\u4FDD\u8A3C\u3059\u308B\u3082\u306E\u3067\u306F\u3042\u308A\u307E\u305B\u3093",
+    "financial intermediary":"\u91D1\u878D\u4EF2\u4ECB\u696D\u8005","payment institution":"\u6C7A\u6E08\u4E8B\u696D\u8005","electronic money":"\u96FB\u5B50\u30DE\u30CD\u30FC",
+    "digital assets":"\u30C7\u30B8\u30BF\u30EB\u8CC7\u7523","securities":"\u6709\u4FA1\u8A3C\u5238","transfer fee":"\u632F\u8FBC\u624B\u6570\u6599",
+    "available balance":"\u5229\u7528\u53EF\u80FD\u6B8B\u9AD8","wallet balance":"\u30A6\u30A9\u30EC\u30C3\u30C8\u6B8B\u9AD8","reserved balance":"\u7559\u4FDD\u6B8B\u9AD8",
+    "pending":"\u4FDD\u7559\u4E2D","completed":"\u5B8C\u4E86","failed":"\u5931\u6557","verification pending":"\u672C\u4EBA\u78BA\u8A8D\u5F85\u3061",
+    "two-factor authentication":"\u4E8C\u8981\u7D20\u8A8D\u8A3C","regulatory":"\u898F\u5236","SME":"\u4E2D\u5C0F\u4F01\u696D","borrower company":"\u501F\u5165\u4F01\u696D",
+    "payment protection":"\u652F\u6255\u4FDD\u8B77","buyback guarantee":"\u8CB7\u53D6\u4FDD\u8A3C","interest accrual":"\u5229\u606F\u767A\u751F",
+    "GDPR":"GDPR","EEA":"EEA","privacy policy":"\u30D7\u30E9\u30A4\u30D0\u30B7\u30FC\u30DD\u30EA\u30B7\u30FC","terms of service":"\u5229\u7528\u898F\u7D04","AML policy":"AML\u65B9\u91DD",
+    "payout":"\u652F\u6255\u3044","payouts":"\u652F\u6255\u3044","refund":"\u8FD4\u91D1","top up":"\u30C1\u30E3\u30FC\u30B8","disbursement":"\u9001\u91D1",
+    "loyalty program":"\u30ED\u30A4\u30E4\u30EB\u30C6\u30A3\u30D7\u30ED\u30B0\u30E9\u30E0","referral program":"\u7D39\u4ECB\u30D7\u30ED\u30B0\u30E9\u30E0","welcome offer":"\u30A6\u30A7\u30EB\u30AB\u30E0\u7279\u5178",
+    "annualized return":"\u5E74\u63DB\u7B97\u30EA\u30BF\u30FC\u30F3","internal rate of return":"\u5185\u90E8\u53CE\u76CA\u7387","holding period":"\u4FDD\u6709\u671F\u9593",
+    "liquidity risk":"\u6D41\u52D5\u6027\u30EA\u30B9\u30AF","credit risk":"\u4FE1\u7528\u30EA\u30B9\u30AF","market risk":"\u5E02\u5834\u30EA\u30B9\u30AF",
+    "collateralized loan":"\u62C5\u4FDD\u4ED8\u30ED\u30FC\u30F3","unsecured loan":"\u7121\u62C5\u4FDD\u30ED\u30FC\u30F3","loan book":"\u30ED\u30FC\u30F3\u30D6\u30C3\u30AF",
+    "underwriting":"\u4E0E\u4FE1\u5BE9\u67FB","origination fee":"\u624B\u6570\u6599\uFF08\u7D44\u6210\uFF09","servicing":"\u30B5\u30FC\u30D3\u30B7\u30F3\u30B0",
+    "escrow":"\u30A8\u30B9\u30AF\u30ED\u30FC","settlement date":"\u6C7A\u6E08\u65E5","value date":"\u30D0\u30EA\u30E5\u30FC\u65E5",
+    "KYC verification":"KYC\u8A8D\u8A3C","identity verification":"\u672C\u4EBA\u78BA\u8A8D","proof of address":"\u4F4F\u6240\u8A3C\u660E",
+    "iban":"IBAN","swift":"SWIFT","remittance":"\u9001\u91D1",
+    "slippage":"\u30B9\u30EA\u30C3\u30DA\u30FC\u30B8","liquidity pool":"\u6D41\u52D5\u6027\u30D7\u30FC\u30EB","impermanent loss":"\u4E00\u6642\u7684\u640D\u5931",
+    "DEX":"DEX","CEX":"CEX","order book":"\u30AA\u30FC\u30C0\u30FC\u30D6\u30C3\u30AF","yield farming":"\u30A4\u30FC\u30EB\u30C9\u30D5\u30A1\u30FC\u30DF\u30F3\u30B0","APY":"APY","TVL":"TVL",
+    "blockchain":"\u30D6\u30ED\u30C3\u30AF\u30C1\u30A7\u30FC\u30F3","token":"\u30C8\u30FC\u30AF\u30F3","tokens":"\u30C8\u30FC\u30AF\u30F3",
+    "stablecoin":"\u30B9\u30C6\u30FC\u30D6\u30EB\u30B3\u30A4\u30F3","stablecoins":"\u30B9\u30C6\u30FC\u30D6\u30EB\u30B3\u30A4\u30F3",
+    "cryptocurrency":"\u6697\u53F7\u8CC7\u7523","crypto":"\u30AF\u30EA\u30D7\u30C8",
+    "crypto wallet":"\u6697\u53F7\u8CC7\u7523\u30A6\u30A9\u30EC\u30C3\u30C8","wallet":"\u30A6\u30A9\u30EC\u30C3\u30C8",
+    "seed phrase":"\u30B7\u30FC\u30C9\u30D5\u30EC\u30FC\u30BA","private key":"\u79D8\u5BC6\u9375",
+    "public address":"\u516C\u958B\u30A2\u30C9\u30EC\u30B9","smart contract":"\u30B9\u30DE\u30FC\u30C8\u30B3\u30F3\u30C8\u30E9\u30AF\u30C8",
+    "network fees":"\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u624B\u6570\u6599","gas fees":"\u30AC\u30B9\u4EE3",
+    "custodial":"\u30AB\u30B9\u30C8\u30C7\u30A3\u30A2\u30EB","non-custodial":"\u30CE\u30F3\u30AB\u30B9\u30C8\u30C7\u30A3\u30A2\u30EB",
+    "custodial wallet":"\u30AB\u30B9\u30C8\u30C7\u30A3\u30A2\u30EB\u30A6\u30A9\u30EC\u30C3\u30C8",
+    "non-custodial wallet":"\u30CE\u30F3\u30AB\u30B9\u30C8\u30C7\u30A3\u30A2\u30EB\u30A6\u30A9\u30EC\u30C3\u30C8",
+    "fiat":"\u6CD5\u5B9A\u901A\u8CA8","pegged":"\u30DA\u30C3\u30B0",
+    "decentralized":"\u5206\u6563\u578B","centralized":"\u4E2D\u592E\u96C6\u6A29\u578B",
+    "capital provider":"\u8CC7\u672C\u63D0\u4F9B\u8005",
+    "repayment schedule":"\u8FD4\u6E08\u30B9\u30B1\u30B8\u30E5\u30FC\u30EB",
+    "leverage":"\u30EC\u30D0\u30EC\u30C3\u30B8","diversification":"\u5206\u6563\u6295\u8CC7",
+    "yield":"\u5229\u56DE\u308A","returns":"\u30EA\u30BF\u30FC\u30F3",
+    "liquidity":"\u6D41\u52D5\u6027","protocol":"\u30D7\u30ED\u30C8\u30B3\u30EB",
+    "staking":"\u30B9\u30C6\u30FC\u30AD\u30F3\u30B0","airdrop":"\u30A8\u30A2\u30C9\u30ED\u30C3\u30D7",
+    "mining":"\u30DE\u30A4\u30CB\u30F3\u30B0","validator":"\u30D0\u30EA\u30C7\u30FC\u30BF\u30FC",
+    "consensus":"\u30B3\u30F3\u30BB\u30F3\u30B5\u30B9","bridge":"\u30D6\u30EA\u30C3\u30B8",
+    "on-chain":"\u30AA\u30F3\u30C1\u30A7\u30FC\u30F3","off-chain":"\u30AA\u30D5\u30C1\u30A7\u30FC\u30F3",
+    "scam":"\u8A50\u6B3A","phishing":"\u30D5\u30A3\u30C3\u30B7\u30F3\u30B0",
+    "Learn & Earn":"\u5B66\u3093\u3067\u7A3C\u3050",
+    "start learning":"\u5B66\u7FD2\u3092\u59CB\u3081\u308B",
+    "checklist":"\u30C1\u30A7\u30C3\u30AF\u30EA\u30B9\u30C8","step-by-step":"\u30B9\u30C6\u30C3\u30D7\u30D0\u30A4\u30B9\u30C6\u30C3\u30D7",
+    "beginner":"\u521D\u5FC3\u8005","beginners":"\u521D\u5FC3\u8005",
     "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
     "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","Layer 1":"Layer 1","Layer 2":"Layer 2",
     "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
-    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
-    "Evolution of the Web from 1.0 to 3.0":"Webの進化：1.0から3.0へ",
-    "Static read-only web pages":"静的な読み取り専用ウェブページ",
-    "Information-centric and interactive":"情報中心でインタラクティブ",
-    "User-centric, decentralized, private and secure":"ユーザー中心・分散型・プライベート・安全",
-    "read-only":"読み取り専用","user-centric":"ユーザー中心"
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"Web\u306E\u9032\u5316\uFF1A1.0\u304B\u30893.0\u3078",
+    "Static read-only web pages":"\u9759\u7684\u306A\u8AAD\u307F\u53D6\u308A\u5C02\u7528\u30A6\u30A7\u30D6\u30DA\u30FC\u30B8",
+    "Information-centric and interactive":"\u60C5\u5831\u4E2D\u5FC3\u3067\u30A4\u30F3\u30BF\u30E9\u30AF\u30C6\u30A3\u30D6",
+    "User-centric, decentralized, private and secure":"\u30E6\u30FC\u30B6\u30FC\u4E2D\u5FC3\u30FB\u5206\u6563\u578B\u30FB\u30D7\u30E9\u30A4\u30D9\u30FC\u30C8\u30FB\u5B89\u5168",
+    "read-only":"\u8AAD\u307F\u53D6\u308A\u5C02\u7528","user-centric":"\u30E6\u30FC\u30B6\u30FC\u4E2D\u5FC3"
   }
 };
 
@@ -2288,35 +2291,35 @@ const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"P
 const COURSE_GLOSSARY = {
   es: {
     "tx as a receipt":"tx como comprobante",
-    "transaction hash":"hash de transacción",
+    "transaction hash":"hash de transacci\xF3n",
     "block explorer":"explorador de bloques",
     "network":"red","base network":"red Base",
-    "Interface":"Interfaz","website":"sitio web","confirm":"confirmar","execution":"ejecución",
-    "tokenomics":"tokenómica",
+    "Interface":"Interfaz","website":"sitio web","confirm":"confirmar","execution":"ejecuci\xF3n",
+    "tokenomics":"token\xF3mica",
     "crypto taxes":"impuestos cripto",
     "real yield":"rendimiento real",
-    "approval":"aprobación","approvals":"aprobaciones",
-    "spending cap":"límite de gasto",
-    "allowance":"asignación",
-    "revoke approval":"revocar aprobación",
-    "wallet connection":"conexión de monedero",
-    "normal login":"inicio de sesión normal",
+    "approval":"aprobaci\xF3n","approvals":"aprobaciones",
+    "spending cap":"l\xEDmite de gasto",
+    "allowance":"asignaci\xF3n",
+    "revoke approval":"revocar aprobaci\xF3n",
+    "wallet connection":"conexi\xF3n de monedero",
+    "normal login":"inicio de sesi\xF3n normal",
     "clone site":"sitio clonado","fake support":"soporte falso",
     "support staff":"personal de soporte",
-    "wrong address":"dirección incorrecta",
-    "malicious transaction":"transacción maliciosa",
-    "private key leak":"filtración de clave privada",
-    "seed phrase leak":"filtración de frase semilla",
-    "risk management":"gestión de riesgos",
-    "position sizing":"dimensionamiento de posición",
+    "wrong address":"direcci\xF3n incorrecta",
+    "malicious transaction":"transacci\xF3n maliciosa",
+    "private key leak":"filtraci\xF3n de clave privada",
+    "seed phrase leak":"filtraci\xF3n de frase semilla",
+    "risk management":"gesti\xF3n de riesgos",
+    "position sizing":"dimensionamiento de posici\xF3n",
     "term length":"plazo",
     "investor discipline":"disciplina del inversor",
-    "capital preservation":"preservación de capital",
-    "money management":"gestión del dinero",
+    "capital preservation":"preservaci\xF3n de capital",
+    "money management":"gesti\xF3n del dinero",
     "operational security":"seguridad operativa",
     "self-custody":"autocustodia",
     "price swings":"oscilaciones de precio",
-    "quick reset":"reinicio rápido"
+    "quick reset":"reinicio r\xE1pido"
   },
   it: {
     "tx as a receipt":"tx come ricevuta","transaction hash":"hash della transazione",
@@ -2336,152 +2339,152 @@ const COURSE_GLOSSARY = {
     "price swings":"oscillazioni di prezzo","quick reset":"reset rapido"
   },
   fr: {
-    "tx as a receipt":"tx comme reçu","transaction hash":"hash de transaction",
-    "block explorer":"explorateur de blocs","network":"réseau","base network":"réseau Base",
-    "Interface":"Interface","website":"site web","confirm":"confirmer","execution":"exécution",
-    "tokenomics":"tokenomics","crypto taxes":"fiscalité crypto","real yield":"rendement réel",
-    "approval":"approbation","approvals":"approbations","spending cap":"plafond de dépense",
-    "allowance":"autorisation","revoke approval":"révoquer l'approbation",
+    "tx as a receipt":"tx comme re\xE7u","transaction hash":"hash de transaction",
+    "block explorer":"explorateur de blocs","network":"r\xE9seau","base network":"r\xE9seau Base",
+    "Interface":"Interface","website":"site web","confirm":"confirmer","execution":"ex\xE9cution",
+    "tokenomics":"tokenomics","crypto taxes":"fiscalit\xE9 crypto","real yield":"rendement r\xE9el",
+    "approval":"approbation","approvals":"approbations","spending cap":"plafond de d\xE9pense",
+    "allowance":"autorisation","revoke approval":"r\xE9voquer l'approbation",
     "wallet connection":"connexion du portefeuille","normal login":"connexion classique",
-    "clone site":"site cloné","fake support":"faux support","support staff":"équipe support",
+    "clone site":"site clon\xE9","fake support":"faux support","support staff":"\xE9quipe support",
     "wrong address":"mauvaise adresse","malicious transaction":"transaction malveillante",
-    "private key leak":"fuite de clé privée","seed phrase leak":"fuite de phrase de récupération",
+    "private key leak":"fuite de cl\xE9 priv\xE9e","seed phrase leak":"fuite de phrase de r\xE9cup\xE9ration",
     "risk management":"gestion des risques","position sizing":"dimensionnement de position",
-    "term length":"durée","investor discipline":"discipline de l'investisseur",
-    "capital preservation":"préservation du capital","money management":"gestion de l'argent",
-    "operational security":"sécurité opérationnelle","self-custody":"auto-garde",
-    "price swings":"variations de prix","quick reset":"réinitialisation rapide"
+    "term length":"dur\xE9e","investor discipline":"discipline de l'investisseur",
+    "capital preservation":"pr\xE9servation du capital","money management":"gestion de l'argent",
+    "operational security":"s\xE9curit\xE9 op\xE9rationnelle","self-custody":"auto-garde",
+    "price swings":"variations de prix","quick reset":"r\xE9initialisation rapide"
   },
   de: {
     "tx as a receipt":"TX als Beleg","transaction hash":"Transaktions-Hash",
     "block explorer":"Block-Explorer","network":"Netzwerk","base network":"Base-Netzwerk",
-    "Interface":"Oberfläche","website":"Website","confirm":"Bestätigen","execution":"Ausführung",
+    "Interface":"Oberfl\xE4che","website":"Website","confirm":"Best\xE4tigen","execution":"Ausf\xFChrung",
     "tokenomics":"Tokenomics","crypto taxes":"Krypto-Steuern","real yield":"reale Rendite",
     "approval":"Freigabe","approvals":"Freigaben","spending cap":"Ausgabenlimit",
     "allowance":"Berechtigung","revoke approval":"Freigabe widerrufen",
     "wallet connection":"Wallet-Verbindung","normal login":"normale Anmeldung",
     "clone site":"Klonseite","fake support":"falscher Support","support staff":"Support-Team",
-    "wrong address":"falsche Adresse","malicious transaction":"bösartige Transaktion",
-    "private key leak":"Leak des privaten Schlüssels","seed phrase leak":"Leak der Seed-Phrase",
-    "risk management":"Risikomanagement","position sizing":"Positionsgröße",
+    "wrong address":"falsche Adresse","malicious transaction":"b\xF6sartige Transaktion",
+    "private key leak":"Leak des privaten Schl\xFCssels","seed phrase leak":"Leak der Seed-Phrase",
+    "risk management":"Risikomanagement","position sizing":"Positionsgr\xF6\xDFe",
     "term length":"Laufzeit","investor discipline":"Investor-Disziplin",
     "capital preservation":"Kapitalerhalt","money management":"Geldmanagement",
     "operational security":"operative Sicherheit","self-custody":"Selbstverwahrung",
     "price swings":"Preisschwankungen","quick reset":"Schnell-Reset"
   },
   pt: {
-    "tx as a receipt":"tx como comprovativo","transaction hash":"hash da transação",
+    "tx as a receipt":"tx como comprovativo","transaction hash":"hash da transa\xE7\xE3o",
     "block explorer":"explorador de blocos","network":"rede","base network":"rede Base",
-    "Interface":"Interface","website":"site web","confirm":"confirmar","execution":"execução",
+    "Interface":"Interface","website":"site web","confirm":"confirmar","execution":"execu\xE7\xE3o",
     "tokenomics":"tokenomics","crypto taxes":"impostos cripto","real yield":"rendimento real",
-    "approval":"aprovação","approvals":"aprovações","spending cap":"limite de gastos",
-    "allowance":"permissão","revoke approval":"revogar aprovação",
-    "wallet connection":"conexão da carteira","normal login":"login normal",
+    "approval":"aprova\xE7\xE3o","approvals":"aprova\xE7\xF5es","spending cap":"limite de gastos",
+    "allowance":"permiss\xE3o","revoke approval":"revogar aprova\xE7\xE3o",
+    "wallet connection":"conex\xE3o da carteira","normal login":"login normal",
     "clone site":"site clonado","fake support":"suporte falso","support staff":"equipa de suporte",
-    "wrong address":"endereço errado","malicious transaction":"transação maliciosa",
+    "wrong address":"endere\xE7o errado","malicious transaction":"transa\xE7\xE3o maliciosa",
     "private key leak":"vazamento de chave privada","seed phrase leak":"vazamento da frase-semente",
-    "risk management":"gestão de risco","position sizing":"dimensionamento da posição",
+    "risk management":"gest\xE3o de risco","position sizing":"dimensionamento da posi\xE7\xE3o",
     "term length":"prazo","investor discipline":"disciplina do investidor",
-    "capital preservation":"preservação de capital","money management":"gestão de dinheiro",
-    "operational security":"segurança operacional","self-custody":"autocustódia",
-    "price swings":"oscilações de preço","quick reset":"reinício rápido"
+    "capital preservation":"preserva\xE7\xE3o de capital","money management":"gest\xE3o de dinheiro",
+    "operational security":"seguran\xE7a operacional","self-custody":"autocust\xF3dia",
+    "price swings":"oscila\xE7\xF5es de pre\xE7o","quick reset":"rein\xEDcio r\xE1pido"
   },
   pl: {
     "tx as a receipt":"tx jako potwierdzenie","transaction hash":"hash transakcji",
-    "block explorer":"eksplorator bloków","network":"sieć","base network":"sieć Base",
-    "Interface":"Interfejs","website":"strona internetowa","confirm":"potwierdź","execution":"wykonanie",
+    "block explorer":"eksplorator blok\xF3w","network":"sie\u0107","base network":"sie\u0107 Base",
+    "Interface":"Interfejs","website":"strona internetowa","confirm":"potwierd\u017A","execution":"wykonanie",
     "tokenomics":"tokenomika","crypto taxes":"podatki krypto","real yield":"realny zwrot",
-    "approval":"zatwierdzenie","approvals":"zatwierdzenia","spending cap":"limit wydatków",
+    "approval":"zatwierdzenie","approvals":"zatwierdzenia","spending cap":"limit wydatk\xF3w",
     "allowance":"limit zgody","revoke approval":"cofnij zatwierdzenie",
-    "wallet connection":"połączenie portfela","normal login":"standardowe logowanie",
-    "clone site":"sklonowana strona","fake support":"fałszywe wsparcie","support staff":"personel wsparcia",
-    "wrong address":"błędny adres","malicious transaction":"złośliwa transakcja",
+    "wallet connection":"po\u0142\u0105czenie portfela","normal login":"standardowe logowanie",
+    "clone site":"sklonowana strona","fake support":"fa\u0142szywe wsparcie","support staff":"personel wsparcia",
+    "wrong address":"b\u0142\u0119dny adres","malicious transaction":"z\u0142o\u015Bliwa transakcja",
     "private key leak":"wyciek klucza prywatnego","seed phrase leak":"wyciek frazy seed",
-    "risk management":"zarządzanie ryzykiem","position sizing":"wielkość pozycji",
+    "risk management":"zarz\u0105dzanie ryzykiem","position sizing":"wielko\u015B\u0107 pozycji",
     "term length":"okres","investor discipline":"dyscyplina inwestora",
-    "capital preservation":"ochrona kapitału","money management":"zarządzanie pieniędzmi",
-    "operational security":"bezpieczeństwo operacyjne","self-custody":"samodzielna kustodia",
+    "capital preservation":"ochrona kapita\u0142u","money management":"zarz\u0105dzanie pieni\u0119dzmi",
+    "operational security":"bezpiecze\u0144stwo operacyjne","self-custody":"samodzielna kustodia",
     "price swings":"wahania cen","quick reset":"szybki reset"
   },
   el: {
-    "tx as a receipt":"tx ως απόδειξη","transaction hash":"hash συναλλαγής",
-    "block explorer":"εξερευνητής μπλοκ","network":"δίκτυο","base network":"δίκτυο Base",
-    "Interface":"Διεπαφή","website":"ιστοσελίδα","confirm":"επιβεβαίωση","execution":"εκτέλεση",
-    "tokenomics":"tokenomics","crypto taxes":"φόροι κρύπτο","real yield":"πραγματική απόδοση",
-    "approval":"έγκριση","approvals":"εγκρίσεις","spending cap":"όριο δαπανών",
-    "allowance":"όριο έγκρισης","revoke approval":"ανάκληση έγκρισης",
-    "wallet connection":"σύνδεση πορτοφολιού","normal login":"κανονική σύνδεση",
-    "clone site":"κλωνοποιημένος ιστότοπος","fake support":"ψεύτικη υποστήριξη","support staff":"ομάδα υποστήριξης",
-    "wrong address":"λανθασμένη διεύθυνση","malicious transaction":"κακόβουλη συναλλαγή",
-    "private key leak":"διαρροή ιδιωτικού κλειδιού","seed phrase leak":"διαρροή φράσης seed",
-    "risk management":"διαχείριση κινδύνου","position sizing":"μέγεθος θέσης",
-    "term length":"διάρκεια","investor discipline":"πειθαρχία επενδυτή",
-    "capital preservation":"διατήρηση κεφαλαίου","money management":"διαχείριση χρημάτων",
-    "operational security":"λειτουργική ασφάλεια","self-custody":"αυτοδιαχείριση",
-    "price swings":"διακυμάνσεις τιμών","quick reset":"γρήγορη επαναφορά"
+    "tx as a receipt":"tx \u03C9\u03C2 \u03B1\u03C0\u03CC\u03B4\u03B5\u03B9\u03BE\u03B7","transaction hash":"hash \u03C3\u03C5\u03BD\u03B1\u03BB\u03BB\u03B1\u03B3\u03AE\u03C2",
+    "block explorer":"\u03B5\u03BE\u03B5\u03C1\u03B5\u03C5\u03BD\u03B7\u03C4\u03AE\u03C2 \u03BC\u03C0\u03BB\u03BF\u03BA","network":"\u03B4\u03AF\u03BA\u03C4\u03C5\u03BF","base network":"\u03B4\u03AF\u03BA\u03C4\u03C5\u03BF Base",
+    "Interface":"\u0394\u03B9\u03B5\u03C0\u03B1\u03C6\u03AE","website":"\u03B9\u03C3\u03C4\u03BF\u03C3\u03B5\u03BB\u03AF\u03B4\u03B1","confirm":"\u03B5\u03C0\u03B9\u03B2\u03B5\u03B2\u03B1\u03AF\u03C9\u03C3\u03B7","execution":"\u03B5\u03BA\u03C4\u03AD\u03BB\u03B5\u03C3\u03B7",
+    "tokenomics":"tokenomics","crypto taxes":"\u03C6\u03CC\u03C1\u03BF\u03B9 \u03BA\u03C1\u03CD\u03C0\u03C4\u03BF","real yield":"\u03C0\u03C1\u03B1\u03B3\u03BC\u03B1\u03C4\u03B9\u03BA\u03AE \u03B1\u03C0\u03CC\u03B4\u03BF\u03C3\u03B7",
+    "approval":"\u03AD\u03B3\u03BA\u03C1\u03B9\u03C3\u03B7","approvals":"\u03B5\u03B3\u03BA\u03C1\u03AF\u03C3\u03B5\u03B9\u03C2","spending cap":"\u03CC\u03C1\u03B9\u03BF \u03B4\u03B1\u03C0\u03B1\u03BD\u03CE\u03BD",
+    "allowance":"\u03CC\u03C1\u03B9\u03BF \u03AD\u03B3\u03BA\u03C1\u03B9\u03C3\u03B7\u03C2","revoke approval":"\u03B1\u03BD\u03AC\u03BA\u03BB\u03B7\u03C3\u03B7 \u03AD\u03B3\u03BA\u03C1\u03B9\u03C3\u03B7\u03C2",
+    "wallet connection":"\u03C3\u03CD\u03BD\u03B4\u03B5\u03C3\u03B7 \u03C0\u03BF\u03C1\u03C4\u03BF\u03C6\u03BF\u03BB\u03B9\u03BF\u03CD","normal login":"\u03BA\u03B1\u03BD\u03BF\u03BD\u03B9\u03BA\u03AE \u03C3\u03CD\u03BD\u03B4\u03B5\u03C3\u03B7",
+    "clone site":"\u03BA\u03BB\u03C9\u03BD\u03BF\u03C0\u03BF\u03B9\u03B7\u03BC\u03AD\u03BD\u03BF\u03C2 \u03B9\u03C3\u03C4\u03CC\u03C4\u03BF\u03C0\u03BF\u03C2","fake support":"\u03C8\u03B5\u03CD\u03C4\u03B9\u03BA\u03B7 \u03C5\u03C0\u03BF\u03C3\u03C4\u03AE\u03C1\u03B9\u03BE\u03B7","support staff":"\u03BF\u03BC\u03AC\u03B4\u03B1 \u03C5\u03C0\u03BF\u03C3\u03C4\u03AE\u03C1\u03B9\u03BE\u03B7\u03C2",
+    "wrong address":"\u03BB\u03B1\u03BD\u03B8\u03B1\u03C3\u03BC\u03AD\u03BD\u03B7 \u03B4\u03B9\u03B5\u03CD\u03B8\u03C5\u03BD\u03C3\u03B7","malicious transaction":"\u03BA\u03B1\u03BA\u03CC\u03B2\u03BF\u03C5\u03BB\u03B7 \u03C3\u03C5\u03BD\u03B1\u03BB\u03BB\u03B1\u03B3\u03AE",
+    "private key leak":"\u03B4\u03B9\u03B1\u03C1\u03C1\u03BF\u03AE \u03B9\u03B4\u03B9\u03C9\u03C4\u03B9\u03BA\u03BF\u03CD \u03BA\u03BB\u03B5\u03B9\u03B4\u03B9\u03BF\u03CD","seed phrase leak":"\u03B4\u03B9\u03B1\u03C1\u03C1\u03BF\u03AE \u03C6\u03C1\u03AC\u03C3\u03B7\u03C2 seed",
+    "risk management":"\u03B4\u03B9\u03B1\u03C7\u03B5\u03AF\u03C1\u03B9\u03C3\u03B7 \u03BA\u03B9\u03BD\u03B4\u03CD\u03BD\u03BF\u03C5","position sizing":"\u03BC\u03AD\u03B3\u03B5\u03B8\u03BF\u03C2 \u03B8\u03AD\u03C3\u03B7\u03C2",
+    "term length":"\u03B4\u03B9\u03AC\u03C1\u03BA\u03B5\u03B9\u03B1","investor discipline":"\u03C0\u03B5\u03B9\u03B8\u03B1\u03C1\u03C7\u03AF\u03B1 \u03B5\u03C0\u03B5\u03BD\u03B4\u03C5\u03C4\u03AE",
+    "capital preservation":"\u03B4\u03B9\u03B1\u03C4\u03AE\u03C1\u03B7\u03C3\u03B7 \u03BA\u03B5\u03C6\u03B1\u03BB\u03B1\u03AF\u03BF\u03C5","money management":"\u03B4\u03B9\u03B1\u03C7\u03B5\u03AF\u03C1\u03B9\u03C3\u03B7 \u03C7\u03C1\u03B7\u03BC\u03AC\u03C4\u03C9\u03BD",
+    "operational security":"\u03BB\u03B5\u03B9\u03C4\u03BF\u03C5\u03C1\u03B3\u03B9\u03BA\u03AE \u03B1\u03C3\u03C6\u03AC\u03BB\u03B5\u03B9\u03B1","self-custody":"\u03B1\u03C5\u03C4\u03BF\u03B4\u03B9\u03B1\u03C7\u03B5\u03AF\u03C1\u03B9\u03C3\u03B7",
+    "price swings":"\u03B4\u03B9\u03B1\u03BA\u03C5\u03BC\u03AC\u03BD\u03C3\u03B5\u03B9\u03C2 \u03C4\u03B9\u03BC\u03CE\u03BD","quick reset":"\u03B3\u03C1\u03AE\u03B3\u03BF\u03C1\u03B7 \u03B5\u03C0\u03B1\u03BD\u03B1\u03C6\u03BF\u03C1\u03AC"
   },
   ko: {
-    "tx as a receipt":"영수증으로서의 tx","transaction hash":"트랜잭션 해시",
-    "block explorer":"블록 익스플로러","network":"네트워크","base network":"Base 네트워크",
-    "Interface":"인터페이스","website":"웹사이트","confirm":"확인","execution":"실행",
-    "tokenomics":"토크노믹스","crypto taxes":"암호화폐 세금","real yield":"실질 수익률",
-    "approval":"승인","approvals":"승인","spending cap":"지출 한도",
-    "allowance":"허용 한도","revoke approval":"승인 취소",
-    "wallet connection":"지갑 연결","normal login":"일반 로그인",
-    "clone site":"복제 사이트","fake support":"가짜 지원","support staff":"지원팀",
-    "wrong address":"잘못된 주소","malicious transaction":"악성 거래",
-    "private key leak":"개인 키 유출","seed phrase leak":"시드 구문 유출",
-    "risk management":"리스크 관리","position sizing":"포지션 크기",
-    "term length":"기간","investor discipline":"투자자 규율",
-    "capital preservation":"자본 보전","money management":"자금 관리",
-    "operational security":"운영 보안","self-custody":"셀프 커스터디",
-    "price swings":"가격 변동",
-    "perpetual contract":"무기한 계약","oracle":"오라클","liquidation":"강제 청산",
-    "rug pull":"럭풀","honeypot":"허니팟","smart contract audit":"스마트 컨트랙트 감사",
-    "over-collateralization":"과담보","flash loan":"플래시론","MEV":"MEV",
-    "quick reset":"빠른 재설정"
+    "tx as a receipt":"\uC601\uC218\uC99D\uC73C\uB85C\uC11C\uC758 tx","transaction hash":"\uD2B8\uB79C\uC7AD\uC158 \uD574\uC2DC",
+    "block explorer":"\uBE14\uB85D \uC775\uC2A4\uD50C\uB85C\uB7EC","network":"\uB124\uD2B8\uC6CC\uD06C","base network":"Base \uB124\uD2B8\uC6CC\uD06C",
+    "Interface":"\uC778\uD130\uD398\uC774\uC2A4","website":"\uC6F9\uC0AC\uC774\uD2B8","confirm":"\uD655\uC778","execution":"\uC2E4\uD589",
+    "tokenomics":"\uD1A0\uD06C\uB178\uBBF9\uC2A4","crypto taxes":"\uC554\uD638\uD654\uD3D0 \uC138\uAE08","real yield":"\uC2E4\uC9C8 \uC218\uC775\uB960",
+    "approval":"\uC2B9\uC778","approvals":"\uC2B9\uC778","spending cap":"\uC9C0\uCD9C \uD55C\uB3C4",
+    "allowance":"\uD5C8\uC6A9 \uD55C\uB3C4","revoke approval":"\uC2B9\uC778 \uCDE8\uC18C",
+    "wallet connection":"\uC9C0\uAC11 \uC5F0\uACB0","normal login":"\uC77C\uBC18 \uB85C\uADF8\uC778",
+    "clone site":"\uBCF5\uC81C \uC0AC\uC774\uD2B8","fake support":"\uAC00\uC9DC \uC9C0\uC6D0","support staff":"\uC9C0\uC6D0\uD300",
+    "wrong address":"\uC798\uBABB\uB41C \uC8FC\uC18C","malicious transaction":"\uC545\uC131 \uAC70\uB798",
+    "private key leak":"\uAC1C\uC778 \uD0A4 \uC720\uCD9C","seed phrase leak":"\uC2DC\uB4DC \uAD6C\uBB38 \uC720\uCD9C",
+    "risk management":"\uB9AC\uC2A4\uD06C \uAD00\uB9AC","position sizing":"\uD3EC\uC9C0\uC158 \uD06C\uAE30",
+    "term length":"\uAE30\uAC04","investor discipline":"\uD22C\uC790\uC790 \uADDC\uC728",
+    "capital preservation":"\uC790\uBCF8 \uBCF4\uC804","money management":"\uC790\uAE08 \uAD00\uB9AC",
+    "operational security":"\uC6B4\uC601 \uBCF4\uC548","self-custody":"\uC140\uD504 \uCEE4\uC2A4\uD130\uB514",
+    "price swings":"\uAC00\uACA9 \uBCC0\uB3D9",
+    "perpetual contract":"\uBB34\uAE30\uD55C \uACC4\uC57D","oracle":"\uC624\uB77C\uD074","liquidation":"\uAC15\uC81C \uCCAD\uC0B0",
+    "rug pull":"\uB7ED\uD480","honeypot":"\uD5C8\uB2C8\uD31F","smart contract audit":"\uC2A4\uB9C8\uD2B8 \uCEE8\uD2B8\uB799\uD2B8 \uAC10\uC0AC",
+    "over-collateralization":"\uACFC\uB2F4\uBCF4","flash loan":"\uD50C\uB798\uC2DC\uB860","MEV":"MEV",
+    "quick reset":"\uBE60\uB978 \uC7AC\uC124\uC815"
   },
   zh: {
-    "tx as a receipt":"交易作为凭证","transaction hash":"交易哈希",
-    "block explorer":"区块浏览器","network":"网络","base network":"Base 网络",
-    "Interface":"界面","website":"网站","confirm":"确认","execution":"执行",
-    "tokenomics":"代币经济学","crypto taxes":"加密税务","real yield":"真实收益",
-    "approval":"授权","approvals":"授权","spending cap":"支出上限",
-    "allowance":"额度","revoke approval":"撤销授权",
-    "wallet connection":"钱包连接","normal login":"常规登录",
-    "clone site":"克隆网站","fake support":"假冒客服","support staff":"客服人员",
-    "wrong address":"错误地址","malicious transaction":"恶意交易",
-    "private key leak":"私钥泄露","seed phrase leak":"助记词泄露",
-    "risk management":"风险管理","position sizing":"仓位规模",
-    "term length":"期限","investor discipline":"投资者纪律",
-    "capital preservation":"资本保全","money management":"资金管理",
-    "operational security":"运营安全","self-custody":"自托管",
-    "price swings":"价格波动",
-    "perpetual contract":"永续合约","oracle":"预言机","liquidation":"强制平仓",
-    "rug pull":"跑路","honeypot":"蜜罐","smart contract audit":"智能合约审计",
-    "over-collateralization":"超额抵押","flash loan":"闪电贷","MEV":"MEV",
-    "quick reset":"快速重置"
+    "tx as a receipt":"\u4EA4\u6613\u4F5C\u4E3A\u51ED\u8BC1","transaction hash":"\u4EA4\u6613\u54C8\u5E0C",
+    "block explorer":"\u533A\u5757\u6D4F\u89C8\u5668","network":"\u7F51\u7EDC","base network":"Base \u7F51\u7EDC",
+    "Interface":"\u754C\u9762","website":"\u7F51\u7AD9","confirm":"\u786E\u8BA4","execution":"\u6267\u884C",
+    "tokenomics":"\u4EE3\u5E01\u7ECF\u6D4E\u5B66","crypto taxes":"\u52A0\u5BC6\u7A0E\u52A1","real yield":"\u771F\u5B9E\u6536\u76CA",
+    "approval":"\u6388\u6743","approvals":"\u6388\u6743","spending cap":"\u652F\u51FA\u4E0A\u9650",
+    "allowance":"\u989D\u5EA6","revoke approval":"\u64A4\u9500\u6388\u6743",
+    "wallet connection":"\u94B1\u5305\u8FDE\u63A5","normal login":"\u5E38\u89C4\u767B\u5F55",
+    "clone site":"\u514B\u9686\u7F51\u7AD9","fake support":"\u5047\u5192\u5BA2\u670D","support staff":"\u5BA2\u670D\u4EBA\u5458",
+    "wrong address":"\u9519\u8BEF\u5730\u5740","malicious transaction":"\u6076\u610F\u4EA4\u6613",
+    "private key leak":"\u79C1\u94A5\u6CC4\u9732","seed phrase leak":"\u52A9\u8BB0\u8BCD\u6CC4\u9732",
+    "risk management":"\u98CE\u9669\u7BA1\u7406","position sizing":"\u4ED3\u4F4D\u89C4\u6A21",
+    "term length":"\u671F\u9650","investor discipline":"\u6295\u8D44\u8005\u7EAA\u5F8B",
+    "capital preservation":"\u8D44\u672C\u4FDD\u5168","money management":"\u8D44\u91D1\u7BA1\u7406",
+    "operational security":"\u8FD0\u8425\u5B89\u5168","self-custody":"\u81EA\u6258\u7BA1",
+    "price swings":"\u4EF7\u683C\u6CE2\u52A8",
+    "perpetual contract":"\u6C38\u7EED\u5408\u7EA6","oracle":"\u9884\u8A00\u673A","liquidation":"\u5F3A\u5236\u5E73\u4ED3",
+    "rug pull":"\u8DD1\u8DEF","honeypot":"\u871C\u7F50","smart contract audit":"\u667A\u80FD\u5408\u7EA6\u5BA1\u8BA1",
+    "over-collateralization":"\u8D85\u989D\u62B5\u62BC","flash loan":"\u95EA\u7535\u8D37","MEV":"MEV",
+    "quick reset":"\u5FEB\u901F\u91CD\u7F6E"
   },
   ja: {
-    "tx as a receipt":"領収書としてのtx","transaction hash":"トランザクションハッシュ",
-    "block explorer":"ブロックエクスプローラー","network":"ネットワーク","base network":"Baseネットワーク",
-    "Interface":"インターフェース","website":"ウェブサイト","confirm":"確認","execution":"実行",
-    "tokenomics":"トークノミクス","crypto taxes":"暗号資産税","real yield":"実質利回り",
-    "approval":"承認","approvals":"承認","spending cap":"支出上限",
-    "allowance":"許可額","revoke approval":"承認を取り消す",
-    "wallet connection":"ウォレット接続","normal login":"通常ログイン",
-    "clone site":"クローンサイト","fake support":"偽サポート","support staff":"サポート担当",
-    "wrong address":"誤ったアドレス","malicious transaction":"悪意のある取引",
-    "private key leak":"秘密鍵の漏洩","seed phrase leak":"シードフレーズの漏洩",
-    "risk management":"リスク管理","position sizing":"ポジションサイズ",
-    "term length":"期間","investor discipline":"投資家の規律",
-    "capital preservation":"資本保全","money management":"資金管理",
-    "operational security":"運用セキュリティ","self-custody":"セルフカストディ",
-    "price swings":"価格変動",
-    "perpetual contract":"無期限契約","oracle":"オラクル","liquidation":"清算",
-    "rug pull":"ラグプル","honeypot":"ハニーポット","smart contract audit":"スマートコントラクト監査",
-    "over-collateralization":"過剰担保","flash loan":"フラッシュローン","MEV":"MEV",
-    "quick reset":"クイックリセット"
+    "tx as a receipt":"\u9818\u53CE\u66F8\u3068\u3057\u3066\u306Etx","transaction hash":"\u30C8\u30E9\u30F3\u30B6\u30AF\u30B7\u30E7\u30F3\u30CF\u30C3\u30B7\u30E5",
+    "block explorer":"\u30D6\u30ED\u30C3\u30AF\u30A8\u30AF\u30B9\u30D7\u30ED\u30FC\u30E9\u30FC","network":"\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF","base network":"Base\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF",
+    "Interface":"\u30A4\u30F3\u30BF\u30FC\u30D5\u30A7\u30FC\u30B9","website":"\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8","confirm":"\u78BA\u8A8D","execution":"\u5B9F\u884C",
+    "tokenomics":"\u30C8\u30FC\u30AF\u30CE\u30DF\u30AF\u30B9","crypto taxes":"\u6697\u53F7\u8CC7\u7523\u7A0E","real yield":"\u5B9F\u8CEA\u5229\u56DE\u308A",
+    "approval":"\u627F\u8A8D","approvals":"\u627F\u8A8D","spending cap":"\u652F\u51FA\u4E0A\u9650",
+    "allowance":"\u8A31\u53EF\u984D","revoke approval":"\u627F\u8A8D\u3092\u53D6\u308A\u6D88\u3059",
+    "wallet connection":"\u30A6\u30A9\u30EC\u30C3\u30C8\u63A5\u7D9A","normal login":"\u901A\u5E38\u30ED\u30B0\u30A4\u30F3",
+    "clone site":"\u30AF\u30ED\u30FC\u30F3\u30B5\u30A4\u30C8","fake support":"\u507D\u30B5\u30DD\u30FC\u30C8","support staff":"\u30B5\u30DD\u30FC\u30C8\u62C5\u5F53",
+    "wrong address":"\u8AA4\u3063\u305F\u30A2\u30C9\u30EC\u30B9","malicious transaction":"\u60AA\u610F\u306E\u3042\u308B\u53D6\u5F15",
+    "private key leak":"\u79D8\u5BC6\u9375\u306E\u6F0F\u6D29","seed phrase leak":"\u30B7\u30FC\u30C9\u30D5\u30EC\u30FC\u30BA\u306E\u6F0F\u6D29",
+    "risk management":"\u30EA\u30B9\u30AF\u7BA1\u7406","position sizing":"\u30DD\u30B8\u30B7\u30E7\u30F3\u30B5\u30A4\u30BA",
+    "term length":"\u671F\u9593","investor discipline":"\u6295\u8CC7\u5BB6\u306E\u898F\u5F8B",
+    "capital preservation":"\u8CC7\u672C\u4FDD\u5168","money management":"\u8CC7\u91D1\u7BA1\u7406",
+    "operational security":"\u904B\u7528\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3","self-custody":"\u30BB\u30EB\u30D5\u30AB\u30B9\u30C8\u30C7\u30A3",
+    "price swings":"\u4FA1\u683C\u5909\u52D5",
+    "perpetual contract":"\u7121\u671F\u9650\u5951\u7D04","oracle":"\u30AA\u30E9\u30AF\u30EB","liquidation":"\u6E05\u7B97",
+    "rug pull":"\u30E9\u30B0\u30D7\u30EB","honeypot":"\u30CF\u30CB\u30FC\u30DD\u30C3\u30C8","smart contract audit":"\u30B9\u30DE\u30FC\u30C8\u30B3\u30F3\u30C8\u30E9\u30AF\u30C8\u76E3\u67FB",
+    "over-collateralization":"\u904E\u5270\u62C5\u4FDD","flash loan":"\u30D5\u30E9\u30C3\u30B7\u30E5\u30ED\u30FC\u30F3","MEV":"MEV",
+    "quick reset":"\u30AF\u30A4\u30C3\u30AF\u30EA\u30BB\u30C3\u30C8"
   }
 };
 
@@ -2708,7 +2711,7 @@ $saveKey.addEventListener("click", () => {
 $cancelBtn.addEventListener("click", function() {
   cancelRequested = true;
   $cancelBtn.disabled = true;
-  $cancelBtn.textContent = "Cancelling…";
+  $cancelBtn.textContent = "Cancelling\u2026";
 });
 
 $model.addEventListener("change", () => { updateCost(); saveSettings(); });
@@ -2780,7 +2783,7 @@ function updateCost() {
         '<div class="price free-price">Free</div>' +
         '<div class="detail">' + perLang + ' strings via Google Translate &middot; No API key needed</div>' +
       '</div>';
-    $costHint.textContent = "Free — powered by Google Translate";
+    $costHint.textContent = "Free \u2014 powered by Google Translate";
     $costHint.classList.remove("hidden");
   } else {
     const model = $model.value;
@@ -2847,7 +2850,7 @@ if ($syncRefBtn) {
     if (provider === "openai" && !$apiKey.value.trim()) { log("Enter OpenAI API key", "err"); return; }
     setBusy(true);
     $progressSec.classList.remove("hidden");
-    setProgress(0, "Reading source frame…");
+    setProgress(0, "Reading source frame\u2026");
     parent.postMessage({ pluginMessage: { type: "sync-reference-scan", langs: langs } }, "*");
   });
 }
@@ -2870,16 +2873,16 @@ function looksTranslated(original, translated) {
 
 /**
  * Split trailing sentence punctuation from the last non-whitespace run (mirrors source vs API).
- * Preserves spaces after punctuation in `.after` (unusual in UI but keeps layout faithful).
+ * Preserves spaces after punctuation in \`.after\` (unusual in UI but keeps layout faithful).
  */
 function splitTrailingSentencePunct(s) {
   if (!s) return { core: "", punct: "", after: "" };
   let i = s.length - 1;
-  while (i >= 0 && /\s/.test(s[i])) i--;
+  while (i >= 0 && /\\s/.test(s[i])) i--;
   const after = s.slice(i + 1);
   if (i < 0) return { core: "", punct: "", after: after };
   let j = i;
-  while (j >= 0 && /[.!?…:;\u2026\u3002\uFF01\uFF1F\uFF1A\uFF1B\uFF0E\uFE52]/.test(s[j])) j--;
+  while (j >= 0 && /[.!?\u2026:;\\u2026\\u3002\\uFF01\\uFF1F\\uFF1A\\uFF1B\\uFF0E\\uFE52]/.test(s[j])) j--;
   const punct = s.slice(j + 1, i + 1);
   const core = s.slice(0, j + 1);
   return { core, punct, after };
@@ -2888,14 +2891,14 @@ function splitTrailingSentencePunct(s) {
 /** If source has no lowercase letters, uppercase the whole translation (e.g. VIP, OK). */
 function mirrorLetterCase(origCore, transCore) {
   if (!transCore) return transCore;
-  if (!/\p{L}/u.test(origCore)) return transCore;
+  if (!/\\p{L}/u.test(origCore)) return transCore;
 
-  if (!/\p{Ll}/u.test(origCore)) {
+  if (!/\\p{Ll}/u.test(origCore)) {
     return transCore.toLocaleUpperCase("en-US");
   }
 
-  const tm = transCore.match(/\p{L}/u);
-  const om = origCore.match(/\p{L}/u);
+  const tm = transCore.match(/\\p{L}/u);
+  const om = origCore.match(/\\p{L}/u);
   if (!tm || !om) return transCore;
 
   const tch = tm[0];
@@ -2918,8 +2921,8 @@ function mirrorLetterCase(origCore, transCore) {
 function applySourceFormatting(original, translated) {
   if (translated == null || translated === "") return original;
 
-  const lead = (original.match(/^\s*/) || [""])[0];
-  const trail = (original.match(/\s*$/) || [""])[0];
+  const lead = (original.match(/^\\s*/) || [""])[0];
+  const trail = (original.match(/\\s*$/) || [""])[0];
   const mid = original.slice(lead.length, original.length - trail.length);
 
   const t = translated.trim();
@@ -3002,7 +3005,7 @@ async function translateMyMemory(text, lang) {
 }
 
 /* ================================================================== */
-/*  Free batch: Google primary → MyMemory fallback → parallel          */
+/*  Free batch: Google primary \u2192 MyMemory fallback \u2192 parallel          */
 /* ================================================================== */
 async function translateOneFree(text, lang) {
   if (isDateEraLabel(text)) return text;
@@ -3082,31 +3085,31 @@ async function callOpenAI(texts, lang) {
   const key = $apiKey.value.trim();
   const model = $model.value;
   const gl = filterGlossary(getGlossary(lang), texts);
-  const glBlock = Object.entries(gl).map(([e,t]) => '  "'+e+'" → "'+t+'"').join("\n");
+  const glBlock = Object.entries(gl).map(([e,t]) => '  "'+e+'" \u2192 "'+t+'"').join("\\n");
 
   const sys =
-    "You are a professional fintech UI/UX translator.\n" +
-    "Translate every string from English to " + LANG_NAMES[lang] + ".\n\n" +
-    "RULES:\n" +
-    "1. Formal, professional tone for financial apps.\n" +
-    "2. Preserve ALL placeholders: {var}, {{var}}, %s, %d, %@, $var.\n" +
-    "3. DATE / ERA / TIMELINE LABELS: any string that is primarily a date range, decade, year span, or timeline marker (e.g. \"1900s~2000\", \"2000s~2020s\", \"2020s~?\", \"Q1 2024\", \"2020–2025\") must be returned EXACTLY as-is, character-for-character. Do NOT spell out decades, do NOT rephrase, do NOT drop the \"s\" suffix, do NOT change ~ or – to other characters.\n" +
-    "4. Keep unchanged: KYC, AML, IBAN, SWIFT, BIC, API, PIN, OTP, 2FA, CVV, PCI, SEPA.\n" +
-    "5. Keep established tech/industry terms untranslated: Web 1.0, Web 2.0, Web 3.0, DeFi, NFT, DAO, DEX, CEX, DApp, Layer 1, Layer 2, staking, blockchain, token, wallet, smart contract, and all brand names.\n" +
-    "6. CONCISE — this is critical for UI cards and labels:\n" +
-    "   - Translation must match the source length as closely as possible.\n" +
-    "   - NEVER expand a short phrase into a verbose description.\n" +
-    "   - If source is ≤ 30 chars → translation must not exceed 130 % of source length.\n" +
-    "   - If source is ≤ 60 chars → translation must not exceed 120 % of source length.\n" +
-    "   - Prefer shorter synonyms and natural abbreviations in the target language.\n" +
-    "7. No extra punctuation.\n" +
-    "8. Preserve capitalisation (ALL CAPS → ALL CAPS, Title → Title).\n" +
-    "9. Preserve leading/trailing whitespace and terminal punctuation exactly as in source.\n" +
-    "10. Preserve ALL special characters verbatim: tildes (~), en-dashes (–), em-dashes (—), arrows (→←), bullets (•), pipes (|), slashes (/). Never replace one with another.\n\n" +
-    (glBlock ? "GLOSSARY (use these exact translations when the source matches):\n" + glBlock + "\n\n" : "") +
-    "INPUT: JSON array of source strings.\n" +
-    "OUTPUT: a JSON object with a single key \"t\" whose value is the translated array (same order, same count).\n" +
-    "Example: {\"t\": [\"translated1\", \"translated2\"]}\n" +
+    "You are a professional fintech UI/UX translator.\\n" +
+    "Translate every string from English to " + LANG_NAMES[lang] + ".\\n\\n" +
+    "RULES:\\n" +
+    "1. Formal, professional tone for financial apps.\\n" +
+    "2. Preserve ALL placeholders: {var}, {{var}}, %s, %d, %@, $var.\\n" +
+    "3. DATE / ERA / TIMELINE LABELS: any string that is primarily a date range, decade, year span, or timeline marker (e.g. \\"1900s~2000\\", \\"2000s~2020s\\", \\"2020s~?\\", \\"Q1 2024\\", \\"2020\u20132025\\") must be returned EXACTLY as-is, character-for-character. Do NOT spell out decades, do NOT rephrase, do NOT drop the \\"s\\" suffix, do NOT change ~ or \u2013 to other characters.\\n" +
+    "4. Keep unchanged: KYC, AML, IBAN, SWIFT, BIC, API, PIN, OTP, 2FA, CVV, PCI, SEPA.\\n" +
+    "5. Keep established tech/industry terms untranslated: Web 1.0, Web 2.0, Web 3.0, DeFi, NFT, DAO, DEX, CEX, DApp, Layer 1, Layer 2, staking, blockchain, token, wallet, smart contract, and all brand names.\\n" +
+    "6. CONCISE \u2014 this is critical for UI cards and labels:\\n" +
+    "   - Translation must match the source length as closely as possible.\\n" +
+    "   - NEVER expand a short phrase into a verbose description.\\n" +
+    "   - If source is \u2264 30 chars \u2192 translation must not exceed 130 % of source length.\\n" +
+    "   - If source is \u2264 60 chars \u2192 translation must not exceed 120 % of source length.\\n" +
+    "   - Prefer shorter synonyms and natural abbreviations in the target language.\\n" +
+    "7. No extra punctuation.\\n" +
+    "8. Preserve capitalisation (ALL CAPS \u2192 ALL CAPS, Title \u2192 Title).\\n" +
+    "9. Preserve leading/trailing whitespace and terminal punctuation exactly as in source.\\n" +
+    "10. Preserve ALL special characters verbatim: tildes (~), en-dashes (\u2013), em-dashes (\u2014), arrows (\u2192\u2190), bullets (\u2022), pipes (|), slashes (/). Never replace one with another.\\n\\n" +
+    (glBlock ? "GLOSSARY (use these exact translations when the source matches):\\n" + glBlock + "\\n\\n" : "") +
+    "INPUT: JSON array of source strings.\\n" +
+    "OUTPUT: a JSON object with a single key \\"t\\" whose value is the translated array (same order, same count).\\n" +
+    "Example: {\\"t\\": [\\"translated1\\", \\"translated2\\"]}\\n" +
     "Return ONLY valid JSON. No markdown, no explanation.";
 
   const body = {
@@ -3139,7 +3142,7 @@ async function callOpenAI(texts, lang) {
     }
 
     let content = data.choices[0].message.content.trim();
-    if (content.startsWith("```")) content = content.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+    if (content.startsWith("\`\`\`")) content = content.replace(/^\`\`\`(?:json)?\\n?/, "").replace(/\\n?\`\`\`$/, "");
 
     let parsed;
     try { parsed = JSON.parse(content); } catch (pe) {
@@ -3245,7 +3248,7 @@ function isLockedTerm(text) {
   return getLockedSet().has(text.toLowerCase().trim());
 }
 
-const DATE_ERA_RE = /^\s*\d{4}s?\s*[~–—\-]\s*(\d{4}s?|\?)\s*$/;
+const DATE_ERA_RE = /^\\s*\\d{4}s?\\s*[~\u2013\u2014\\-]\\s*(\\d{4}s?|\\?)\\s*$/;
 function isDateEraLabel(text) {
   return DATE_ERA_RE.test(text);
 }
@@ -3325,7 +3328,7 @@ $translateBtn.addEventListener("click", async () => {
       for (const frame of framesData) {
         if (cancelRequested) throw new Error("Cancelled");
         const allChars = frame.texts.map(t => t.characters);
-        setProgress(Math.round(done / steps * 100), "[" + lang.toUpperCase() + "] …");
+        setProgress(Math.round(done / steps * 100), "[" + lang.toUpperCase() + "] \u2026");
 
         const onProg = (cur, tot) => {
           const gp = Math.round(((done + cur / tot) / steps) * 100);
@@ -3349,12 +3352,12 @@ $translateBtn.addEventListener("click", async () => {
         }
 
         done++;
-        setProgress(Math.round(done / steps * 100), "[" + lang.toUpperCase() + "] ✓");
+        setProgress(Math.round(done / steps * 100), "[" + lang.toUpperCase() + "] \u2713");
         await sleep(100);
       }
     }
 
-    setProgress(100, "Done — review Fit %, then apply");
+    setProgress(100, "Done \u2014 review Fit %, then apply");
     log("Translation ready. Check Review (Fit %), then use the button below to apply.", "ok");
     showReviewPanel(langs);
     $translateBtn.classList.add("hidden");
@@ -3368,7 +3371,7 @@ $translateBtn.addEventListener("click", async () => {
       setProgress(0, "Cancelled");
     } else {
       log("Error: " + e.message, "err");
-      setProgress(0, "Error — see log");
+      setProgress(0, "Error \u2014 see log");
     }
     translatedStore = {};
     $translateBtn.classList.remove("hidden");
@@ -3391,7 +3394,7 @@ if ($applyBtn) {
     if (busy) return;
     const applyLangs = Object.keys(translatedStore);
     if (!applyLangs.length) {
-      log("Translate first — nothing to apply", "err");
+      log("Translate first \u2014 nothing to apply", "err");
       return;
     }
     if (!framesData.length) {
@@ -3400,7 +3403,7 @@ if ($applyBtn) {
     }
     setBusy(true);
     $progressSec.classList.remove("hidden");
-    setProgress(0, "Applying to canvas…");
+    setProgress(0, "Applying to canvas\u2026");
     try {
       const multiFrame = framesData.length > 1;
       const ops = [];
@@ -3420,7 +3423,7 @@ if ($applyBtn) {
         const op = ops[i];
         setProgress(
           ops.length ? Math.round((i / ops.length) * 100) : 100,
-          "Applying " + op.lang.toUpperCase() + "…",
+          "Applying " + op.lang.toUpperCase() + "\u2026",
         );
         parent.postMessage({ pluginMessage: {
           type: "create-frame",
@@ -3433,7 +3436,7 @@ if ($applyBtn) {
         }}, "*");
         await sleep(200);
       }
-      setProgress(100, "Done — " + ops.length + " frame op(s)");
+      setProgress(100, "Done \u2014 " + ops.length + " frame op(s)");
       log(ops.length + " frame(s) created/updated on canvas", "ok");
       canvasApplied = true;
       updateReviewSummary();
@@ -3515,7 +3518,7 @@ function renderReviewRows(lang) {
       }
     });
 
-    /* ---- Source (EN) edit → re-translate for all languages ---- */
+    /* ---- Source (EN) edit \u2192 re-translate for all languages ---- */
     const srcCell = row.querySelector(".review-original");
     srcCell.addEventListener("blur", function() {
       const newSrc = srcCell.textContent.trim();
@@ -3563,7 +3566,7 @@ function updateReviewSummary() {
   });
 
   const hint = canvasApplied
-    ? "On canvas — edit cells &amp; use the same button again to re-apply"
+    ? "On canvas \u2014 edit cells &amp; use the same button again to re-apply"
     : "Use the primary button below to apply (after Translate finishes it switches to Apply)";
   $reviewSummary.innerHTML =
     '<div class="stat"><span class="dot-sm" style="background:var(--green)"></span> ' + ok + ' fit</div>' +
@@ -3680,7 +3683,7 @@ window.onmessage = (e) => {
     hideRescanWarn();
     updateCost();
     log("Scanned: " + framesData.length + " frame(s), " + total + " text(s)", "ok", true);
-    // Прокрутка так, чтобы блок результатов прижался к низу видимой области панели.
+    // \u041F\u0440\u043E\u043A\u0440\u0443\u0442\u043A\u0430 \u0442\u0430\u043A, \u0447\u0442\u043E\u0431\u044B \u0431\u043B\u043E\u043A \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u043E\u0432 \u043F\u0440\u0438\u0436\u0430\u043B\u0441\u044F \u043A \u043D\u0438\u0437\u0443 \u0432\u0438\u0434\u0438\u043C\u043E\u0439 \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u0430\u043D\u0435\u043B\u0438.
     setTimeout(function() {
       if ($previewSec) {
         $previewSec.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
@@ -3722,14 +3725,14 @@ window.onmessage = (e) => {
           const lang = langs[li];
           const targetId = targets[lang];
           if (!targetId) {
-            log("Skip " + lang.toUpperCase() + ": no frame «" + baseName + " [" + lang.toUpperCase() + "]» on page", "warn");
+            log("Skip " + lang.toUpperCase() + ": no frame \xAB" + baseName + " [" + lang.toUpperCase() + "]\xBB on page", "warn");
             continue;
           }
 
           const allChars = texts.map(function(t) { return t.characters; });
           const onProg = function(cur, tot) {
             const gp = Math.round(((done + cur / tot) / steps) * 100);
-            setProgress(gp, "Sync " + lang.toUpperCase() + " — " + Math.round(cur / tot * 100) + "%");
+            setProgress(gp, "Sync " + lang.toUpperCase() + " \u2014 " + Math.round(cur / tot * 100) + "%");
           };
 
           let translated;
@@ -3770,7 +3773,7 @@ window.onmessage = (e) => {
         }
 
         if (applied === 0) {
-          log("No matching frames on page. Names must be «" + baseName + " [ES]», etc.", "err");
+          log("No matching frames on page. Names must be \xAB" + baseName + " [ES]\xBB, etc.", "err");
         } else {
           log("Sent " + applied + " update(s) to Figma", "info");
         }
@@ -3783,10 +3786,10 @@ window.onmessage = (e) => {
 
   if (msg.type === "sync-reference-done") {
     let s = msg.fail
-      ? "[↻ " + msg.langCode.toUpperCase() + "] " + msg.ok + " ok, " + msg.fail + " skipped"
-      : "[↻ " + msg.langCode.toUpperCase() + "] " + msg.ok + " texts updated";
-    if (msg.err) s += " — " + msg.err;
-    else if (msg.framesExpanded > 0) s += " · " + msg.framesExpanded + " frame(s) enlarged";
+      ? "[\u21BB " + msg.langCode.toUpperCase() + "] " + msg.ok + " ok, " + msg.fail + " skipped"
+      : "[\u21BB " + msg.langCode.toUpperCase() + "] " + msg.ok + " texts updated";
+    if (msg.err) s += " \u2014 " + msg.err;
+    else if (msg.framesExpanded > 0) s += " \xB7 " + msg.framesExpanded + " frame(s) enlarged";
     log(s, msg.fail || msg.err ? "warn" : "info");
   }
 
@@ -3794,7 +3797,7 @@ window.onmessage = (e) => {
     let s = msg.fail
       ? "[" + msg.langCode.toUpperCase() + "] " + msg.ok + " ok, " + msg.fail + " skipped"
       : "[" + msg.langCode.toUpperCase() + "] " + msg.ok + " texts applied";
-    if (!msg.fail && msg.framesExpanded > 0) s += " · " + msg.framesExpanded + " frame(s) enlarged";
+    if (!msg.fail && msg.framesExpanded > 0) s += " \xB7 " + msg.framesExpanded + " frame(s) enlarged";
     log(s, msg.fail ? "warn" : "info");
   }
 
@@ -3807,6 +3810,713 @@ window.onmessage = (e) => {
 /*  Init                                                               */
 /* ================================================================== */
 parent.postMessage({ pluginMessage: { type: "init" } }, "*");
-</script>
+<\/script>
 </body>
 </html>
+`, { width: 560, height: 740 });
+  void figma.loadAllPagesAsync();
+  function collectTexts(node, path = []) {
+    const out = [];
+    if (node.type === "TEXT" && node.characters.trim()) {
+      out.push({ path: [...path], characters: node.characters });
+    }
+    if ("children" in node) {
+      const kids = node.children;
+      for (let i = 0; i < kids.length; i++) {
+        out.push(...collectTexts(kids[i], [...path, i]));
+      }
+    }
+    return out;
+  }
+  function nodeAtPath(root, path) {
+    let cur = root;
+    for (const i of path) {
+      if (!("children" in cur))
+        return null;
+      const ch = cur.children;
+      if (i >= ch.length)
+        return null;
+      cur = ch[i];
+    }
+    return cur;
+  }
+  function tryDisableHyphenation(node) {
+    try {
+      const n = node;
+      if (typeof n.hyphenationEnabled === "boolean") {
+        n.hyphenationEnabled = false;
+      }
+    } catch (_e) {
+    }
+  }
+  function captureCharStyles(node) {
+    const len = node.characters.length;
+    const styles = [];
+    for (let i = 0; i < len; i++) {
+      styles.push({
+        fontName: node.getRangeFontName(i, i + 1),
+        fontSize: node.getRangeFontSize(i, i + 1),
+        letterSpacing: node.getRangeLetterSpacing(i, i + 1),
+        lineHeight: node.getRangeLineHeight(i, i + 1),
+        textDecoration: node.getRangeTextDecoration(i, i + 1),
+        textCase: node.getRangeTextCase(i, i + 1),
+        fills: node.getRangeFills(i, i + 1)
+      });
+    }
+    return styles;
+  }
+  function isUniformStyle(styles) {
+    if (styles.length <= 1)
+      return true;
+    const f = styles[0];
+    for (let i = 1; i < styles.length; i++) {
+      const s = styles[i];
+      if (s.fontName.family !== f.fontName.family || s.fontName.style !== f.fontName.style || s.fontSize !== f.fontSize)
+        return false;
+    }
+    return true;
+  }
+  function mapSegmentStyles(segStyles, oldSeg, newSeg) {
+    const newLen = newSeg.length;
+    if (!segStyles.length || newLen === 0)
+      return [];
+    if (isUniformStyle(segStyles)) {
+      const arr = [];
+      for (let i = 0; i < newLen; i++)
+        arr.push(segStyles[0]);
+      return arr;
+    }
+    const oldTokens = oldSeg.split(/(\s+)/);
+    const newTokens = newSeg.split(/(\s+)/);
+    let pos = 0;
+    const tokenStyle = [];
+    for (const tok of oldTokens) {
+      tokenStyle.push(segStyles[Math.min(pos, segStyles.length - 1)]);
+      pos += tok.length;
+    }
+    const result = [];
+    if (oldTokens.length === newTokens.length) {
+      for (let ti = 0; ti < newTokens.length; ti++) {
+        const st = tokenStyle[ti];
+        for (let ci = 0; ci < newTokens[ti].length; ci++)
+          result.push(st);
+      }
+    } else {
+      for (let ti = 0; ti < newTokens.length; ti++) {
+        const srcTi = Math.min(Math.floor(ti / newTokens.length * oldTokens.length), oldTokens.length - 1);
+        const st = tokenStyle[srcTi];
+        for (let ci = 0; ci < newTokens[ti].length; ci++)
+          result.push(st);
+      }
+    }
+    return result;
+  }
+  function mapStylesToNewLength(styles, oldText, newText) {
+    const newLen = newText.length;
+    if (!styles.length || newLen === 0)
+      return [];
+    const oldLines = oldText.split("\n");
+    const newLines = newText.split("\n");
+    if (oldLines.length === newLines.length) {
+      const mapped = [];
+      let oldPos = 0;
+      for (let li = 0; li < oldLines.length; li++) {
+        const lineStyles = styles.slice(oldPos, oldPos + oldLines[li].length);
+        const effective = lineStyles.length ? lineStyles : [styles[Math.min(oldPos, styles.length - 1)]];
+        mapped.push(...mapSegmentStyles(effective, oldLines[li], newLines[li]));
+        oldPos += oldLines[li].length;
+        if (li < oldLines.length - 1) {
+          mapped.push(styles[Math.min(oldPos, styles.length - 1)]);
+          oldPos += 1;
+        }
+      }
+      while (mapped.length < newLen)
+        mapped.push(styles[styles.length - 1]);
+      return mapped.slice(0, newLen);
+    }
+    return mapSegmentStyles(styles, oldText, newText);
+  }
+  async function applyCharStyles(node, mapped) {
+    const len = node.characters.length;
+    if (!mapped.length || len === 0)
+      return;
+    let i = 0;
+    while (i < len) {
+      const s = mapped[i];
+      let j = i + 1;
+      while (j < len && j < mapped.length) {
+        const n = mapped[j];
+        if (n.fontName.family !== s.fontName.family || n.fontName.style !== s.fontName.style || n.fontSize !== s.fontSize)
+          break;
+        j++;
+      }
+      try {
+        await figma.loadFontAsync(s.fontName);
+        node.setRangeFontName(i, j, s.fontName);
+        node.setRangeFontSize(i, j, s.fontSize);
+        node.setRangeLetterSpacing(i, j, s.letterSpacing);
+        node.setRangeLineHeight(i, j, s.lineHeight);
+        node.setRangeTextDecoration(i, j, s.textDecoration);
+        node.setRangeTextCase(i, j, s.textCase);
+        if (s.fills !== figma.mixed) {
+          node.setRangeFills(i, j, s.fills);
+        }
+      } catch (_e) {
+      }
+      i = j;
+    }
+  }
+  async function loadFonts(t) {
+    if (t.fontName === figma.mixed) {
+      const seen = /* @__PURE__ */ new Set();
+      for (let i = 0; i < t.characters.length; i++) {
+        const f = t.getRangeFontName(i, i + 1);
+        const k = `${f.family}|${f.style}`;
+        if (!seen.has(k)) {
+          seen.add(k);
+          await figma.loadFontAsync(f);
+        }
+      }
+    } else {
+      await figma.loadFontAsync(t.fontName);
+    }
+  }
+  function parentIsAutoLayout(node) {
+    const p = node.parent;
+    if (!p)
+      return false;
+    if (p.type !== "FRAME" && p.type !== "COMPONENT" && p.type !== "INSTANCE")
+      return false;
+    return p.layoutMode !== "NONE";
+  }
+  function availableWidth(node, sidePadding) {
+    const p = node.parent;
+    if (!p || !("width" in p))
+      return node.width;
+    const pNode = p;
+    const hasFrame = p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE";
+    const padL = hasFrame ? (pNode.paddingLeft || 0) + sidePadding : sidePadding;
+    const padR = hasFrame ? (pNode.paddingRight || 0) + sidePadding : sidePadding;
+    return Math.max(24, pNode.width - padL - padR);
+  }
+  function availableHeight(node, sidePadding) {
+    const p = node.parent;
+    if (!p || !("height" in p))
+      return Infinity;
+    if (parentIsAutoLayout(node))
+      return Infinity;
+    const pNode = p;
+    const hasFrame = p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE";
+    const padB = hasFrame ? pNode.paddingBottom || 0 : 0;
+    return Math.max(16, pNode.height - padB - node.y - sidePadding);
+  }
+  function getMaxFontSize(node) {
+    if (node.fontSize !== figma.mixed)
+      return node.fontSize;
+    let max = 0;
+    for (let i = 0; i < node.characters.length; i++) {
+      const s = node.getRangeFontSize(i, i + 1);
+      if (typeof s === "number" && s > max)
+        max = s;
+    }
+    return max;
+  }
+  async function scaleAllFontsBy(node, ratio, minSize) {
+    const len = node.characters.length;
+    if (len === 0)
+      return;
+    await loadFonts(node);
+    if (node.fontSize !== figma.mixed) {
+      const cur = node.fontSize;
+      const ns = Math.max(minSize, Math.round(cur * ratio * 2) / 2);
+      node.setRangeFontSize(0, len, ns);
+    } else {
+      let i = 0;
+      while (i < len) {
+        const cur = node.getRangeFontSize(i, i + 1);
+        let j = i + 1;
+        while (j < len) {
+          const nxt = node.getRangeFontSize(j, j + 1);
+          if (nxt !== cur)
+            break;
+          j++;
+        }
+        const ns = Math.max(minSize, Math.round(cur * ratio * 2) / 2);
+        if (ns !== cur)
+          node.setRangeFontSize(i, j, ns);
+        i = j;
+      }
+    }
+  }
+  async function scaleFontDown(node, maxHeight, minSize) {
+    let size = getMaxFontSize(node);
+    if (size <= minSize)
+      return;
+    while (node.height > maxHeight && size > minSize) {
+      const ratio = Math.max(minSize / size, (size - 0.5) / size);
+      try {
+        await scaleAllFontsBy(node, ratio, minSize);
+        size = getMaxFontSize(node);
+      } catch (_e) {
+        break;
+      }
+    }
+  }
+  async function scaleFontToWidth(node, maxWidth, minSize) {
+    if (node.textAutoResize !== "WIDTH_AND_HEIGHT")
+      return;
+    let size = getMaxFontSize(node);
+    if (size <= minSize)
+      return;
+    while (node.width > maxWidth && size > minSize) {
+      const ratio = Math.max(minSize / size, (size - 0.5) / size);
+      try {
+        await scaleAllFontsBy(node, ratio, minSize);
+        size = getMaxFontSize(node);
+      } catch (_e) {
+        break;
+      }
+    }
+  }
+  async function applySmartFit(node, opts, originalWidth) {
+    if (!opts || !opts.smartWrap)
+      return;
+    const sp = Math.max(0, Number(opts.sidePadding == null ? 0 : opts.sidePadding));
+    const autoScale = opts.autoFontScale === true;
+    const minFont = Math.max(6, Number(opts.minFontSize || 8));
+    const inAutoLayout = parentIsAutoLayout(node);
+    const canGrowFrame = opts.expandFrames !== false;
+    if (node.textAutoResize === "WIDTH_AND_HEIGHT") {
+      if (inAutoLayout) {
+        if (autoScale) {
+          await scaleFontToWidth(node, originalWidth, minFont);
+        }
+      } else if (canGrowFrame && !autoScale) {
+      } else {
+        node.textAutoResize = "HEIGHT";
+        node.resize(Math.max(24, originalWidth), node.height);
+        if (autoScale) {
+          const ah = availableHeight(node, sp);
+          if (node.height > ah)
+            await scaleFontDown(node, ah, minFont);
+        }
+      }
+      return;
+    }
+    if (node.textAutoResize === "HEIGHT") {
+      if (!inAutoLayout) {
+        const aw = availableWidth(node, sp);
+        if (node.width > aw)
+          node.resize(Math.max(24, aw), node.height);
+        if (autoScale) {
+          const ah = availableHeight(node, sp);
+          if (node.height > ah)
+            await scaleFontDown(node, ah, minFont);
+        }
+      }
+      return;
+    }
+    if (autoScale) {
+      const ah = availableHeight(node, sp);
+      if (node.height > ah)
+        await scaleFontDown(node, ah, minFont);
+    }
+  }
+  var EXPAND_FRAME_PAD = 8;
+  var EXPAND_RELAX_PASSES = 4;
+  function expandFrameForTextOverflow(textNode, frame) {
+    const tb = textNode.absoluteBoundingBox;
+    const fb = frame.absoluteBoundingBox;
+    if (!tb || !fb)
+      return false;
+    const overflowW = tb.x + tb.width - (fb.x + fb.width);
+    const overflowH = tb.y + tb.height - (fb.y + fb.height);
+    if (overflowW <= 0 && overflowH <= 0)
+      return false;
+    const addW = overflowW > 0 ? overflowW + EXPAND_FRAME_PAD : 0;
+    const addH = overflowH > 0 ? overflowH + EXPAND_FRAME_PAD : 0;
+    const w0 = frame.width;
+    const h0 = frame.height;
+    try {
+      frame.resize(w0 + addW, h0 + addH);
+      return frame.width !== w0 || frame.height !== h0;
+    } catch (_e) {
+      return false;
+    }
+  }
+  function relaxFramesForTranslatedText(textNodes, root) {
+    const resizedIds = /* @__PURE__ */ new Set();
+    for (let pass = 0; pass < EXPAND_RELAX_PASSES; pass++) {
+      for (const t of textNodes) {
+        let p = t.parent;
+        while (p) {
+          if (p.type === "PAGE")
+            break;
+          if (p.type === "FRAME" || p.type === "COMPONENT" || p.type === "INSTANCE") {
+            if (expandFrameForTextOverflow(t, p))
+              resizedIds.add(p.id);
+          }
+          if (p.id === root.id)
+            break;
+          p = p.parent;
+        }
+      }
+    }
+    return resizedIds.size;
+  }
+  async function applyTranslationsToRoot(root, translations, fo) {
+    const doAutoScale = fo.autoFontScale === true;
+    const minFont = Math.max(6, Number(fo.minFontSize || 8));
+    const records = [];
+    let ok = 0;
+    let fail = 0;
+    const foNoScale = {
+      smartWrap: fo.smartWrap,
+      sidePadding: fo.sidePadding,
+      autoFontScale: false,
+      minFontSize: fo.minFontSize,
+      expandFrames: fo.expandFrames
+    };
+    for (const t of translations) {
+      const node = nodeAtPath(root, t.path);
+      if (node && node.type === "TEXT") {
+        try {
+          const originalWidth = node.width;
+          const originalFontSize = getMaxFontSize(node);
+          const wasWAH = node.textAutoResize === "WIDTH_AND_HEIGHT";
+          const inAL = parentIsAutoLayout(node);
+          await loadFonts(node);
+          const savedStyles = captureCharStyles(node);
+          const originalText = node.characters;
+          node.characters = t.text;
+          const mapped = mapStylesToNewLength(savedStyles, originalText, t.text);
+          await applyCharStyles(node, mapped);
+          tryDisableHyphenation(node);
+          await applySmartFit(node, foNoScale, originalWidth);
+          records.push({ node, originalWidth, originalFontSize, wasWAH, inAutoLayout: inAL });
+          ok++;
+        } catch (_e) {
+          fail++;
+        }
+      } else {
+        fail++;
+      }
+    }
+    if (doAutoScale) {
+      const scaleBySize = {};
+      for (let ri = 0; ri < records.length; ri++) {
+        const r = records[ri];
+        if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
+          continue;
+        if (r.node.width > r.originalWidth && r.originalWidth > 0) {
+          const ratio = r.originalWidth / r.node.width;
+          const key = String(r.originalFontSize);
+          const prev = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
+          scaleBySize[key] = prev < ratio ? prev : ratio;
+        }
+      }
+      for (let ri = 0; ri < records.length; ri++) {
+        const r = records[ri];
+        if (!r.wasWAH || !r.inAutoLayout || r.originalFontSize <= 0)
+          continue;
+        const key = String(r.originalFontSize);
+        const scale = scaleBySize[key] !== void 0 ? scaleBySize[key] : 1;
+        if (scale >= 1)
+          continue;
+        try {
+          await scaleAllFontsBy(r.node, scale, minFont);
+        } catch (_e2) {
+        }
+      }
+      const spNum = Math.max(0, Number(fo.sidePadding === void 0 || fo.sidePadding === null ? 0 : fo.sidePadding));
+      for (let ri = 0; ri < records.length; ri++) {
+        const r = records[ri];
+        if (r.inAutoLayout)
+          continue;
+        const ah = availableHeight(r.node, spNum);
+        if (r.node.height > ah) {
+          try {
+            await scaleFontDown(r.node, ah, minFont);
+          } catch (_e2) {
+          }
+        }
+      }
+    }
+    let framesExpanded = 0;
+    const expandOn = fo.expandFrames !== false;
+    if (expandOn && records.length) {
+      framesExpanded = relaxFramesForTranslatedText(
+        records.map((r) => r.node),
+        root
+      );
+    }
+    return { ok, fail, framesExpanded };
+  }
+  function stripLangSuffix(name) {
+    return name.replace(/\s+\[[A-Za-z]{2}\]\s*$/, "").trim();
+  }
+  function localizedFrameName(base, lang) {
+    return base + " [" + lang.toUpperCase() + "]";
+  }
+  function respaceLanguageClones(sourceId, sourceX, sourceY, sourceW, sourceH, gap, multiFrame) {
+    const all = figma.currentPage.findAll(
+      (n) => n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE"
+    );
+    const siblings = [];
+    for (const n of all) {
+      const f = n;
+      if (f.getPluginData("ft_source_id") === sourceId)
+        siblings.push(f);
+    }
+    if (siblings.length === 0)
+      return;
+    siblings.sort((a, b) => {
+      const ai = parseInt(a.getPluginData("ft_lang_index") || "", 10);
+      const bi = parseInt(b.getPluginData("ft_lang_index") || "", 10);
+      if (!isNaN(ai) && !isNaN(bi) && ai !== bi)
+        return ai - bi;
+      return multiFrame ? a.y - b.y : a.x - b.x;
+    });
+    if (multiFrame) {
+      let nextY = sourceY + sourceH + gap;
+      for (const sib of siblings) {
+        sib.x = sourceX;
+        sib.y = nextY;
+        nextY = sib.y + sib.height + gap;
+      }
+    } else {
+      let nextX = sourceX + sourceW + gap;
+      for (const sib of siblings) {
+        sib.x = nextX;
+        sib.y = sourceY;
+        nextX = sib.x + sib.width + gap;
+      }
+    }
+  }
+  figma.on("selectionchange", () => {
+    const ids = figma.currentPage.selection.map((n) => n.id);
+    figma.ui.postMessage({ type: "selection-changed", ids });
+  });
+  figma.ui.onmessage = async (msg) => {
+    if (msg.type === "init") {
+      const settings = await figma.clientStorage.getAsync("ft_settings") || {};
+      const key = await figma.clientStorage.getAsync("openai_key") || "";
+      const cached = await figma.clientStorage.getAsync("ft_cache") || {};
+      figma.ui.postMessage({ type: "init-data", settings, key, cache: cached });
+    }
+    if (msg.type === "save-settings") {
+      await figma.clientStorage.setAsync("ft_settings", msg.settings);
+    }
+    if (msg.type === "save-cache") {
+      await figma.clientStorage.setAsync("ft_cache", msg.data || {});
+    }
+    if (msg.type === "save-key") {
+      await figma.clientStorage.setAsync("openai_key", msg.key);
+      figma.ui.postMessage({ type: "key-saved" });
+    }
+    if (msg.type === "scan") {
+      const sel = figma.currentPage.selection;
+      if (!sel.length) {
+        figma.ui.postMessage({ type: "error", text: "Select at least one frame in Figma" });
+        return;
+      }
+      const frames = [];
+      for (const node of sel) {
+        const texts = collectTexts(node);
+        if (texts.length) {
+          frames.push({
+            id: node.id,
+            name: node.name,
+            width: "width" in node ? node.width : 400,
+            texts
+          });
+        }
+      }
+      if (!frames.length) {
+        figma.ui.postMessage({ type: "error", text: "No text layers found in the selected frames" });
+        return;
+      }
+      figma.ui.postMessage({ type: "scanned", frames });
+    }
+    if (msg.type === "create-frame") {
+      const {
+        frameId,
+        langCode,
+        langIndex,
+        translations,
+        fitOptions,
+        multiFrame
+      } = msg;
+      const orig = await figma.getNodeByIdAsync(frameId);
+      if (!orig) {
+        figma.ui.postMessage({ type: "frame-error", frameId, langCode, text: "Original frame not found" });
+        return;
+      }
+      const wantName = `${stripLangSuffix(orig.name)} [${langCode.toUpperCase()}]`;
+      const taggedMatches = [];
+      const legacyNameMatches = [];
+      const candidates = figma.currentPage.findAll(
+        (n) => n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE"
+      );
+      for (const n of candidates) {
+        const f = n;
+        const tagId = f.getPluginData("ft_source_id");
+        const tagLang = f.getPluginData("ft_lang");
+        if (tagId && tagId === frameId && tagLang === langCode) {
+          taggedMatches.push(f);
+        } else if (!tagId && f.name === wantName) {
+          legacyNameMatches.push(f);
+        }
+      }
+      let toReplace = null;
+      if (taggedMatches.length > 0) {
+        toReplace = taggedMatches[0];
+      } else if (legacyNameMatches.length === 1) {
+        toReplace = legacyNameMatches[0];
+      }
+      let replaceX = null;
+      let replaceY = null;
+      if (toReplace) {
+        replaceX = toReplace.x;
+        replaceY = toReplace.y;
+        for (const f of taggedMatches) {
+          try {
+            f.remove();
+          } catch (_e) {
+          }
+        }
+        if (taggedMatches.length === 0) {
+          try {
+            toReplace.remove();
+          } catch (_e) {
+          }
+        }
+      }
+      const gap = 80;
+      const origFrame = orig;
+      const absX = origFrame.absoluteTransform[0][2];
+      const absY = origFrame.absoluteTransform[1][2];
+      const ow = origFrame.width || 400;
+      const oh = origFrame.height || 400;
+      const clone = origFrame.clone();
+      clone.name = wantName;
+      clone.setPluginData("ft_source_id", frameId);
+      clone.setPluginData("ft_lang", langCode);
+      clone.setPluginData("ft_lang_index", String(langIndex));
+      clone.setPluginData("ft_multi_frame", multiFrame === true ? "1" : "0");
+      if (clone.parent !== figma.currentPage) {
+        figma.currentPage.appendChild(clone);
+      }
+      if (replaceX !== null && replaceY !== null) {
+        clone.x = replaceX;
+        clone.y = replaceY;
+      } else if (multiFrame === true) {
+        clone.x = absX;
+        clone.y = absY + (oh + gap) * (langIndex + 1);
+      } else {
+        clone.x = absX + (ow + gap) * (langIndex + 1);
+        clone.y = absY;
+      }
+      try {
+        const fo = fitOptions || {};
+        const { ok, fail, framesExpanded } = await applyTranslationsToRoot(clone, translations, fo);
+        respaceLanguageClones(frameId, absX, absY, ow, oh, gap, multiFrame === true);
+        figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail, framesExpanded });
+        let toast = `\u2713 ${clone.name} \u2014 ${ok} translated`;
+        if (fail)
+          toast += `, ${fail} skipped`;
+        if (framesExpanded)
+          toast += ` \xB7 ${framesExpanded} frame(s) enlarged`;
+        figma.notify(toast);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        figma.ui.postMessage({ type: "frame-error", frameId, langCode, text: message });
+        figma.notify(`\u2717 ${langCode.toUpperCase()}: ${message}`, { error: true });
+      }
+    }
+    if (msg.type === "sync-reference-scan") {
+      const langs = msg.langs;
+      if (!langs || langs.length === 0) {
+        figma.ui.postMessage({ type: "error", text: "Pick target languages in the plugin first" });
+        return;
+      }
+      const sel = figma.currentPage.selection;
+      if (sel.length !== 1) {
+        figma.ui.postMessage({
+          type: "error",
+          text: "Select exactly one source frame (edit EN here, then sync to language variants)"
+        });
+        return;
+      }
+      const source = sel[0];
+      if (!("children" in source)) {
+        figma.ui.postMessage({ type: "error", text: "Select a frame, component, or group that contains text" });
+        return;
+      }
+      const texts = collectTexts(source);
+      if (texts.length === 0) {
+        figma.ui.postMessage({ type: "error", text: "No text layers in the selected frame" });
+        return;
+      }
+      const baseName = stripLangSuffix(source.name);
+      const targets = {};
+      for (let li = 0; li < langs.length; li++) {
+        const lang = langs[li];
+        const want = localizedFrameName(baseName, lang);
+        const found = figma.currentPage.findAll(
+          (n) => n.name === want && (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE")
+        );
+        if (found.length > 0)
+          targets[lang] = found[0].id;
+      }
+      figma.ui.postMessage({
+        type: "sync-reference-ready",
+        baseName,
+        sourceId: source.id,
+        texts,
+        targets
+      });
+    }
+    if (msg.type === "sync-reference-apply") {
+      const {
+        targetFrameId,
+        langCode,
+        translations,
+        fitOptions
+      } = msg;
+      const root = await figma.getNodeByIdAsync(targetFrameId);
+      if (!root || !("children" in root)) {
+        figma.ui.postMessage({
+          type: "sync-reference-done",
+          langCode,
+          ok: 0,
+          fail: translations.length,
+          err: "Target frame missing"
+        });
+        return;
+      }
+      try {
+        const fo = fitOptions || {};
+        const { ok, fail, framesExpanded } = await applyTranslationsToRoot(root, translations, fo);
+        figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail, framesExpanded });
+        let st = `\u21BB [${langCode.toUpperCase()}] \u2014 ${ok} text layer(s)`;
+        if (framesExpanded)
+          st += ` \xB7 ${framesExpanded} frame(s) enlarged`;
+        figma.notify(st);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        figma.ui.postMessage({
+          type: "sync-reference-done",
+          langCode,
+          ok: 0,
+          fail: translations.length,
+          err: message
+        });
+        figma.notify(`\u2717 Sync ${langCode.toUpperCase()}: ${message}`, { error: true });
+      }
+    }
+    if (msg.type === "close") {
+      figma.closePlugin();
+    }
+  };
+})();

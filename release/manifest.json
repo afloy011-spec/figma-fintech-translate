@@ -1,12 +1,12 @@
 {
   "name": "Maclear Translate",
   "id": "1626602972629600121",
-  "editorType": ["figma"],
+  "editorType": [
+    "figma"
+  ],
   "api": "1.0.0",
-  "main": "dist/code.js",
-  "ui": "dist/ui.html",
-  "capabilities": [],
-  "enableProposedApi": false,
+  "main": "code.js",
+  "ui": "ui.html",
   "documentAccess": "dynamic-page",
   "networkAccess": {
     "allowedDomains": [
