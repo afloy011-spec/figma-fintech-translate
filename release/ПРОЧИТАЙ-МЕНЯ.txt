@@ -1,0 +1,14 @@
+Maclear Translate — переустановка в Figma
+=========================================
+
+1. Распакуй архив в любую папку.
+
+2. Figma Desktop → Plugins → Development → Import plugin from manifest…
+
+3. Выбери файл manifest.json из этой папки.
+
+Готово. Запуск: Plugins → Development → Maclear Translate.
+
+(Если плагин уже стоял — пункт 2 просто обновит его.)
+
+Скачать новую версию: https://github.com/afloy011-spec/figma-fintech-translate/releases

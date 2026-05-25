@@ -1,6 +1,6 @@
 /**
  * Build dist + pack a ready-to-import Figma plugin zip for colleagues.
- * Output: release/Maclear-Translate-figma-plugin.zip (gitignored *.zip)
+ * Output: release/Maclear-Translate-Figma.zip
  */
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "fs";
 import { execSync } from "child_process";
@@ -9,7 +9,8 @@ import { fileURLToPath } from "url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const staging = join(root, "release", "_zip-staging");
-const outZip = join(root, "release", "Maclear-Translate-figma-plugin.zip");
+const outZip = join(root, "release", "Maclear-Translate-Figma.zip");
+const readme = join(root, "release", "ПРОЧИТАЙ-МЕНЯ.txt");
 
 console.log("→ npm run build");
 execSync("npm run build", { cwd: root, stdio: "inherit" });
@@ -27,16 +28,12 @@ writeFileSync(join(staging, "manifest.json"), JSON.stringify(manifest, null, 2) 
 copyFileSync(join(root, "dist", "code.js"), join(staging, "code.js"));
 copyFileSync(join(root, "dist", "ui.html"), join(staging, "ui.html"));
 copyFileSync(join(root, "dist", "glossary-lookup.js"), join(staging, "glossary-lookup.js"));
-copyFileSync(join(root, "release", "INSTALL-COLLEAGUES.md"), join(staging, "INSTALL-COLLEAGUES.md"));
+copyFileSync(readme, join(staging, "ПРОЧИТАЙ-МЕНЯ.txt"));
 
-/* Sync flat release/ folder (import without unzip) */
 const releaseDir = join(root, "release");
-for (const f of ["manifest.json", "code.js", "ui.html", "glossary-lookup.js"]) {
-  if (f === "manifest.json") {
-    writeFileSync(join(releaseDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
-  } else {
-    copyFileSync(join(staging, f), join(releaseDir, f));
-  }
+writeFileSync(join(releaseDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+for (const f of ["code.js", "ui.html", "glossary-lookup.js"]) {
+  copyFileSync(join(staging, f), join(releaseDir, f));
 }
 
 console.log("→ zip:", outZip);
@@ -50,5 +47,4 @@ if (process.platform === "win32") {
 }
 
 rmSync(staging, { recursive: true, force: true });
-console.log("✓ Ready:", outZip);
-console.log("  Colleagues: unzip → Figma → Import plugin from manifest.json");
+console.log("✓", outZip);
