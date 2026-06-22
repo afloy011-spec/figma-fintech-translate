@@ -1150,6 +1150,21 @@ select.input {
           <span class="flag">&#127477;&#127481;</span>
           <div class="lang-meta"><div class="name">Português</div><div class="code">PT</div></div>
         </label>
+        <label class="chip" data-lang="pl">
+          <input type="checkbox" value="pl" />
+          <span class="flag">&#127477;&#127473;</span>
+          <div class="lang-meta"><div class="name">Polski</div><div class="code">PL</div></div>
+        </label>
+        <label class="chip" data-lang="el">
+          <input type="checkbox" value="el" />
+          <span class="flag">&#127468;&#127479;</span>
+          <div class="lang-meta"><div class="name">Ελληνικά</div><div class="code">EL</div></div>
+        </label>
+        <label class="chip" data-lang="tr">
+          <input type="checkbox" value="tr" />
+          <span class="flag">&#127481;&#127479;</span>
+          <div class="lang-meta"><div class="name">Türkçe</div><div class="code">TR</div></div>
+        </label>
         <label class="chip" data-lang="ko">
           <input type="checkbox" value="ko" />
           <span class="flag">&#127472;&#127479;</span>
@@ -2102,7 +2117,7 @@ const GLOSSARY = {
   }
 };
 
-const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"Portuguese", ko:"Korean", zh:"Simplified Chinese", ja:"Japanese" };
+const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"Portuguese", pl:"Polish", el:"Greek", tr:"Turkish", ko:"Korean", zh:"Simplified Chinese", ja:"Japanese" };
 
 const COURSE_GLOSSARY = {
   es: {
@@ -2311,6 +2326,14 @@ function persistCache() {
   const slice = keys.slice(-2000);
   for (const k of slice) trimmed[k] = cache[k];
   parent.postMessage({ pluginMessage: { type: "save-cache", data: trimmed } }, "*");
+}
+
+/* Cache key namespaced by provider (and model for OpenAI) so a Free/Google
+   translation is never silently reused for a Pro/OpenAI run, and switching
+   model re-translates instead of returning the previous model's output. */
+function cacheKey(lang, text) {
+  const tag = provider === "openai" ? "o:" + ($model.value || "") : "free";
+  return tag + ":" + lang + ":" + text;
 }
 
 /* ================================================================== */
@@ -2788,7 +2811,7 @@ async function translateMyMemory(text, lang) {
 /* ================================================================== */
 async function translateOneFree(text, lang) {
   if (isDateEraLabel(text)) return text;
-  const key = lang + ":" + text;
+  const key = cacheKey(lang, text);
   if (cache[key]) return cache[key];
 
   const exact = glossaryExact(text, lang);
@@ -2818,7 +2841,12 @@ async function translateOneFree(text, lang) {
   }
 
   translated = stripTags(translated);
-  if (!translated) translated = text;
+  if (!translated) {
+    /* Both providers failed / returned nothing. Return the original but do NOT
+       cache it — otherwise a transient network outage would permanently poison
+       the cache, leaving this string stuck in English on every future run. */
+    return applySourceFormatting(text, text);
+  }
 
   translated = applySourceFormatting(text, translated);
   cache[key] = translated;
@@ -2979,7 +3007,7 @@ async function batchOpenAI(texts, lang, onProg) {
         batchRes[j] = batch[j];
         continue;
       }
-      const k = lang + ":" + batch[j];
+      const k = cacheKey(lang, batch[j]);
       const exact = glossaryExact(batch[j], lang);
       if (exact) {
         const out = applySourceFormatting(batch[j], exact);
@@ -2998,7 +3026,7 @@ async function batchOpenAI(texts, lang, onProg) {
       if (cancelRequested) throw new Error("Cancelled");
       const translated = await callOpenAI(uncachedTxt, lang);
       for (let k = 0; k < uncachedTxt.length; k++) {
-        const ck = lang + ":" + uncachedTxt[k];
+        const ck = cacheKey(lang, uncachedTxt[k]);
         const out = applySourceFormatting(uncachedTxt[k], translated[k]);
         cache[ck] = out;
         cacheDirty = true;
@@ -3493,6 +3521,10 @@ window.onmessage = (e) => {
   if (msg.type === "sync-reference-ready") {
     void (async function() {
       try {
+        /* Fresh run: clear leftover cancel flag and MyMemory budget so Sync
+           isn't blocked by a previously cancelled/exhausted Translate. */
+        cancelRequested = false;
+        myMemoryCharsUsed = 0;
         const baseName = msg.baseName;
         const texts = msg.texts;
         const targets = msg.targets;
