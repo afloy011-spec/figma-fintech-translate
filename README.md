@@ -10,7 +10,7 @@
   <a href="https://github.com/afloy011-spec/figma-fintech-translate/actions"><img src="https://img.shields.io/badge/CI-template-656d76?style=flat-square&logo=githubactions&logoColor=white" alt="CI"></a>
 </p>
 
-**Scope:** fintech / crypto UI — **EN** → ES · IT · FR · DE · PT · PL · EL (KO / ZH / JA follow the glossary). Lock brands, check **Fit %** in Review, then **Apply**; Smart Fit adjusts layout on canvas.
+**Scope:** fintech / crypto UI — **EN** → ES · IT · FR · DE · PT · PL · EL · TR (KO / ZH / JA follow the glossary). Lock brands, check **Fit %** in Review, then **Apply**; Smart Fit adjusts layout on canvas.
 
 <table style="border-collapse:separate;border-spacing:10px;width:100%;max-width:720px;table-layout:fixed;margin:20px 0 8px 0;">
   <tbody>

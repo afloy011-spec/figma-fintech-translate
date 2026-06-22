@@ -1166,6 +1166,11 @@ select.input {
           <span class="flag">&#127468;&#127479;</span>
           <div class="lang-meta"><div class="name">\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC</div><div class="code">EL</div></div>
         </label>
+        <label class="chip" data-lang="tr">
+          <input type="checkbox" value="tr" />
+          <span class="flag">&#127481;&#127479;</span>
+          <div class="lang-meta"><div class="name">T\xFCrk\xE7e</div><div class="code">TR</div></div>
+        </label>
         <label class="chip" data-lang="ko">
           <input type="checkbox" value="ko" />
           <span class="flag">&#127472;&#127479;</span>
@@ -1963,6 +1968,90 @@ const GLOSSARY = {
     "read-only":"\u03BC\u03CC\u03BD\u03BF \u03B3\u03B9\u03B1 \u03B1\u03BD\u03AC\u03B3\u03BD\u03C9\u03C3\u03B7","user-centric":"\u03B5\u03C3\u03C4\u03B9\u03B1\u03C3\u03BC\u03AD\u03BD\u03B7 \u03C3\u03C4\u03BF\u03BD \u03C7\u03C1\u03AE\u03C3\u03C4\u03B7",
     "private and secure":"\u03B9\u03B4\u03B9\u03C9\u03C4\u03B9\u03BA\u03AE \u03BA\u03B1\u03B9 \u03B1\u03C3\u03C6\u03B1\u03BB\u03AE\u03C2"
   },
+  tr: {
+    "APR":"YBO","Annual Percentage Rate":"Y\u0131ll\u0131k Bazda Oran",
+    "interest rate":"faiz oran\u0131","annual returns":"y\u0131ll\u0131k getiriler",
+    "monthly payouts":"ayl\u0131k \xF6demeler","monthly payments":"ayl\u0131k \xF6demeler",
+    "balance":"bakiye","statement":"hesap \xF6zeti","account":"hesap",
+    "deposit":"para yat\u0131rma","withdrawal":"para \xE7ekme","wire transfer":"havale",
+    "transaction":"i\u015Flem","payment":"\xF6deme","invoice":"fatura",
+    "fee":"\xFCcret","no hidden fees":"gizli \xFCcret yok",
+    "P2P lending":"P2P kredi","crowdlending":"kitlesel kredilendirme",
+    "crowdfunding":"kitlesel fonlama","lending platform":"kredi platformu",
+    "investment platform":"yat\u0131r\u0131m platformu",
+    "investor":"yat\u0131r\u0131mc\u0131","investors":"yat\u0131r\u0131mc\u0131lar",
+    "borrower":"bor\xE7lu","lender":"kredi veren",
+    "loan":"kredi","loan period":"kredi s\xFCresi","loan term":"kredi vadesi",
+    "loan originator":"kredi sa\u011Flay\u0131c\u0131",
+    "funded":"fonland\u0131","repaid":"geri \xF6dendi",
+    "default":"temerr\xFCt","late loans":"geciken krediler",
+    "cash drag":"at\u0131l nakit",
+    "primary market":"birincil piyasa","secondary market":"ikincil piyasa",
+    "total funded":"toplam fonlanan","total interest paid":"\xF6denen toplam faiz",
+    "available funds":"kullan\u0131labilir fonlar","invested funds":"yat\u0131r\u0131lan fonlar",
+    "total funds":"toplam fonlar",
+    "initial investment":"ba\u015Flang\u0131\xE7 yat\u0131r\u0131m\u0131","investment period":"yat\u0131r\u0131m d\xF6nemi",
+    "future value":"gelecek de\u011Fer","earned return":"kazan\u0131lan getiri",
+    "average annual return":"ortalama y\u0131ll\u0131k getiri",
+    "portfolio":"portf\xF6y","passive income":"pasif gelir",
+    "principal repayment":"anapara geri \xF6demesi",
+    "interest payment":"faiz \xF6demesi",
+    "installment":"taksit","recurring payment":"tekrarlayan \xF6deme",
+    "due diligence":"durum tespiti","risk assessment":"risk de\u011Ferlendirmesi",
+    "risk scoring":"risk puanlamas\u0131","AML":"AML",
+    "compliance":"mevzuata uyum","regulated":"d\xFCzenlemeye tabi",
+    "verification":"do\u011Frulama","KYC":"KYC",
+    "referral bonus":"davet bonusu","loyalty bonus":"sadakat bonusu",
+    "welcome bonus":"ho\u015F geldin bonusu","investment reward":"yat\u0131r\u0131m \xF6d\xFCl\xFC",
+    "invite friends":"arkada\u015Flar\u0131n\u0131 davet et",
+    "sign up":"kaydol","log in":"giri\u015F yap","register":"kaydol",
+    "invest now":"\u015Fimdi yat\u0131r\u0131m yap","start investing":"yat\u0131r\u0131ma ba\u015Fla",
+    "dashboard":"kontrol paneli","onboarding":"m\xFC\u015Fteri kayd\u0131",
+    "collateral":"teminat","mortgage":"ipotek","savings":"birikimler",
+    "credit score":"kredi notu","overdraft":"ek hesap",
+    "chargeback":"\xF6deme iadesi","settlement":"mutabakat",
+    "direct debit":"otomatik \xF6deme","exchange rate":"d\xF6viz kuru",
+    "payee":"alacakl\u0131","payer":"\xF6deyen","beneficiary":"lehtar",
+    "equity":"\xF6zkaynak","liability":"y\xFCk\xFCml\xFCl\xFCk","asset":"varl\u0131k",
+    "dividend":"temett\xFC","spending limit":"harcama limiti",
+    "blockchain":"blok zinciri","token":"token","tokens":"tokenlar",
+    "stablecoin":"stablecoin","stablecoins":"stablecoinler",
+    "cryptocurrency":"kripto para","crypto":"kripto",
+    "crypto wallet":"kripto c\xFCzdan\u0131","wallet":"c\xFCzdan",
+    "seed phrase":"kurtarma ifadesi","private key":"\xF6zel anahtar",
+    "public address":"genel adres","smart contract":"ak\u0131ll\u0131 s\xF6zle\u015Fme",
+    "network fees":"a\u011F \xFCcretleri","gas fees":"gas \xFCcretleri",
+    "custodial":"saklamal\u0131","non-custodial":"saklamas\u0131z",
+    "custodial wallet":"saklamal\u0131 c\xFCzdan",
+    "non-custodial wallet":"saklamas\u0131z c\xFCzdan",
+    "fiat":"itibari para","pegged":"sabitlenmi\u015F",
+    "decentralized":"merkeziyetsiz","centralized":"merkezi",
+    "capital provider":"sermaye sa\u011Flay\u0131c\u0131",
+    "repayment schedule":"geri \xF6deme plan\u0131",
+    "leverage":"kald\u0131ra\xE7","diversification":"\xE7e\u015Fitlendirme",
+    "yield":"getiri","returns":"getiriler",
+    "liquidity":"likidite","protocol":"protokol",
+    "staking":"staking","airdrop":"airdrop",
+    "mining":"madencilik","validator":"do\u011Frulay\u0131c\u0131",
+    "consensus":"konsens\xFCs","bridge":"k\xF6pr\xFC",
+    "on-chain":"zincir \xFCst\xFC","off-chain":"zincir d\u0131\u015F\u0131",
+    "scam":"doland\u0131r\u0131c\u0131l\u0131k","phishing":"oltalama",
+    "Learn & Earn":"\xD6\u011Fren ve Kazan",
+    "start learning":"\xF6\u011Frenmeye ba\u015Fla",
+    "checklist":"kontrol listesi","step-by-step":"ad\u0131m ad\u0131m",
+    "beginner":"ba\u015Flang\u0131\xE7","beginners":"yeni ba\u015Flayanlar",
+    "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
+    "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
+    "Layer 1":"Layer 1","Layer 2":"Layer 2",
+    "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
+    "1900s\u20132000":"1900s\u20132000","2000s\u20132020s":"2000s\u20132020s","2020s\u2013?":"2020s\u2013?",
+    "Evolution of the Web from 1.0 to 3.0":"Web'in 1.0'dan 3.0'a evrimi",
+    "Static read-only web pages":"Statik salt okunur web sayfalar\u0131",
+    "Information-centric and interactive":"Bilgi odakl\u0131 ve etkile\u015Fimli",
+    "User-centric, decentralized, private and secure":"Kullan\u0131c\u0131 odakl\u0131, merkeziyetsiz, gizli ve g\xFCvenli",
+    "read-only":"salt okunur","user-centric":"kullan\u0131c\u0131 odakl\u0131",
+    "private and secure":"gizli ve g\xFCvenli"
+  },
   ko: {
     "APR":"\uC5F0\uC774\uC728","Annual Percentage Rate":"\uC5F0\uC774\uC728",
     "interest rate":"\uC774\uC790\uC728","annual returns":"\uC5F0\uAC04 \uC218\uC775\uB960",
@@ -2286,7 +2375,7 @@ const GLOSSARY = {
   }
 };
 
-const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"Portuguese", pl:"Polish", el:"Greek", ko:"Korean", zh:"Simplified Chinese", ja:"Japanese" };
+const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"Portuguese", pl:"Polish", el:"Greek", tr:"Turkish", ko:"Korean", zh:"Simplified Chinese", ja:"Japanese" };
 
 const COURSE_GLOSSARY = {
   es: {
@@ -2422,6 +2511,23 @@ const COURSE_GLOSSARY = {
     "capital preservation":"\u03B4\u03B9\u03B1\u03C4\u03AE\u03C1\u03B7\u03C3\u03B7 \u03BA\u03B5\u03C6\u03B1\u03BB\u03B1\u03AF\u03BF\u03C5","money management":"\u03B4\u03B9\u03B1\u03C7\u03B5\u03AF\u03C1\u03B9\u03C3\u03B7 \u03C7\u03C1\u03B7\u03BC\u03AC\u03C4\u03C9\u03BD",
     "operational security":"\u03BB\u03B5\u03B9\u03C4\u03BF\u03C5\u03C1\u03B3\u03B9\u03BA\u03AE \u03B1\u03C3\u03C6\u03AC\u03BB\u03B5\u03B9\u03B1","self-custody":"\u03B1\u03C5\u03C4\u03BF\u03B4\u03B9\u03B1\u03C7\u03B5\u03AF\u03C1\u03B9\u03C3\u03B7",
     "price swings":"\u03B4\u03B9\u03B1\u03BA\u03C5\u03BC\u03AC\u03BD\u03C3\u03B5\u03B9\u03C2 \u03C4\u03B9\u03BC\u03CE\u03BD","quick reset":"\u03B3\u03C1\u03AE\u03B3\u03BF\u03C1\u03B7 \u03B5\u03C0\u03B1\u03BD\u03B1\u03C6\u03BF\u03C1\u03AC"
+  },
+  tr: {
+    "tx as a receipt":"makbuz olarak tx","transaction hash":"i\u015Flem hash'i",
+    "block explorer":"blok gezgini","network":"a\u011F","base network":"Base a\u011F\u0131",
+    "Interface":"Aray\xFCz","website":"web sitesi","confirm":"onayla","execution":"y\xFCr\xFCtme",
+    "tokenomics":"tokenomi","crypto taxes":"kripto vergileri","real yield":"ger\xE7ek getiri",
+    "approval":"onay","approvals":"onaylar","spending cap":"harcama limiti",
+    "allowance":"izin limiti","revoke approval":"onay\u0131 iptal et",
+    "wallet connection":"c\xFCzdan ba\u011Flant\u0131s\u0131","normal login":"normal giri\u015F",
+    "clone site":"klon site","fake support":"sahte destek","support staff":"destek ekibi",
+    "wrong address":"yanl\u0131\u015F adres","malicious transaction":"k\xF6t\xFC ama\xE7l\u0131 i\u015Flem",
+    "private key leak":"\xF6zel anahtar s\u0131z\u0131nt\u0131s\u0131","seed phrase leak":"kurtarma ifadesi s\u0131z\u0131nt\u0131s\u0131",
+    "risk management":"risk y\xF6netimi","position sizing":"pozisyon boyutland\u0131rma",
+    "term length":"vade","investor discipline":"yat\u0131r\u0131mc\u0131 disiplini",
+    "capital preservation":"sermaye korumas\u0131","money management":"para y\xF6netimi",
+    "operational security":"operasyonel g\xFCvenlik","self-custody":"\xF6z saklama",
+    "price swings":"fiyat dalgalanmalar\u0131","quick reset":"h\u0131zl\u0131 s\u0131f\u0131rlama"
   },
   ko: {
     "tx as a receipt":"\uC601\uC218\uC99D\uC73C\uB85C\uC11C\uC758 tx","transaction hash":"\uD2B8\uB79C\uC7AD\uC158 \uD574\uC2DC",
