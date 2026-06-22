@@ -2894,9 +2894,11 @@ async function callOpenAI(texts, lang) {
   const body = {
     model,
     messages: [{ role: "system", content: sys }, { role: "user", content: JSON.stringify(texts) }],
-    temperature: 0.1,
     response_format: { type: "json_object" },
   };
+  /* GPT-5.x accepts only the default temperature and 400s on a custom value;
+     keep the low-temperature determinism for legacy gpt-4o models only. */
+  if (/^gpt-4o/.test(model)) body.temperature = 0.1;
 
   return withRetry(async function() {
     if (cancelRequested) throw new Error("Cancelled");

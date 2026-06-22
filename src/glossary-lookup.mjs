@@ -34,6 +34,15 @@ export function glossaryResolve(sourceText, glossaryMap, opts) {
     const kl = k.toLowerCase();
     const idx = tl.indexOf(kl);
     if (idx === -1) continue;
+
+    /* Only replace whole-word matches. Without this, a short key like "Apr"/"fee"
+       matches inside unrelated words ("April" → "TAEil", "feedback" → "comisióndback"). */
+    const keyStartsWord = isWordChar(kl[0]);
+    const keyEndsWord   = isWordChar(kl[kl.length - 1]);
+    const leftBad  = keyStartsWord && idx > 0 && isWordChar(t[idx - 1]);
+    const rightBad = keyEndsWord && (idx + k.length) < t.length && isWordChar(t[idx + k.length]);
+    if (leftBad || rightBad) continue;
+
     const before = t.slice(0, idx);
     const after = t.slice(idx + k.length);
     const trans = glossaryMap[k];
@@ -41,4 +50,8 @@ export function glossaryResolve(sourceText, glossaryMap, opts) {
   }
 
   return null;
+}
+
+function isWordChar(ch) {
+  return ch != null && /[\p{L}\p{N}]/u.test(ch);
 }

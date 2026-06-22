@@ -15,6 +15,13 @@ assert.equal(
 );
 assert.equal(glossaryResolve("no match here", es, {}), null);
 
+/* Whole-word guard: short keys must not match inside larger words. */
+const feeMap = { fee: "comisión", Apr: "TAE" };
+assert.equal(glossaryResolve("April", feeMap, {}), null);      // not "TAEil"
+assert.equal(glossaryResolve("feedback", feeMap, {}), null);   // not "comisióndback"
+assert.equal(glossaryResolve("coffee", feeMap, {}), null);     // not "cofcomisión"
+assert.equal(glossaryResolve("monthly fee here", feeMap, {}), "monthly comisión here");
+
 assert.equal(
   glossaryResolve("Annual Percentage Rate", { "Annual Percentage Rate": "TAE equiv" }, {}),
   "TAE equiv",
