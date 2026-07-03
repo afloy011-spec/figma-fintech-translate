@@ -7,10 +7,13 @@
 <p>
   <a href="https://www.figma.com/community"><img src="https://img.shields.io/badge/Figma-Plugin-F24E1E?style=flat-square&logo=figma&logoColor=white" alt="Figma plugin"></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-%E2%89%A518-24292f?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js 18+"></a>
-  <a href="https://github.com/afloy011-spec/figma-fintech-translate/actions"><img src="https://img.shields.io/badge/CI-template-656d76?style=flat-square&logo=githubactions&logoColor=white" alt="CI"></a>
+  <a href="https://github.com/afloy011-spec/figma-fintech-translate/actions/workflows/ci.yml"><img src="https://github.com/afloy011-spec/figma-fintech-translate/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
-**Scope:** fintech / crypto UI — **EN** → ES · IT · FR · DE · PT · PT-BR · PL · EL · TR (KO / ZH / JA follow the glossary). Lock brands, check **Fit %** in Review, then **Apply**; Smart Fit adjusts layout on canvas.
+**Scope:** fintech / crypto UI — **EN** → 12 languages: ES · IT · FR · DE · **PT** · **PT-BR** · PL · EL · TR · KO · ZH · JA. Lock brands, check **Fit %** in Review, then **Apply**; Smart Fit adjusts layout on canvas.
+
+> [!NOTE]
+> **`PT` vs `PT-BR`:** `PT` is **European Portuguese** (mapped to `pt-PT`; e.g. `withdrawal` → *levantamento*) and `PT-BR` is **Brazilian Portuguese** (`pt-BR`; `withdrawal` → *saque*). They ship as separate chips with separate glossaries. `KO` / `ZH` / `JA` carry the largest glossaries; `PL` / `EL` / `TR` are translated via the API without a dedicated glossary.
 
 <table style="border-collapse:separate;border-spacing:10px;width:100%;max-width:720px;table-layout:fixed;margin:20px 0 8px 0;">
   <tbody>
@@ -77,12 +80,17 @@ OpenAI (**Pro**) and Google Translate (**Free**) — plugin UI.
 ```text
 figma-fintech-translate/
 ├── manifest.json           # main: dist/code.js, ui: dist/ui.html
-├── build.mjs
+├── build.mjs               # esbuild: bundles + inlines the modules below into ui.html
 ├── package.json
+├── CHANGELOG.md
 ├── src/
-│   ├── code.ts
-│   ├── ui.html
-│   └── glossary-lookup.mjs
+│   ├── code.ts             # Figma main-thread: scan, clone, smart-fit
+│   ├── ui.html             # UI + translation flow (glossary/text-format inlined at build)
+│   ├── glossary-lookup.mjs # glossaryResolve (exact / case-insensitive / whole-word substring)
+│   ├── glossary-data.mjs   # GLOSSARY, COURSE_GLOSSARY, LANG_NAMES
+│   ├── text-format.mjs     # case/punctuation/whitespace mirroring, date-era detection
+│   └── style-map.mjs       # per-character style remapping (shared with code.ts)
+├── test/                   # node unit tests (no Figma runtime)
 ├── dist/                   # gitignored — npm run build
 └── docs/
     ├── ci-workflow.yml     # copy → .github/workflows/ci.yml to enable Actions
@@ -168,9 +176,12 @@ Russian walkthrough: **[INSTALL.md](./INSTALL.md)**.
   </tbody>
 </table>
 
+> [!WARNING]
+> **Free tier is unofficial and best-effort.** It calls Google Translate's undocumented web endpoint (`translate.googleapis.com/translate_a/single?client=gtx`) with **MyMemory** as a fallback (session budget ~4.5k chars; anonymous MyMemory allows roughly ~5k chars/day). These are not official APIs — Google can rate-limit, change, or block them **without notice**, and MyMemory may reject once the daily quota is hit. Use Free for drafts and Fit % estimation; for reliable, higher-volume, glossary-faithful output use **Pro** (OpenAI, your own key).
+
 ## Testing & CI
 
-- **Tests:** `npm test` — `src/glossary-lookup.mjs` + Fit % heuristic (mirrors `ui.html`).
+- **Tests:** `npm test` — glossary lookup, Fit % heuristic, glossary key-parity across languages, text-formatting helpers, and per-character style mapping.
 - **CI:** copy [`docs/ci-workflow.yml`](./docs/ci-workflow.yml) to `.github/workflows/ci.yml` (GitHub UI works if your token lacks the `workflow` OAuth scope). Then: `npm ci` → `npm test` → `npm run build` on each push/PR.
 - **Not covered:** Figma sandbox smart-fit (`code.ts`) without a harness.
 
