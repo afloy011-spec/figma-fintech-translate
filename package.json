@@ -1,6 +1,6 @@
 {
   "name": "figma-fintech-translate",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Figma plugin — translate fintech UI screens to 12 languages (Google/MyMemory free tier or OpenAI Pro) with a company glossary",
   "scripts": {
     "build": "node build.mjs",

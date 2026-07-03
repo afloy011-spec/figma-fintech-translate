@@ -5,3 +5,10 @@ dist/
 .env
 .env.*
 *.zip
+
+# Generated release artifacts (published to GitHub Releases, not committed).
+# Handwritten files in release/ (e.g. ПРОЧИТАЙ-МЕНЯ.txt) stay tracked.
+release/*.js
+release/*.html
+release/manifest.json
+release/_zip-staging/
