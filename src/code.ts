@@ -550,7 +550,8 @@ async function applyTranslationsToRoot(
 }
 
 function stripLangSuffix(name: string): string {
-  return name.replace(/\s+\[[A-Za-z]{2}\]\s*$/, "").trim();
+  // 2-letter codes plus regional variants like [PT-BR]
+  return name.replace(/\s+\[[A-Za-z]{2}(?:-[A-Za-z]{2})?\]\s*$/, "").trim();
 }
 
 function localizedFrameName(base: string, lang: string): string {

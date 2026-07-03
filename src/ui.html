@@ -1148,7 +1148,12 @@ select.input {
         <label class="chip on" data-lang="pt">
           <input type="checkbox" value="pt" checked />
           <span class="flag">&#127477;&#127481;</span>
-          <div class="lang-meta"><div class="name">Português</div><div class="code">PT</div></div>
+          <div class="lang-meta"><div class="name">Português (PT)</div><div class="code">PT</div></div>
+        </label>
+        <label class="chip on" data-lang="pt-br">
+          <input type="checkbox" value="pt-br" checked />
+          <span class="flag">&#127463;&#127479;</span>
+          <div class="lang-meta"><div class="name">Português (BR)</div><div class="code">PT-BR</div></div>
         </label>
         <label class="chip" data-lang="pl">
           <input type="checkbox" value="pl" />
@@ -1794,6 +1799,101 @@ const GLOSSARY = {
     "User-centric, decentralized, private and secure":"Centrada no usuário, descentralizada, privada e segura",
     "read-only":"somente leitura","user-centric":"centrada no usuário"
   },
+  "pt-br": {
+    // Core finance — Brazilian banking vocabulary (saque, parcela, tarifa…)
+    "APR":"Taxa Anual","Annual Percentage Rate":"Taxa Percentual Anual",
+    "interest rate":"taxa de juros","annual returns":"retornos anuais",
+    "monthly payouts":"pagamentos mensais","monthly payments":"pagamentos mensais",
+    "balance":"saldo","statement":"extrato","account":"conta",
+    "deposit":"depósito","withdrawal":"saque","wire transfer":"transferência bancária",
+    "transaction":"transação","payment":"pagamento","invoice":"fatura",
+    "fee":"tarifa","no hidden fees":"sem tarifas ocultas",
+    // P2P / Crowdlending (Maclear)
+    "P2P lending":"empréstimos P2P","crowdlending":"crowdlending",
+    "crowdfunding":"financiamento coletivo","lending platform":"plataforma de empréstimos",
+    "investment platform":"plataforma de investimentos",
+    "investor":"investidor","investors":"investidores",
+    "borrower":"tomador","lender":"credor",
+    "loan":"empréstimo","loan period":"prazo do empréstimo","loan term":"prazo do empréstimo",
+    "loan originator":"originador de empréstimos",
+    "funded":"financiado","repaid":"quitado",
+    "default":"inadimplência","late loans":"empréstimos em atraso",
+    "cash drag":"capital parado",
+    "primary market":"mercado primário","secondary market":"mercado secundário",
+    "total funded":"total financiado","total interest paid":"total de juros pagos",
+    "available funds":"fundos disponíveis","invested funds":"fundos investidos",
+    "total funds":"fundos totais",
+    // Investment
+    "initial investment":"investimento inicial","investment period":"período de investimento",
+    "future value":"valor futuro","earned return":"retorno obtido",
+    "average annual return":"retorno médio anual",
+    "portfolio":"carteira","passive income":"renda passiva",
+    "principal repayment":"amortização do principal",
+    "interest payment":"pagamento de juros",
+    "installment":"parcela","recurring payment":"pagamento recorrente",
+    // Compliance & process
+    "due diligence":"due diligence","risk assessment":"avaliação de risco",
+    "risk scoring":"score de risco","AML":"PLD",
+    "compliance":"compliance","regulated":"regulado",
+    "verification":"verificação","KYC":"KYC",
+    // Bonuses & rewards
+    "referral bonus":"bônus de indicação","loyalty bonus":"bônus de fidelidade",
+    "welcome bonus":"bônus de boas-vindas","investment reward":"recompensa de investimento",
+    "invite friends":"convide amigos",
+    // UI actions
+    "sign up":"cadastre-se","log in":"entrar","register":"cadastrar",
+    "invest now":"invista agora","start investing":"comece a investir",
+    "dashboard":"painel de controle","onboarding":"cadastro de cliente",
+    // General finance
+    "collateral":"garantia","mortgage":"hipoteca","savings":"poupança",
+    "credit score":"score de crédito","overdraft":"cheque especial",
+    "chargeback":"estorno","settlement":"liquidação",
+    "direct debit":"débito automático","exchange rate":"taxa de câmbio",
+    "payee":"beneficiário","payer":"pagador","beneficiary":"beneficiário",
+    "equity":"patrimônio líquido","liability":"passivo","asset":"ativo",
+    "dividend":"dividendo","spending limit":"limite de gastos",
+    // Crypto / Web3 (Maclear Crypto Course)
+    "blockchain":"blockchain","token":"token","tokens":"tokens",
+    "stablecoin":"stablecoin","stablecoins":"stablecoins",
+    "cryptocurrency":"criptomoeda","crypto":"cripto",
+    "crypto wallet":"carteira cripto","wallet":"carteira",
+    "seed phrase":"frase-semente","private key":"chave privada",
+    "public address":"endereço público","smart contract":"contrato inteligente",
+    "network fees":"taxas de rede","gas fees":"taxas de gás",
+    "custodial":"custodial","non-custodial":"não custodial",
+    "custodial wallet":"carteira custodial",
+    "non-custodial wallet":"carteira não custodial",
+    "fiat":"moeda fiduciária","pegged":"atrelado",
+    "decentralized":"descentralizado","centralized":"centralizado",
+    "capital provider":"provedor de capital",
+    "repayment schedule":"cronograma de pagamentos",
+    "leverage":"alavancagem","diversification":"diversificação",
+    "yield":"rendimento","returns":"retornos",
+    "liquidity":"liquidez","protocol":"protocolo",
+    "staking":"staking","airdrop":"airdrop",
+    "mining":"mineração","validator":"validador",
+    "consensus":"consenso","bridge":"ponte",
+    "on-chain":"on-chain","off-chain":"off-chain",
+    "scam":"golpe","phishing":"phishing",
+    "Learn & Earn":"Aprenda e Ganhe",
+    "start learning":"comece a aprender",
+    "checklist":"checklist","step-by-step":"passo a passo",
+    "beginner":"iniciante","beginners":"iniciantes",
+    // Tech terms — must stay untranslated
+    "Web 1.0":"Web 1.0","Web 2.0":"Web 2.0","Web 3.0":"Web 3.0",
+    "DeFi":"DeFi","NFT":"NFT","DAO":"DAO","DEX":"DEX","CEX":"CEX","DApp":"DApp",
+    "Layer 1":"Layer 1","Layer 2":"Layer 2",
+    // Date/era labels — keep verbatim
+    "1900s~2000":"1900s~2000","2000s~2020s":"2000s~2020s","2020s~?":"2020s~?",
+    "1900s–2000":"1900s–2000","2000s–2020s":"2000s–2020s","2020s–?":"2020s–?",
+    // Infographic card text — concise translations
+    "Evolution of the Web from 1.0 to 3.0":"Evolução da Web de 1.0 a 3.0",
+    "Static read-only web pages":"Páginas web estáticas somente leitura",
+    "Information-centric and interactive":"Centrada na informação e interativa",
+    "User-centric, decentralized, private and secure":"Centrada no usuário, descentralizada, privada e segura",
+    "read-only":"somente leitura","user-centric":"centrada no usuário",
+    "private and secure":"privada e segura"
+  },
   ko: {
     "APR":"연이율","Annual Percentage Rate":"연이율",
     "interest rate":"이자율","annual returns":"연간 수익률",
@@ -2117,7 +2217,7 @@ const GLOSSARY = {
   }
 };
 
-const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"Portuguese", pl:"Polish", el:"Greek", tr:"Turkish", ko:"Korean", zh:"Simplified Chinese", ja:"Japanese" };
+const LANG_NAMES = { es:"Spanish", it:"Italian", fr:"French", de:"German", pt:"European Portuguese", "pt-br":"Brazilian Portuguese", pl:"Polish", el:"Greek", tr:"Turkish", ko:"Korean", zh:"Simplified Chinese", ja:"Japanese" };
 
 const COURSE_GLOSSARY = {
   es: {
@@ -2217,6 +2317,23 @@ const COURSE_GLOSSARY = {
     "risk management":"gestão de risco","position sizing":"dimensionamento da posição",
     "term length":"prazo","investor discipline":"disciplina do investidor",
     "capital preservation":"preservação de capital","money management":"gestão de dinheiro",
+    "operational security":"segurança operacional","self-custody":"autocustódia",
+    "price swings":"oscilações de preço","quick reset":"reinício rápido"
+  },
+  "pt-br": {
+    "tx as a receipt":"tx como comprovante","transaction hash":"hash da transação",
+    "block explorer":"explorador de blocos","network":"rede","base network":"rede Base",
+    "Interface":"Interface","website":"site","confirm":"confirmar","execution":"execução",
+    "tokenomics":"tokenomics","crypto taxes":"impostos sobre cripto","real yield":"rendimento real",
+    "approval":"aprovação","approvals":"aprovações","spending cap":"limite de gastos",
+    "allowance":"permissão","revoke approval":"revogar aprovação",
+    "wallet connection":"conexão da carteira","normal login":"login comum",
+    "clone site":"site clonado","fake support":"suporte falso","support staff":"equipe de suporte",
+    "wrong address":"endereço errado","malicious transaction":"transação maliciosa",
+    "private key leak":"vazamento de chave privada","seed phrase leak":"vazamento da frase-semente",
+    "risk management":"gestão de riscos","position sizing":"dimensionamento de posição",
+    "term length":"prazo","investor discipline":"disciplina do investidor",
+    "capital preservation":"preservação de capital","money management":"gestão do dinheiro",
     "operational security":"segurança operacional","self-custody":"autocustódia",
     "price swings":"oscilações de preço","quick reset":"reinício rápido"
   },
@@ -2739,9 +2856,14 @@ function applySourceFormatting(original, translated) {
   return lead + outCore + src.punct + src.after + trail;
 }
 
-/* Google / MyMemory expect zh-CN for simplified Chinese; UI chip stays "zh". */
+/* Google / MyMemory expect zh-CN / pt-BR; UI chips stay "zh" / "pt-br".
+   Bare "pt" is kept as-is: Google treats it as Brazilian by default, so the
+   European chip maps to pt-PT explicitly. */
 function translateApiLang(lang) {
-  return lang === "zh" ? "zh-CN" : lang;
+  if (lang === "zh") return "zh-CN";
+  if (lang === "pt") return "pt-PT";
+  if (lang === "pt-br") return "pt-BR";
+  return lang;
 }
 
 /* ================================================================== */
