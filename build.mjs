@@ -5,28 +5,38 @@ mkdirSync('dist', { recursive: true });
 
 const isWatch = process.argv.includes('--watch');
 
-const glossaryOpts = {
-  entryPoints: ['src/glossary-lookup.mjs'],
+/* Pure ES-module bundles inlined into ui.html at build time. The Figma UI is
+   shown from a single HTML string (figma.showUI), so a relative
+   `<script src="...">` never resolves inside the plugin iframe — without
+   inlining, the globals are undefined at runtime and the glossary/formatting
+   logic silently never runs. Each entry exposes an IIFE global consumed by the
+   inline shims in ui.html. */
+const inlineBundles = [
+  { entry: 'src/glossary-lookup.mjs', outfile: 'dist/glossary-lookup.js', globalName: 'FintechGlossary', tag: '<script src="glossary-lookup.js"></script>' },
+  { entry: 'src/glossary-data.mjs',   outfile: 'dist/glossary-data.js',   globalName: 'FintechData',     tag: '<script src="glossary-data.js"></script>' },
+  { entry: 'src/text-format.mjs',     outfile: 'dist/text-format.js',     globalName: 'FintechText',     tag: '<script src="text-format.js"></script>' },
+];
+
+const glossaryOpts = inlineBundles.map((b) => ({
+  entryPoints: [b.entry],
   bundle: true,
-  outfile: 'dist/glossary-lookup.js',
+  outfile: b.outfile,
   target: 'es2017',
   format: 'iife',
-  globalName: 'FintechGlossary',
-};
+  globalName: b.globalName,
+}));
 
-/* Inline the bundled glossary into ui.html. The Figma UI is shown from a single
-   HTML string (figma.showUI), so a relative `<script src="glossary-lookup.js">`
-   never resolves inside the plugin iframe — without inlining, FintechGlossary is
-   undefined at runtime and the glossary substring matching silently never runs. */
 function writeInlinedUi() {
-  const ui = readFileSync('src/ui.html', 'utf8');
-  const gl = readFileSync('dist/glossary-lookup.js', 'utf8');
-  const tag = '<script src="glossary-lookup.js"></script>';
-  if (!ui.includes(tag)) {
-    throw new Error('build: expected `' + tag + '` in src/ui.html');
+  let ui = readFileSync('src/ui.html', 'utf8');
+  for (const b of inlineBundles) {
+    if (!ui.includes(b.tag)) {
+      throw new Error('build: expected `' + b.tag + '` in src/ui.html');
+    }
+    const js = readFileSync(b.outfile, 'utf8');
+    ui = ui.replace(b.tag, '<script>\n' + js + '\n</script>');
   }
-  writeFileSync('dist/ui.html', ui.replace(tag, '<script>\n' + gl + '\n</script>'));
-  console.log('✓ ui.html built (glossary inlined)');
+  writeFileSync('dist/ui.html', ui);
+  console.log('✓ ui.html built (glossary + data + text-format inlined)');
 }
 
 function codeBuildOptions() {
@@ -44,8 +54,8 @@ function codeBuildOptions() {
 }
 
 async function buildAll() {
-  await build(glossaryOpts);
-  console.log('✓ glossary-lookup.js built');
+  for (const opts of glossaryOpts) await build(opts);
+  console.log('✓ inline bundles built');
   writeInlinedUi();
   await build(codeBuildOptions());
   console.log('✓ code.js built');
@@ -54,10 +64,11 @@ async function buildAll() {
 if (isWatch) {
   await buildAll();
   const ctxCode = await context(codeBuildOptions());
-  const ctxGl = await context(glossaryOpts);
+  const glCtxs = [];
+  for (const opts of glossaryOpts) glCtxs.push(await context(opts));
   await ctxCode.watch();
-  await ctxGl.watch();
-  console.log('Watching src/code.ts + src/glossary-lookup.mjs …');
+  for (const c of glCtxs) await c.watch();
+  console.log('Watching src/code.ts + inline module bundles …');
 } else {
   await buildAll();
 }
