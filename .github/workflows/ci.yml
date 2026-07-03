@@ -1,6 +1,3 @@
-# Copy this file to .github/workflows/ci.yml in the repo root to enable GitHub Actions.
-# (Some git credentials cannot push new workflow files without the "workflow" OAuth scope;
-# creating the file once in the GitHub UI works too.)
 
 name: CI
 
