@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
-    "test": "node test/glossary-lookup.test.mjs && node test/estimate-width.test.mjs",
+    "test": "node test/glossary-lookup.test.mjs && node test/estimate-width.test.mjs && node test/glossary-parity.test.mjs && node test/text-format.test.mjs && node test/style-map.test.mjs",
     "release:zip": "node scripts/build-release-zip.mjs"
   },
   "devDependencies": {
