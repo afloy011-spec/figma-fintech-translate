@@ -1385,14 +1385,14 @@ function getGlossary(lang) {
 }
 
 function glossaryExact(sourceText, lang) {
-  const gl = getGlossary(lang);
+  /* No naive fallback: the whole-word matching in FintechGlossary.glossaryResolve
+     exists precisely to avoid bugs the simple path caused (e.g. "April"→"TAEil",
+     "feedback"→"comisióndback"). If the bundle isn't inlined the build is broken,
+     so fail loudly instead of silently degrading the glossary. */
   if (typeof FintechGlossary === "undefined" || !FintechGlossary.glossaryResolve) {
-    if (gl[sourceText] !== undefined) return gl[sourceText];
-    const lower = sourceText.toLowerCase();
-    if (gl[lower] !== undefined) return gl[lower];
-    return null;
+    throw new Error("glossary bundle not inlined (build broken)");
   }
-  return FintechGlossary.glossaryResolve(sourceText, gl, { isLocked: isLockedTerm });
+  return FintechGlossary.glossaryResolve(sourceText, getGlossary(lang), { isLocked: isLockedTerm });
 }
 
 const PRICING = {
