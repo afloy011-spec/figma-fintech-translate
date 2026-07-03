@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
-    "test": "node test/glossary-lookup.test.mjs && node test/estimate-width.test.mjs"
+    "test": "node test/glossary-lookup.test.mjs && node test/estimate-width.test.mjs",
+    "release:zip": "node scripts/build-release-zip.mjs"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.98.0",

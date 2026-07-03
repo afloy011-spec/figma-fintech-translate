@@ -3,6 +3,10 @@ declare const __html__: string;
 
 figma.showUI(__html__, { width: 560, height: 740 });
 
+/* Required when manifest has "documentAccess": "dynamic-page" so that
+   PageNode.findAll() and figma.getNodeByIdAsync() see all pages. */
+void figma.loadAllPagesAsync();
+
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
@@ -351,6 +355,7 @@ async function applySmartFit(
   const autoScale    = opts.autoFontScale === true;
   const minFont      = Math.max(6, Number(opts.minFontSize || 8));
   const inAutoLayout = parentIsAutoLayout(node);
+  const canGrowFrame = opts.expandFrames !== false;
 
   /* ---- WIDTH_AND_HEIGHT: expanding labels / buttons / headings ---- */
   if (node.textAutoResize === "WIDTH_AND_HEIGHT") {
@@ -361,8 +366,15 @@ async function applySmartFit(
         await scaleFontToWidth(node, originalWidth, minFont);
       }
       // Without font-scale: leave it — auto-layout expands the button.
+    } else if (canGrowFrame && !autoScale) {
+      // Preferred path when "Grow frames" is on: keep the label on one line
+      // and let relaxFramesForTranslatedText widen the parent. Forcing
+      // HEIGHT (wrap) here causes long translations to break onto a second
+      // line BEFORE the frame has a chance to grow.
+      // No-op: text stays in WIDTH_AND_HEIGHT and grows naturally.
     } else {
-      // Fixed frame / group: lock to original width and let text wrap.
+      // Fixed frame / group with no growth allowed: lock to original width
+      // and let text wrap to keep it inside the card.
       node.textAutoResize = "HEIGHT";
       node.resize(Math.max(24, originalWidth), node.height);
       if (autoScale) {
@@ -471,6 +483,7 @@ async function applyTranslationsToRoot(
     sidePadding:   fo.sidePadding,
     autoFontScale: false,
     minFontSize:   fo.minFontSize,
+    expandFrames:  fo.expandFrames,
   };
 
   for (const t of translations) {
@@ -558,6 +571,60 @@ function localizedFrameName(base: string, lang: string): string {
   return base + " [" + lang.toUpperCase() + "]";
 }
 
+/**
+ * Re-arrange every language clone tied to `sourceId` in a row (or column when
+ * the user scanned multiple source frames) so that none of them overlap after
+ * Grow frames has widened/heightened individual clones.
+ *
+ * Anchor (sourceX, sourceY) is the absolute position of the original source
+ * frame; (sourceW, sourceH) is its size. `gap` is the spacing constant used
+ * elsewhere in the file.
+ */
+function respaceLanguageClones(
+  sourceId: string,
+  sourceX: number,
+  sourceY: number,
+  sourceW: number,
+  sourceH: number,
+  gap: number,
+  multiFrame: boolean,
+): void {
+  const all = figma.currentPage.findAll((n) =>
+    n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE",
+  );
+  const siblings: FrameNode[] = [];
+  for (const n of all) {
+    const f = n as FrameNode;
+    if (f.getPluginData("ft_source_id") === sourceId) siblings.push(f);
+  }
+  if (siblings.length === 0) return;
+
+  /* Stable order by langIndex (stored as plugin data when the clone is
+     created). Fallback to current x/y for legacy clones without an index. */
+  siblings.sort((a, b) => {
+    const ai = parseInt(a.getPluginData("ft_lang_index") || "", 10);
+    const bi = parseInt(b.getPluginData("ft_lang_index") || "", 10);
+    if (!isNaN(ai) && !isNaN(bi) && ai !== bi) return ai - bi;
+    return multiFrame ? a.y - b.y : a.x - b.x;
+  });
+
+  if (multiFrame) {
+    let nextY = sourceY + sourceH + gap;
+    for (const sib of siblings) {
+      sib.x = sourceX;
+      sib.y = nextY;
+      nextY = sib.y + sib.height + gap;
+    }
+  } else {
+    let nextX = sourceX + sourceW + gap;
+    for (const sib of siblings) {
+      sib.x = nextX;
+      sib.y = sourceY;
+      nextX = sib.x + sib.width + gap;
+    }
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /*  Message handler                                                    */
 /* ------------------------------------------------------------------ */
@@ -636,7 +703,7 @@ figma.ui.onmessage = async (msg: any) => {
       multiFrame?: boolean;
     };
 
-    const orig = figma.getNodeById(frameId) as SceneNode;
+    const orig = (await figma.getNodeByIdAsync(frameId)) as SceneNode | null;
     if (!orig) {
       figma.ui.postMessage({ type: "frame-error", frameId, langCode, text: "Original frame not found" });
       return;
@@ -644,17 +711,46 @@ figma.ui.onmessage = async (msg: any) => {
 
     const wantName = `${stripLangSuffix(orig.name)} [${langCode.toUpperCase()}]`;
 
-    const existing = figma.currentPage.findAll(
-      (n) => n.name === wantName &&
-        (n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE"),
+    /* Bind clones to their source frame by id, NOT by name.
+       Without this, copy/rename of a source frame would re-target the old
+       language clones because the base name still matches. */
+    const taggedMatches: FrameNode[] = [];
+    const legacyNameMatches: FrameNode[] = [];
+    const candidates = figma.currentPage.findAll((n) =>
+      n.type === "FRAME" || n.type === "COMPONENT" || n.type === "INSTANCE",
     );
+    for (const n of candidates) {
+      const f = n as FrameNode;
+      const tagId = f.getPluginData("ft_source_id");
+      const tagLang = f.getPluginData("ft_lang");
+      if (tagId && tagId === frameId && tagLang === langCode) {
+        taggedMatches.push(f);
+      } else if (!tagId && f.name === wantName) {
+        legacyNameMatches.push(f);
+      }
+    }
+
+    /* Prefer tagged matches; otherwise adopt a legacy name-match only when
+       it is unambiguous (exactly one). Several legacy matches → safer to
+       create a fresh clone than overwrite the wrong frame. */
+    let toReplace: FrameNode | null = null;
+    if (taggedMatches.length > 0) {
+      toReplace = taggedMatches[0];
+    } else if (legacyNameMatches.length === 1) {
+      toReplace = legacyNameMatches[0];
+    }
 
     let replaceX: number | null = null;
     let replaceY: number | null = null;
-    if (existing.length > 0) {
-      replaceX = (existing[0] as FrameNode).x;
-      replaceY = (existing[0] as FrameNode).y;
-      existing[0].remove();
+    if (toReplace) {
+      replaceX = toReplace.x;
+      replaceY = toReplace.y;
+      for (const f of taggedMatches) {
+        try { f.remove(); } catch (_e) { /* already removed */ }
+      }
+      if (taggedMatches.length === 0) {
+        try { toReplace.remove(); } catch (_e) { /* already removed */ }
+      }
     }
 
     /* Capture position & size BEFORE clone() — cloning into an auto-layout
@@ -668,6 +764,10 @@ figma.ui.onmessage = async (msg: any) => {
 
     const clone = origFrame.clone();
     clone.name = wantName;
+    clone.setPluginData("ft_source_id", frameId);
+    clone.setPluginData("ft_lang", langCode);
+    clone.setPluginData("ft_lang_index", String(langIndex));
+    clone.setPluginData("ft_multi_frame", multiFrame === true ? "1" : "0");
 
     /* Always move to page root so auto-layouts don't trap the clone. */
     if (clone.parent !== figma.currentPage) {
@@ -685,14 +785,26 @@ figma.ui.onmessage = async (msg: any) => {
       clone.y = absY;
     }
 
-    const fo = fitOptions || {};
-    const { ok, fail, framesExpanded } = await applyTranslationsToRoot(clone, translations, fo);
+    try {
+      const fo = fitOptions || {};
+      const { ok, fail, framesExpanded } = await applyTranslationsToRoot(clone, translations, fo);
 
-    figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail, framesExpanded });
-    let toast = `✓ ${clone.name} — ${ok} translated`;
-    if (fail) toast += `, ${fail} skipped`;
-    if (framesExpanded) toast += ` · ${framesExpanded} frame(s) enlarged`;
-    figma.notify(toast);
+      /* After "Grow frames" may have widened this clone, re-space every
+         sibling clone of the same source so they don't overlap. We use
+         actual widths/heights, not the source's, because each language
+         may have grown to a different size. */
+      respaceLanguageClones(frameId, absX, absY, ow, oh, gap, multiFrame === true);
+
+      figma.ui.postMessage({ type: "frame-done", frameId, langCode, ok, fail, framesExpanded });
+      let toast = `✓ ${clone.name} — ${ok} translated`;
+      if (fail) toast += `, ${fail} skipped`;
+      if (framesExpanded) toast += ` · ${framesExpanded} frame(s) enlarged`;
+      figma.notify(toast);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      figma.ui.postMessage({ type: "frame-error", frameId, langCode, text: message });
+      figma.notify(`✗ ${langCode.toUpperCase()}: ${message}`, { error: true });
+    }
   }
 
   /* ---------- Sync: EN master → existing «Name [ES]» frames on page ---------- */
@@ -756,7 +868,7 @@ figma.ui.onmessage = async (msg: any) => {
       fitOptions?: FitOptions;
     };
 
-    const root = figma.getNodeById(targetFrameId) as SceneNode | null;
+    const root = (await figma.getNodeByIdAsync(targetFrameId)) as SceneNode | null;
     if (!root || !("children" in root)) {
       figma.ui.postMessage({
         type: "sync-reference-done",
@@ -768,12 +880,24 @@ figma.ui.onmessage = async (msg: any) => {
       return;
     }
 
-    const fo = fitOptions || {};
-    const { ok, fail, framesExpanded } = await applyTranslationsToRoot(root, translations, fo);
-    figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail, framesExpanded });
-    let st = `↻ [${langCode.toUpperCase()}] — ${ok} text layer(s)`;
-    if (framesExpanded) st += ` · ${framesExpanded} frame(s) enlarged`;
-    figma.notify(st);
+    try {
+      const fo = fitOptions || {};
+      const { ok, fail, framesExpanded } = await applyTranslationsToRoot(root, translations, fo);
+      figma.ui.postMessage({ type: "sync-reference-done", langCode, ok, fail, framesExpanded });
+      let st = `↻ [${langCode.toUpperCase()}] — ${ok} text layer(s)`;
+      if (framesExpanded) st += ` · ${framesExpanded} frame(s) enlarged`;
+      figma.notify(st);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      figma.ui.postMessage({
+        type: "sync-reference-done",
+        langCode,
+        ok: 0,
+        fail: translations.length,
+        err: message,
+      });
+      figma.notify(`✗ Sync ${langCode.toUpperCase()}: ${message}`, { error: true });
+    }
   }
 
   /* ---------- Close ---------- */
